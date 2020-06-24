@@ -3,11 +3,14 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { UserProvider } from "./context/UserContext";
+import { Fabric } from "@fluentui/react";  
 
 ReactDOM.render(
   <React.StrictMode>
       <UserProvider>
-        <App />
+        <Fabric>
+          <App />
+        </Fabric>
       </UserProvider>
   </React.StrictMode>,
   document.getElementById('root')
