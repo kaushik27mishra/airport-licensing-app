@@ -5,11 +5,12 @@ import { HashRouter, Route, Switch, Redirect } from "react-router-dom";
 import Layout from "./layout/Layout";
 
 // pages
-import Error from "../pages/error/error";
-import Login from "../pages/login/Login";
+import Error from "./pages/error/Error";
+import Login from "./pages/auth/Login";
+import Home from "./pages/home/Home";
 
 // context
-import { useUserState } from "../context/UserContext";
+import { useUserState } from "./context/UserContext";
 
 export default function App() {
   // global
@@ -18,7 +19,7 @@ export default function App() {
   return (
     <HashRouter>
       <Switch>
-        <Route exact path="/" render={() => <Redirect to="/app/dashboard" />} />
+        <Route exact path="/" component={Home} />
         <Route
           exact
           path="/app"

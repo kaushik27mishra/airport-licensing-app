@@ -5,6 +5,9 @@ import {
   withRouter,
 } from "react-router-dom";
 
+//component
+import Header from "../components/header/Header"
+
 // pages
 import Dashboard from "../pages/dashboard/dashboard"
 

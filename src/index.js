@@ -1,18 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
 import { UserProvider } from "./context/UserContext";
 import { Fabric } from "@fluentui/react";  
+import App from './App';
+import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(
-  <React.StrictMode>
-      <UserProvider>
-        <Fabric>
-          <App />
-        </Fabric>
-      </UserProvider>
-  </React.StrictMode>,
+  <UserProvider>
+    <Fabric>
+      <App />
+    </Fabric>
+  </UserProvider>,
   document.getElementById('root')
 );
 
