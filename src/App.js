@@ -7,7 +7,9 @@ import Layout from "./layout/Layout";
 // pages
 import Error from "./pages/error/Error";
 import Login from "./pages/auth/Login";
+import AccountRequest from "./pages/auth/AccountRequest";
 import Home from "./pages/home/Home";
+import Faq from "./pages/faq/Faq";
 
 // context
 import { useUserState } from "./context/UserContext";
@@ -20,6 +22,8 @@ export default function App() {
     <HashRouter>
       <Switch>
         <Route exact path="/" component={Home} />
+        <Route exact path="/accountRequest" component={AccountRequest} />
+        <Route exact path="/faq" component={Faq} />
         <Route
           exact
           path="/app"
