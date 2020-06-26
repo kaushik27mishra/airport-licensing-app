@@ -59,13 +59,13 @@ const cards = [
     percentage: '100%'
   },
   {
-    title: 'License Ongoing',
+    title: 'Licenses Ongoing',
     amount: '50',
     icon: 'ProgressLoopOuter',
     percentage: '25%'
   },
   {
-    title: 'License Completed',
+    title: 'Licenses Completed',
     amount: '150',
     icon: 'AirplaneSolid',
     percentage: '75%'

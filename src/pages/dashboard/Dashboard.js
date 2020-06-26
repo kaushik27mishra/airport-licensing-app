@@ -3,6 +3,7 @@ import React from 'react'
 // components
 import Navigation from '../../components/navigation/Navigation'
 import CardsSection from '../../components/cards/Cards'
+import OperationsTable from '../../components/table/DetailsList'
 
 // style
 import './style.css'
@@ -19,7 +20,7 @@ function Dashboard() {
                         <CardsSection/>
                     </div>
                     <div className="ms-Grid-row">
-        
+                        <OperationsTable/>
                     </div>
                 </div>
             </div>

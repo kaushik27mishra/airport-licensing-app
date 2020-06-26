@@ -10,3 +10,11 @@
     padding-left: 0;
     margin-left: 0;
 }
+
+.ms-Viewport {
+    margin: 0 1.5%;
+}
+  
+.ms-FocusZone {
+  padding: 0;
+}
