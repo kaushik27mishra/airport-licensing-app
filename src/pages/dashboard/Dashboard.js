@@ -2,6 +2,7 @@ import React from 'react'
 
 // components
 import Navigation from '../../components/navigation/Navigation'
+import CardsSection from '../../components/cards/Cards'
 
 // style
 import './style.css'
@@ -15,7 +16,7 @@ function Dashboard() {
                 </div>
                 <div className="main-element ms-Grid-col ms-sm10 ms-xl10">
                     <div className="ms-Grid-row">
-        
+                        <CardsSection/>
                     </div>
                     <div className="ms-Grid-row">
         
