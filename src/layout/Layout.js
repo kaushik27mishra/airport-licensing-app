@@ -15,7 +15,7 @@ function Layout(props) {
 
   return (
         <>
-          <Header history={props.history} />
+          {/* <Header history={props.history} /> */}
             <Switch>
               <Route path="/app/dashboard" component={Dashboard} />
             </Switch>
