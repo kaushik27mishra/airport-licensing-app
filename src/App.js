@@ -1,6 +1,9 @@
 import React from "react";
 import { HashRouter, Route, Switch, Redirect } from "react-router-dom";
 
+//style
+import 'office-ui-fabric-react/dist/css/fabric.css';
+
 // components
 import Layout from "./layout/Layout";
 
@@ -29,7 +32,7 @@ export default function App() {
           path="/app"
           render={() => <Redirect to="/app/dashboard" />}
         />
-        <PrivateRoute path="/app" component={Layout} />
+        <Route path="/app" component={Layout} />
         <PublicRoute path="/login" component={Login} />
         <Route component={Error} />
       </Switch>

@@ -1,0 +1,12 @@
+#root {
+    background-color: rgba(225, 223, 221, 0.2);
+}
+
+.ms-Nav {
+ background-color: white;
+}
+
+.ms-Grid-col {
+    padding-left: 0;
+    margin-left: 0;
+}
