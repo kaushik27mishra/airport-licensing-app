@@ -9,13 +9,13 @@ import {
 import Header from "../components/header/Header"
 
 // pages
-import Dashboard from "../pages/dashboard/dashboard"
+import Dashboard from "../pages/dashboard/Dashboard"
 
 function Layout(props) {
 
   return (
         <>
-          <Header history={props.history} />
+          {/* <Header history={props.history} /> */}
             <Switch>
               <Route path="/app/dashboard" component={Dashboard} />
             </Switch>
