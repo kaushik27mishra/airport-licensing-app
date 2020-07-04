@@ -2,6 +2,7 @@ import React from 'react'
 
 //components
 import HeaderHomePage from '../../components/header/HeaderHomepage'
+import Banner from '../../components/banner/Banner'
 
 //style 
 import './style.css'
@@ -14,7 +15,7 @@ function Home() {
                     <HeaderHomePage/>
                 </div>
                 <div className="ms-Grid-row">
-
+                    <Banner/>
                 </div>
             </div>
         </div>
