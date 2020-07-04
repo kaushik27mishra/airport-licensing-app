@@ -5,6 +5,9 @@ import { Nav, initializeIcons } from '@fluentui/react';
 
 const navigationStyles = {
   root: {
+    position: 'fixed',
+    zIndex: 1,
+    width: '250px', 
     height: '100vh',
     boxSizing: 'border-box',
     border: '1px solid #eee',

@@ -11,6 +11,7 @@ import Header from "../components/header/Header";
 
 // pages
 import Dashboard from "../pages/dashboard/Dashboard"
+import SampleForm from "../pages/form/SampleForm";
 
 function Layout(props) {
 
@@ -27,6 +28,7 @@ function Layout(props) {
                 </div>
                 <Switch>
                   <Route path="/app/dashboard" component={Dashboard} />
+                  <Route path="/app/sampleform" component={SampleForm} />
                 </Switch>
               </div>
             </div>

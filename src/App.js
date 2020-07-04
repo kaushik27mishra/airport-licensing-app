@@ -71,7 +71,7 @@ export default function App(props) {
           isAuthenticated ? (
             <Redirect
               to={{
-                pathname: "/",
+                pathname: "/app/dashboard",
               }}
             />
           ) : (
