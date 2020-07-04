@@ -19,7 +19,7 @@ const links = [
       {
         name: 'Dashboard',
         key:'key1',
-        url: '/',
+        url: '#/app/dashboard',
         iconProps: {
           iconName: 'News',
           styles: {
@@ -33,7 +33,7 @@ const links = [
       {
         name: 'Settings',
         key: 'key2',
-        url: '/',
+        url: '#/app/settings',
         iconProps: {
           iconName: 'PlayerSettings',
           styles: {
