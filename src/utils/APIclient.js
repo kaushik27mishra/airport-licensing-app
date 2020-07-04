@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-export default () => {
+api = () => {
   return axios.create({
     baseURL: '',
     headers: {
@@ -8,3 +8,5 @@ export default () => {
     }
   });
 }
+
+export default api;

@@ -17,7 +17,7 @@ import Faq from "./pages/faq/Faq";
 // context
 import { useUserState } from "./context/UserContext";
 
-export default function App() {
+export default function App(props) {
   // global
   var { isAuthenticated } = useUserState();
 

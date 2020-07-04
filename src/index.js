@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { UserProvider } from "./context/UserContext";
 import App from './App';
-// import { createTheme, Customizations, Fabric } from '@fluentui/react'
+import { Fabric } from '@fluentui/react'
 import * as serviceWorker from './serviceWorker';
 
 // const myTheme = createTheme({
@@ -31,12 +31,14 @@ import * as serviceWorker from './serviceWorker';
     // white: '#ffffff',
   // }});
 // 
-// Customizations.applySettings({ theme: myTheme });
+// Customizations.applySettings({ theme: myTheme }); 
 
 ReactDOM.render(
-  <UserProvider>
-      <App />
-  </UserProvider>,
+  <Fabric>
+    <UserProvider>
+        <App />
+    </UserProvider>
+  </Fabric>,
   document.getElementById('root')
 );
 
