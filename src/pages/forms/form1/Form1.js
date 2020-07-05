@@ -1,11 +1,14 @@
 import React, { Component } from 'react'
 
 
+
 //ui
 import { Text, PrimaryButton, Stack, DefaultButton } from 'office-ui-fabric-react';
 import { TextField} from 'office-ui-fabric-react/lib/TextField';
 import { Card } from '@uifabric/react-cards';
 import { mergeStyleSets } from 'office-ui-fabric-react/lib/Styling';
+
+import Address from '../../../components/address/Address'
 
 //style
 const styles = {
@@ -60,7 +63,7 @@ export default class SampleForm extends Component {
                                 {/*<TextField label="Fax Number"/>*/}
                                 <TextField label="Email"/>
                                 {/*<TextField label="Nationality"/>*/}
-                                
+
                                 <Stack horizontal tokens={stackTokens}>
                                     <DefaultButton text="Back" allowDisabledFocus />
                                     <PrimaryButton text="Next" allowDisabledFocus />

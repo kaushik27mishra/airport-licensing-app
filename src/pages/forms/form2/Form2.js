@@ -1,4 +1,3 @@
-{/*Work in progress*/}
 import React, { Component } from 'react'
 
 //ui
@@ -10,7 +9,7 @@ import { ActionButton} from 'office-ui-fabric-react';
 
 import Address from '../../../components/address/Address'
 
-
+{/*Work in progress*/}
 //style
 const styles = {
     cardStyles: {
