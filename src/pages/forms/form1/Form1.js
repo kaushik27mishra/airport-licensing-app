@@ -55,11 +55,12 @@ export default class SampleForm extends Component {
                         <Card.Section>
                                 <Text variant={'xxLarge'} >Details of Licensee</Text>
                                 <TextField label="Full Name"/>
-                                <TextField label="Address of Applicant" multiline rows={3} />
+                                <Address/>
                                 <TextField label="Telephone Number"/>
-                                <TextField label="Fax Number"/>
+                                {/*<TextField label="Fax Number"/>*/}
                                 <TextField label="Email"/>
-                                <TextField label="Nationality"/>
+                                {/*<TextField label="Nationality"/>*/}
+                                
                                 <Stack horizontal tokens={stackTokens}>
                                     <DefaultButton text="Back" allowDisabledFocus />
                                     <PrimaryButton text="Next" allowDisabledFocus />
