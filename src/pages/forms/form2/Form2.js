@@ -1,4 +1,4 @@
-{/*Work in progress*/}
+// work in progress
 import React, { Component } from 'react'
 
 //ui
@@ -8,8 +8,9 @@ import { Card } from '@uifabric/react-cards';
 import { mergeStyleSets } from 'office-ui-fabric-react/lib/Styling';
 import { ActionButton} from 'office-ui-fabric-react';
 
-import Address from '../../../components/address/Address'
 
+//components
+import Address from '../../../components/form/Address'
 
 //style
 const styles = {
@@ -39,10 +40,10 @@ const classNames = mergeStyleSets({
     }
 });
 
-const addFriendIcon = { iconName: 'AddFriend' };
+const addFriendIcon = { iconName: 'OpenFile' };
 const stackTokens = { childrenGap: 20 };
 
-export default class SampleForm extends Component {
+class Form2 extends Component {
     constructor(props) {
         super(props)
     
@@ -68,7 +69,7 @@ export default class SampleForm extends Component {
                                 <TextField label="State/District which situated"/>
                                 <TextField label="Grid Reference in WGS 84" multiline rows={3} />
                                 <ActionButton iconProps={addFriendIcon} allowDisabledFocus>
-                                Create account
+                                    Upload File
                                 </ActionButton>
                                 <Stack horizontal tokens={stackTokens}>
                                     <DefaultButton text="Back" allowDisabledFocus />
@@ -82,3 +83,5 @@ export default class SampleForm extends Component {
         )
     }
 }
+
+export default Form2;
