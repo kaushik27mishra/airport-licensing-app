@@ -13,6 +13,7 @@ import Header from "../components/header/Header";
 import Dashboard from "../pages/dashboard/Dashboard"
 import SampleForm from "../pages/forms/SampleForm";
 import Form1 from "../pages/forms/form1/Form1"
+import Form2 from "../pages/forms/form2/Form2"
 
 function Layout(props) {
 
@@ -31,6 +32,7 @@ function Layout(props) {
                   <Route path="/app/dashboard" component={Dashboard} />
                   <Route path="/app/sampleform" component={SampleForm} />
                   <Route path="/app/licensee_detail_form" component={Form1} />
+                  <Route path="/app/aerodrome_detail_form" component={Form2} />
                 </Switch>
               </div>
             </div>
