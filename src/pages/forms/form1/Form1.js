@@ -1,14 +1,13 @@
 import React, { Component } from 'react'
 
-
-
 //ui
 import { Text, PrimaryButton, Stack, DefaultButton } from 'office-ui-fabric-react';
 import { TextField} from 'office-ui-fabric-react/lib/TextField';
 import { Card } from '@uifabric/react-cards';
 import { mergeStyleSets } from 'office-ui-fabric-react/lib/Styling';
 
-import Address from '../../../components/address/Address'
+//components
+import Address from '../../../components/form/Address'
 
 //style
 const styles = {
@@ -41,7 +40,7 @@ const classNames = mergeStyleSets({
 
 const stackTokens = { childrenGap: 20 };
 
-export default class SampleForm extends Component {
+export default class Form1 extends Component {
     constructor(props) {
         super(props)
     
@@ -58,12 +57,12 @@ export default class SampleForm extends Component {
                         <Card.Section>
                                 <Text variant={'xxLarge'} >Details of Licensee</Text>
                                 <TextField label="Full Name"/>
-                                <Address/>
                                 <TextField label="Telephone Number"/>
-                                {/*<TextField label="Fax Number"/>*/}
+                                {/* To be added in db -> Nationality and Fax Number */}
+                                <TextField label="Fax Number"/>
                                 <TextField label="Email"/>
-                                {/*<TextField label="Nationality"/>*/}
-
+                                <TextField label="Nationality"/> 
+                                <Address/>
                                 <Stack horizontal tokens={stackTokens}>
                                     <DefaultButton text="Back" allowDisabledFocus />
                                     <PrimaryButton text="Next" allowDisabledFocus />
