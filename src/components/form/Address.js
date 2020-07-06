@@ -19,7 +19,7 @@ const StateOptions = [
 
 const Address = (props) => (
     <div style={{paddingTop:'20px',paddingBottom:'20px'}}>  
-        <Text variant={'large'}><em>Address</em></Text>
+        <Text variant={'large'}><em>{props.children}</em></Text>
         <hr style={{border: '1px solid black'}} />
         <TextField label="Line 1"/>
         <TextField label="Line 2"/>

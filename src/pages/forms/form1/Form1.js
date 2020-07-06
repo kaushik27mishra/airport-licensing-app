@@ -62,7 +62,7 @@ export default class Form1 extends Component {
                                 <TextField label="Fax Number"/>
                                 <TextField label="Email"/>
                                 <TextField label="Nationality"/> 
-                                <Address/>
+                                <Address>Address of Licensee</Address>
                                 <Stack horizontal tokens={stackTokens}>
                                     <DefaultButton text="Back" allowDisabledFocus />
                                     <PrimaryButton text="Next" allowDisabledFocus />
