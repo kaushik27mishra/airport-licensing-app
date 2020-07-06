@@ -4,9 +4,8 @@ import React, { Component } from 'react'
 import { Text, PrimaryButton, Stack, DefaultButton } from 'office-ui-fabric-react';
 import { TextField} from 'office-ui-fabric-react/lib/TextField';
 import { Card } from '@uifabric/react-cards';
-//import { mergeStyleSets } from 'office-ui-fabric-react/lib/Styling';
 import { ChoiceGroup } from 'office-ui-fabric-react/lib/ChoiceGroup';
-import { DatePicker, DayOfWeek, IDatePickerStrings, mergeStyleSets } from 'office-ui-fabric-react';
+import { DatePicker, mergeStyleSets } from 'office-ui-fabric-react';
 
 
 //style
@@ -45,11 +44,13 @@ const controlClass = mergeStyleSets({
   });
 
 
+// For Choice Pickers
 const options = [
     { key: true, text: 'Yes' },
     { key: false, text: 'No' },
 ];
 
+//For Date Field
 const DayPickerStrings = {
     months: [
       'January',
@@ -104,39 +105,57 @@ export default class Form4 extends Component {
                 <div className={`s-Grid-col ms-sm9 ms-xl9 ${classNames.pivot}`}>
                     <Card styles={styles.cardStyles}>
                         <Card.Section>
-                            <ChoiceGroup defaultSelectedKey={true} options={options} onChange={this._onChangeowner} label="Are you the owner of the aerodrome site" required={true} />
-                            {
-                                this.state.owner===false ? 
-                                <>
-                                    <TextField label="Please state the details of the
-                                     rights you hold over the land" 
-                                     placeholder="Please enter details here"
-                                     multiline rows={3} /> 
-                                     
-                                     <Text variant='medium'>The period from which you hold these rights</Text> {/*Needs to be made DateField*/}
-                                     <DatePicker
-                                        className={controlClass.control}
-                                        strings={DayPickerStrings}
-                                        placeholder="Select a date..."
-                                        ariaLabel="Select a date"
-                                    />
-                                    <Text variant='medium'>The period to which you hold these rights</Text> {/*Needs to be made DateField*/}
-                                     <DatePicker
-                                        className={controlClass.control}
-                                        strings={DayPickerStrings}
-                                        placeholder="Select a date..."
-                                        ariaLabel="Select a date"
-                                    /> 
-                                     <Text variant='medium'>Termination of these rights</Text> {/*Needs to be made DateField*/}
-                                     <DatePicker
-                                        className={controlClass.control}
-                                        strings={DayPickerStrings}
-                                        placeholder="Select a date..."
-                                        ariaLabel="Select a date"
-                                    />
-                                </>
-                                : null
-                            }
+                            <Text 
+                                variant={'xxLarge'} >
+                                    Control of the Aerodrome
+                            </Text>
+                            <ChoiceGroup 
+                                defaultSelectedKey={true}
+                                options={options}
+                                onChange={this._onChangeowner} 
+                                label="Are you the owner of the aerodrome site" 
+                                required={true}/>
+                                {
+                                    this.state.owner===false ? 
+                                    <>
+                                        <TextField 
+                                            label="Please state the details of the
+                                                rights you hold over the land" 
+                                            placeholder="Please enter details here"
+                                            multiline rows={3} /> 
+                                        
+                                        <Text 
+                                            variant='medium'>
+                                                The period from which you hold these rights
+                                        </Text> {/*Needs to be made DateField*/}
+                                        <DatePicker
+                                            className={controlClass.control}
+                                            strings={DayPickerStrings}
+                                            placeholder="Select a date."
+                                            ariaLabel="Select a date"
+                                        />
+
+                                        <Text 
+                                            variant='medium'>
+                                                The period to which you hold these rights
+                                        </Text> {/*Needs to be made DateField*/}
+                                        <DatePicker
+                                            className={controlClass.control}
+                                            strings={DayPickerStrings}
+                                            placeholder="Select a date."
+                                            ariaLabel="Select a date"
+                                        /> 
+
+                                        <Text variant='medium'>Termination of these rights</Text> {/*Needs to be made DateField*/}
+                                        <DatePicker
+                                            className={controlClass.control}
+                                            strings={DayPickerStrings}
+                                            placeholder="Select a date."
+                                            ariaLabel="Select a date"
+                                        />
+                                    </>
+                                    : null
+                                }
                             <Stack horizontal tokens={stackTokens}>
                                 <DefaultButton text="Back" allowDisabledFocus />
                                 <PrimaryButton text="Next" allowDisabledFocus />
