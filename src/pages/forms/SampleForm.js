@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 
 
 //ui
-import { Text, PrimaryButton, Stack, DefaultButton } from 'office-ui-fabric-react';
+import { Text, PrimaryButton, Stack, DefaultButton, ChoiceGroup } from 'office-ui-fabric-react';
 import { TextField, MaskedTextField } from 'office-ui-fabric-react/lib/TextField';
 import { Card } from '@uifabric/react-cards';
 import { mergeStyleSets } from 'office-ui-fabric-react/lib/Styling';
@@ -37,13 +37,23 @@ const classNames = mergeStyleSets({
 
 const stackTokens = { childrenGap: 20 };
 
+const options = [
+    { key: 'Yes', text: 'Yes' },
+    { key: 'No', text: 'No' },
+];
+
 export default class SampleForm extends Component {
     constructor(props) {
         super(props)
     
         this.state = {
-             
+             check:""
         }
+    }
+
+    _onChange = (ev, option) => {
+        console.dir(option);
+        this.setState({check:option.key})
     }
     
     render() {
@@ -62,6 +72,10 @@ export default class SampleForm extends Component {
                                 <MaskedTextField label="With input mask" mask="m\ask: (999) 999 - 9999" />
                                 <TextField label="With placeholder" placeholder="Please enter text here" />
                                 <TextField label="Disabled with placeholder" disabled placeholder="I am disabled" />
+                                <ChoiceGroup defaultSelectedKey="No" options={options} onChange={this._onChange} label="Pick one" required={true} />
+                                {
+                                    this.state.check==="Yes" ? <TextField label="With placeholder" placeholder="Please enter text here" /> : null
+                                }
                                 <Stack horizontal tokens={stackTokens}>
                                     <DefaultButton text="Standard" allowDisabledFocus />
                                     <PrimaryButton text="Primary" allowDisabledFocus />
