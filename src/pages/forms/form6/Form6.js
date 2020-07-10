@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 
 
 //ui
@@ -67,6 +67,8 @@ class Form6 extends Component {
                         <Card.Section>
                                 <Text variant={'xxLarge'} >Aerodrome Management Personnel</Text>
 
+                                <br/>
+                                <br/>
                                 <Text variant={'large'} >Board Member/ Managing Director or person having specific responsibility for safety.
                                     <em>(To be completed only where the applicant is a company/ corporate/society)</em>
                                 </Text>
@@ -76,16 +78,18 @@ class Form6 extends Component {
                                 <TextField label="Status/Designation" />
                                 <TextField label="Telephone Number"/>
                                 {/*Email phone address to be added in person*/}
+                                <br/>
+                                <br/>
                                 <Text variant={'large'} >The person in charge of day to day operation of aerodrome.</Text>
                                 <TextField label="Name" />
                                 <TextField label="E-Mail" />
                                 <TextField label="Status/Designation" />
                                 <TextField label="Telephone Number"/>    
-                                <div>
-                                    <Text variant={'medium'}><em>Please enclose a current Curriculum Vitae [CV]</em></Text>
-                                    <ActionButton iconProps={addIcon} allowDisabledFocus><em>Add CV</em></ActionButton>
-                                </div>
+                                <Text variant={'medium'}><em>Please enclose a current Curriculum Vitae [CV]</em></Text>
+                                <ActionButton iconProps={addIcon} allowDisabledFocus><em>Add CV</em></ActionButton>
                                 {/*Email phone address to be added in person*/}
+                                <br/>
+                                <br/>
                                 <Text variant={'large'} >The person responsible for Aerodrome Safety.</Text>{/*Update dynamically */}
                                 <TextField label="Name" />
                                 <TextField label="E-Mail" />
@@ -94,45 +98,56 @@ class Form6 extends Component {
                                 <ChoiceGroup defaultSelectedKey="No" options={options} onChange={this._onChange} label="Is the person responsible for Aerodrome Safety, different from person in charge of day to day operation of aerodrome." required={true} />
                                 {
                                     this.state.check==="Yes" ? 
-                                    <div>
-                                        
+                                    <Fragment>
                                         <Text variant={'medium'}>
                                             <em>Please enclose a current Curriculum Vitae [CV]</em>
                                         </Text> 
                                         <ActionButton //to be added in db
                                             iconProps={addIcon} allowDisabledFocus><em>Add CV</em>
                                         </ActionButton>
-                                    </div> : null
+                                    </Fragment> : null
                                 }
                                 
                                 {/*Email phone address to be added in person*/}
+                                <br/>
+                                <br/>
                                 <Text variant={'large'} >Provider of the CNS - ATM</Text>
                                 <TextField label="Name" />
                                 <TextField label="E-Mail" />
                                 <TextField label="Address" />
+                                <br/>
+                                <br/>
                                 {/*Email phone address to be added in person*/}
                                 <Text variant={'large'} >Provider of the MET services</Text>
                                 <TextField label="Name" />
                                 <TextField label="E-Mail" />
                                 <TextField label="Address" />
+                                <br/>
+                                <br/>
                                 {/*Email phone address to be added in person*/}
                                 <Text variant={'large'} >The person responsible for overseeing the day to day provisions of the Air Traffic Management</Text>
                                 <TextField label="Name" />
                                 <TextField label="E-Mail" />
                                 <TextField label="Status/Designation" />
                                 <TextField label="Telephone Number"/>
+                                <br/>
+                                <br/>
                                 {/*Email phone address to be added in person*/}
                                 <Text variant={'large'} >The person responsible for overseeing the day to day provisions of CNS</Text>
                                 <TextField label="Name" />
                                 <TextField label="E-Mail" />
                                 <TextField label="Status/Designation" />
                                 <TextField label="Telephone Number"/>
+                                <br/>
+                                <br/>
                                 {/*Email phone address to be added in person*/}
                                 <Text variant={'large'} >The person responsible for overseeing the day to day provisions of RFF</Text>
                                 <TextField label="Name" />
                                 <TextField label="E-Mail" />
                                 <TextField label="Status/Designation" />
                                 <TextField label="Telephone Number"/>
+                                <br/>
+                                <br/>
                                 {/*Email phone address to be added in person*/}
                                 <Text variant={'large'} >The person responsible for overseeing the day to day provisions of MET services</Text>
                                 <TextField label="Name" />
