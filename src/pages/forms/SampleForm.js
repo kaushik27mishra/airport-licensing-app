@@ -76,7 +76,7 @@ export default class SampleForm extends Component {
                                 <Text variant={'xxLarge'} >Aerodrome Details {standard}</Text>
                                 {/* Yahan se dekhein */}
                                 <TextField name="standard" label="Standard"
-                                    name="standard"
+                                    name="standard" //yeh bhi add karna padega waise state waale variable ke saath same naam rahega 
                                     onChange={this.handleChange} 
                                     value={standard} 
                                     errorMessage={standardError} 
