@@ -61,22 +61,8 @@ export default class Form3 extends Component {
              allWeatherRequired : 'No',
         }
     }
-    _onChangeUse = (ev, option) => {
-       // console.dir(option);
-        this.setState({usage:option.key})
-    }
-
-    _onChangeonlyYourAircraft = (ev, option) => {
-      //  console.dir(option);
-        this.setState({onlyYourAircraft:option.key})
-    }
-    _onChangepriorPermissionForOtherAircraft = (ev, option) => {
-      //  console.dir(option);
-        this.setState({priorPermissionForOtherAircraft:option.key})
-    }
-    _onChangeallWeatherRequired = (ev, option) => {
-     //   console.dir(option);
-        this.setState({allWeatherRequired:option.key})
+    _onChange = (ev, option) => {
+        this.setState({[ev.target.name]:option.key})
     }
 
     render() {
@@ -87,10 +73,11 @@ export default class Form3 extends Component {
                         <Card.Section>
                                 <Text variant={'xxLarge'} >Aerodrome Activities</Text>
 
-                                <ChoiceGroup 
+                                <ChoiceGroup
+                                    name="usage"
                                     defaultSelectedKey="Pub"
                                     options={options_use}
-                                    onChange={this._onChangeUse}
+                                    onChange={this._onChange}
                                     label="Pick one"
                                     required={true}/>
                                 {  
@@ -103,18 +90,20 @@ export default class Form3 extends Component {
                                             placeholder="Please enter text here"
                                             multiline rows={3} /> 
                                         <ChoiceGroup 
+                                            name="onlyYourAircraft"
                                             defaultSelectedKey="No" 
                                             options={options} 
-                                            onChange={this._onChangeonlyYourAircraft}
+                                            onChange={this._onChange}
                                             label="Whether your own aircraft only will use the aerodrome or do you 
                                                 propose to use the aerodrome by own aircraft as well as other aircraft ?" 
                                             required={true}/>
                                         {
                                             this.state.onlyYourAircraft==='No' ?
                                                 <ChoiceGroup 
+                                                name="priorPermissionForOtherAircraft"
                                                 defaultSelectedKey="Yes" 
                                                 options={options} 
-                                                onChange={this._onChangepriorPermissionForOtherAircraft}
+                                                onChange={this._onChange}
                                                 label="Whether your own aircraft only will use the aerodrome or do you 
                                                     propose to use the aerodrome by own aircraft as well as other aircraft ?" 
                                                 required={true}/> 
@@ -123,9 +112,11 @@ export default class Form3 extends Component {
                                     </>
                                     : null
                                 }
-                                <ChoiceGroup defaultSelectedKey="No" 
+                                <ChoiceGroup 
+                                    name="allWeatherRequired"
+                                    defaultSelectedKey="No" 
                                     options={options} 
-                                    onChange={this._onChangeallWeatherRequired}
+                                    onChange={this._onChange}
                                     label="Is a license for NIGHT USE/ ALL WEATHER required?" 
                                     required={true}/>
                                 {
