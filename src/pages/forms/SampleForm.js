@@ -47,7 +47,10 @@ export default class SampleForm extends Component {
         super(props)
     
         this.state = {
-             check:""
+             check:"",
+             standard:"", // value change karke dekhen kya ho rha hai
+             standardbool:false, // value change karke dekhen kya ho rha hai 
+             standardError:"Error yahan pe aayega" // value change karke dekhen kya ho rha hai
         }
     }
 
@@ -55,15 +58,31 @@ export default class SampleForm extends Component {
         console.dir(option);
         this.setState({check:option.key})
     }
+
+    // isko bhi dekh lein
+    handleChange=(e) => {
+        this.setState({
+            [e.target.name]:e.target.value
+        })
+    }
     
     render() {
+        const {standardError,standard,standardbool} =this.state;
         return (
             <div className="ms-Grid-row" style={{paddingBottom:'100px'}}>
                 <div className={`s-Grid-col ms-sm9 ms-xl9 ${classNames.pivot}`}>
                     <Card styles={styles.cardStyles}>
                         <Card.Section>
-                                <Text variant={'xxLarge'} >Aerodrome Details</Text>
-                                <TextField label="Standard" />
+                                <Text variant={'xxLarge'} >Aerodrome Details {standard}</Text>
+                                {/* Yahan se dekhein */}
+                                <TextField name="standard" label="Standard"
+                                    name="standard" //yeh bhi add karna padega waise state waale variable ke saath same naam rahega 
+                                    onChange={this.handleChange} 
+                                    value={standard} 
+                                    errorMessage={standardError} 
+                                    disabled={standardbool} 
+                                />
+                                {/* iske neeche nahi */}
                                 <TextField label="Standard" />
                                 <TextField label="Disabled" disabled defaultValue="I am disabled" />
                                 <TextField label="Read-only" readOnly defaultValue="I am read-only" />
