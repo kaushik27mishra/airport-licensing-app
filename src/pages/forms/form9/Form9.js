@@ -2,9 +2,9 @@ import React, { Component } from 'react'
 
 
 //ui
-import { Text, PrimaryButton, Stack, DefaultButton, ChoiceGroup } from 'office-ui-fabric-react';
-import { TextField, MaskedTextField } from 'office-ui-fabric-react/lib/TextField';
-import { Checkbox, ICheckboxProps } from 'office-ui-fabric-react/lib/Checkbox';
+import { Text, PrimaryButton, Stack, DefaultButton } from 'office-ui-fabric-react';
+import { TextField } from 'office-ui-fabric-react/lib/TextField';
+import { Checkbox } from 'office-ui-fabric-react/lib/Checkbox';
 import { Card } from '@uifabric/react-cards';
 import { mergeStyleSets } from 'office-ui-fabric-react/lib/Styling';
 
@@ -37,11 +37,6 @@ const classNames = mergeStyleSets({
 });
 
 const stackTokens = { childrenGap: 20 };
-
-const option= [
-    { key: true },
-    { key: false }
-];
 
 export default class Form9 extends Component {
     constructor(props) {

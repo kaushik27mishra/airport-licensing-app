@@ -2,8 +2,8 @@ import React, { Component } from 'react'
 
 
 //ui
-import { Text, PrimaryButton, Stack, DefaultButton, ChoiceGroup, ActionButton,DatePicker } from 'office-ui-fabric-react';
-import { TextField, MaskedTextField } from 'office-ui-fabric-react/lib/TextField';
+import { Text, PrimaryButton, Stack, DefaultButton,  ActionButton,DatePicker } from 'office-ui-fabric-react';
+import { TextField} from 'office-ui-fabric-react/lib/TextField';
 import { Card } from '@uifabric/react-cards';
 import {  mergeStyleSets } from 'office-ui-fabric-react/lib/Styling';
 
@@ -44,10 +44,6 @@ const controlClass = mergeStyleSets({
 const addIcon = { iconName: 'Add' };
 const stackTokens = { childrenGap: 20 };
 
-const options = [
-    { key: 'Yes', text: 'Yes' },
-    { key: 'No', text: 'No' },
-];
 const DayPickerStrings = {
     months: [
       'January',
