@@ -58,10 +58,41 @@ class Form2 extends Component {
         super(props)
     
         this.state = {
-             
+            placeName="",
+            placeName_defect=false,
+            placeName_error="",
+            owner="",
+            owner_defect=false,
+            owner_error="",
+            situation="",
+            situation_defect=false,
+            situation_error="",
+            statedistrict="",
+            statedistrict_defect=false,
+            statedistrict_error="",
+            grid="",
+            grid_defect=false,
+            grid_error="",
+            elevationFeet="",
+            elevationFeet_defect=false,
+            elevationMeter="",
+            elevationMeter_defect=false,
+            elevationFeet_error="",
         }
     }
     
+    handleChange=(e) => {
+        this.setState({
+            [e.target.name]:e.target.value
+        })
+    }
+
+    handleChangeDropdown = (e) => {
+        this.setState({
+            [e.target.name]:options.text
+        })
+    }
+
     render() {
         return (
             <div className="ms-Grid-row" style={{paddingBottom:'100px'}}>
@@ -71,10 +102,20 @@ class Form2 extends Component {
                                 <Text variant={'xxLarge'}>
                                     Details of aerodrome<em>(as required to be shown on the licence)</em>
                                 </Text>
-                                <TextField 
+                                <TextField
+                                    name="placeName" 
+                                    onChange={this.handleChange} 
+                                    value={placeName} 
+                                    errorMessage={placeName_error} 
+                                    disabled={placeName_defect}
                                     label="Place name by which the aerodrome 
                                         is to be known in all future references"/>
                                 <Dropdown
+                                    name="owner" 
+                                    onChange={this.handleChangeDropdown} 
+                                    value={owner} 
+                                    errorMessage={owner_error}
+                                    disabled={owner_defect}
                                     placeholder="Select a name"
                                     label="Select name of aerodrome owner"
                                     options={options}
@@ -82,24 +123,53 @@ class Form2 extends Component {
                                 />
                                 {/*Fax number to be added to Person, and this dropdown needs to be connected to Person*/}
                                 
-                                <TextField 
+                                <TextField
+                                    name="situation" 
+                                    onChange={this.handleChange} 
+                                    value={situation} 
+                                    errorMessage={situation_error} 
+                                    disabled={situation_defect}
                                     label="Situation of the aerodrome site with 
                                         reference to the nearest airport, railway 
                                         station and town/village" 
                                     multiline rows={3}/>
-                                <TextField label="State/District which situated"/> {/*To be added in db*/}
-                                <TextField 
+                                <TextField
+                                    name="statedistrict" 
+                                    onChange={this.handleChange} 
+                                    value={statedistrict} 
+                                    errorMessage={statedistrict_error} 
+                                    disabled={statedistrict_defect}
+                                    label="State/District which situated"/> {/*To be added in db*/}
+                                <TextField
+                                    name="grid" 
+                                    onChange={this.handleChange} 
+                                    value={grid} 
+                                    errorMessage={grid_error} 
+                                    disabled={grid_defect}
                                     label="Grid Reference in WGS 84" 
                                     multiline rows={3}/>
 
                                 <ActionButton   // To be added in db
+                                    //State to be added
                                     iconProps={fileRequestIcon} 
                                     allowDisabledFocus>             
                                  Attach a survey map, scale1:10,000 showing by means of broken line 
                                  the exact boundaries of the aerodrome.
                                 </ActionButton>
-                                <TextField label="Elevation of the Aerodrome reference point (AMSL) in feet"/>
-                                <TextField label="Elevation of the Aerodrome reference point (AMSL) in metres"/>
+                                <TextField 
+                                    name="elevationFeet" 
+                                    onChange={this.handleChange} 
+                                    value={elevationFeet} 
+                                    errorMessage={elevationFeet_error} 
+                                    disabled={elevationFeet_defect}
+                                    label="Elevation of the Aerodrome reference point (AMSL) in feet"/>
+                                <TextField
+                                    name="elevationMeter" 
+                                    onChange={this.handleChange} 
+                                    value={elevationMeter} 
+                                    errorMessage={elevationMeter_error} 
+                                    disabled={elevationMeter_defect}
+                                    label="Elevation of the Aerodrome reference point (AMSL) in metres"/>
 
                                 <Text 
                                     variant={'medium'}>

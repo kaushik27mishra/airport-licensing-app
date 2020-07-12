@@ -59,10 +59,43 @@ export default class Form3 extends Component {
              onlyYourAircraft : 'Yes',
              priorPermissionForOtherAircraft : 'Yes',
              allWeatherRequired : 'No',
+             purposeOfPrivate: "",
+             purposeOfPrivate_defect: false,
+             purposeOfPrivate_error: "",
+             detailsOfProposedLighting : "",
+             detailsOfProposedLighting_defect: false,
+             detailsOfProposedLighting_error: "",
+             detailsCNS_ATN : "",
+             detailsCNS_ATN_defect: false,
+             detailsCNS_ATN_error: "",
+             detailsMET_Facilities : "",
+             detailsMET_Facilities_defect: false,
+             detailsMET_Facilities_error: "",
+             otherAviationActivities : "",
+             otherAviationActivities_defect: false,
+             otherAviationActivities_error: "",
+             heaviestAircraftType: "",
+             heaviestAircraftType_defect: false,
+             heaviestAircraftType_error: "",
+             heaviestAircraftLength: "",
+             heaviestAircraftLength_defect: false,
+             heaviestAircraftLength_error: "",
+             heaviestAircraftWeight: "",
+             heaviestAircraftWeight_defect: false,
+             heaviestAircraftWeight_error: "",
+             heaviestAircraftWidth: "",
+             heaviestAircraftWidth_defect: false,
+             heaviestAircraftWidth_error: "",
+
         }
     }
     _onChange = (ev, option) => {
         this.setState({[ev.target.name]:option.key})
+    }
+    handleChange=(e) => {
+        this.setState({
+            [e.target.name]:e.target.value
+        })
     }
 
     render() {
@@ -83,7 +116,12 @@ export default class Form3 extends Component {
                                 {  
                                     this.state.usage==='Pvt' ? 
                                     <>
-                                        <TextField 
+                                        <TextField
+                                            name="purposeOfPrivate" 
+                                            onChange={this.handleChange} 
+                                            value={purposeOfPrivate} 
+                                            errorMessage={purposeOfPrivate_error} 
+                                            disabled={purposeOfPrivate_defect}        
                                             label="Indicate the purpose for which the aerodrome
                                                 will be used e.g. joy rides, air displays, miscellaneous instructional 
                                                 flying, private flying etc." 
@@ -121,38 +159,79 @@ export default class Form3 extends Component {
                                     required={true}/>
                                 {
                                     this.state.allWeatherRequired==="Yes" ?
-                                    <TextField label="Please provide details of proposed lighting
+                                    <TextField 
+                                        name="detailsOfProposedLighting" 
+                                        onChange={this.handleChange} 
+                                        value={detailsOfProposedLighting} 
+                                        errorMessage={detailsOfProposedLighting_error} 
+                                        disabled={detailsOfProposedLighting_defect}
+                                        label="Please provide details of proposed lighting
                                             along with lighting plan" 
                                         placeholder="Please enter text here"
                                         multiline rows={3} />
                                     : null
                                 }
-                                <TextField 
+                                <TextField
+                                        name="detailsCNS_ATN" 
+                                        onChange={this.handleChange} 
+                                        value={detailsCNS_ATN} 
+                                        errorMessage={detailsCNS_ATN_error} 
+                                        disabled={detailsCNS_ATN_defect}
                                         label="Please provide details of proposed CNS-ATM facilities" 
                                         placeholder="Please enter text here"
                                         multiline rows={3}/>
-                                <TextField 
+                                <TextField
+                                        name="detailsMET_Facilities" 
+                                        onChange={this.handleChange} 
+                                        value={detailsMET_Facilities} 
+                                        errorMessage={detailsMET_Facilities_error} 
+                                        disabled={detailsMET_Facilities_defect}
                                         label="Please provide details of proposed MET facilities" 
                                         placeholder="Please enter text here"
                                         multiline rows={3}/>
-                                <TextField 
+                                <TextField
+                                        name="otherAviationActivities" 
+                                        onChange={this.handleChange} 
+                                        value={otherAviationActivities} 
+                                        errorMessage={otherAviationActivities_error} 
+                                        disabled={otherAviationActivities_defect}
                                         label="Please give details of other proposed aviation activities
                                             (for example gliding, parachuting, micro lights)." 
                                         placeholder="Please enter text here"
                                         multiline rows={3}/>
-                                <TextField 
+                                <TextField
+                                        name="heaviestAircraftType" 
+                                        onChange={this.handleChange} 
+                                        value={heaviestAircraftType} 
+                                        errorMessage={heaviestAircraftType_error} 
+                                        disabled={heaviestAircraftType_defect}
                                         label="Mention the type of the largest / heaviest aircraft 
                                             for which the aerodrome is designed"
                                         placeholder="Please enter text here"/>
-                                <TextField 
+                                <TextField
+                                        name="heaviestAircraftWeight" 
+                                        onChange={this.handleChange} 
+                                        value={heaviestAircraftWeight} 
+                                        errorMessage={heaviestAircraftWeight_error} 
+                                        disabled={heaviestAircraftWeight_defect}
                                         label="Mention the maximum total weight of the largest / heaviest aircraft 
                                             for which the aerodrome is designed"
                                         placeholder="Please enter text here"/>
-                                <TextField 
+                                <TextField
+                                        name="heaviestAircraftLength" 
+                                        onChange={this.handleChange} 
+                                        value={heaviestAircraftLength} 
+                                        errorMessage={heaviestAircraftLength_error} 
+                                        disabled={heaviestAircraftLength_defect}
                                         label="Mention thr overall length of the largest / heaviest aircraft 
                                             for which the aerodrome is designed"
                                         placeholder="Please enter text here"/>
-                                <TextField 
+                                <TextField
+                                        name="heaviestAircraftWidth" 
+                                        onChange={this.handleChange} 
+                                        value={heaviestAircraftWidth} 
+                                        errorMessage={heaviestAircraftWidth_error} 
+                                        disabled={heaviestAircraftWidth_defect}
                                         label="Mention the maximum fuselage width of the largest / heaviest aircraft 
                                             for which the aerodrome is designed"
                                         placeholder="Please enter text here"/>

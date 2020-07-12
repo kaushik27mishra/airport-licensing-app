@@ -91,12 +91,31 @@ export default class Form4 extends Component {
     
         this.state = {
              owner: true,
+             rightsIfNotOver: "",
+             rightsIfNotOver_error: "",
+             rightsIfNotOver_defect: false,
+             startingPeriod: "",
+             startingPeriod_error: "",
+             startingPeriod_defect: false,
+             endingPeriod: "",
+             endingPeriod_error: "",
+             endingPeriod_defect: false,
+             termination: "",
+             termination_error: "",
+             termination_defect: false,
+
         }
     }
 
     _onChangeowner = (ev, option) => {
         //console.dir(option.key);
         this.setState({owner:option.key})
+    }
+
+    handleChange=(e) => {
+        this.setState({
+            [e.target.name]:e.target.value
+        })
     }
     
     render() {
@@ -118,7 +137,12 @@ export default class Form4 extends Component {
                                 {
                                     this.state.owner===false ? 
                                     <>
-                                        <TextField 
+                                        <TextField
+                                            name="rightsIfNotOver" 
+                                            onChange={this.handleChange} 
+                                            value={rightsIfNotOver} 
+                                            errorMessage={rightsIfNotOver_error} 
+                                            disabled={rightsIfNotOver_defect}
                                             label="Please state the details of the
                                                 rights you hold over the land" 
                                             placeholder="Please enter details here"
@@ -129,6 +153,11 @@ export default class Form4 extends Component {
                                                 The period from which you hold these rights
                                         </Text> {/*Needs to be made DateField*/}
                                         <DatePicker
+                                            name="startingPeriod" 
+                                            onChange={this.handleChange} 
+                                            value={startingPeriod} 
+                                            errorMessage={startingPeriod_error} 
+                                            disabled={startingPeriod_defect}
                                             className={controlClass.control}
                                             strings={DayPickerStrings}
                                             placeholder="Select a date."
@@ -140,6 +169,11 @@ export default class Form4 extends Component {
                                                 The period to which you hold these rights
                                         </Text> {/*Needs to be made DateField*/}
                                         <DatePicker
+                                            name="endingPeriod" 
+                                            onChange={this.handleChange} 
+                                            value={endingPeriod} 
+                                            errorMessage={endingPeriod_error} 
+                                            disabled={endingPeriod_defect}
                                             className={controlClass.control}
                                             strings={DayPickerStrings}
                                             placeholder="Select a date."
@@ -148,6 +182,11 @@ export default class Form4 extends Component {
 
                                         <Text variant='medium'>Termination of these rights</Text> {/*Needs to be made DateField*/}
                                         <DatePicker
+                                            name="termination" 
+                                            onChange={this.handleChange} 
+                                            value={termination} 
+                                            errorMessage={termination_error} 
+                                            disabled={termination_defect}
                                             className={controlClass.control}
                                             strings={DayPickerStrings}
                                             placeholder="Select a date."
