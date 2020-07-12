@@ -119,6 +119,21 @@ export default class Form4 extends Component {
     }
     
     render() {
+        const {
+             rightsIfNotOver,
+             rightsIfNotOver_error,
+             rightsIfNotOver_defect,
+             startingPeriod,
+             startingPeriod_error,
+             startingPeriod_defect,
+             endingPeriod,
+             endingPeriod_error,
+             endingPeriod_defect,
+             termination,
+             termination_error,
+             termination_defect,
+        } = this.state;
+        
         return (
             <div className="ms-Grid-row" style={{paddingBottom:'100px'}}>
                 <div className={`s-Grid-col ms-sm9 ms-xl9 ${classNames.pivot}`}>

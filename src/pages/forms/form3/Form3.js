@@ -59,9 +59,9 @@ export default class Form3 extends Component {
              onlyYourAircraft : 'Yes',
              priorPermissionForOtherAircraft : 'Yes',
              allWeatherRequired : 'No',
-             purposeOfPrivate: "",
-             purposeOfPrivate_defect: false,
-             purposeOfPrivate_error: "",
+             purposeOfPrivate : "",
+             purposeOfPrivate_defect : false,
+             purposeOfPrivate_error : "",
              detailsOfProposedLighting : "",
              detailsOfProposedLighting_defect: false,
              detailsOfProposedLighting_error: "",
@@ -99,6 +99,35 @@ export default class Form3 extends Component {
     }
 
     render() {
+        const {
+        purposeOfPrivate,
+        purposeOfPrivate_defect,
+        purposeOfPrivate_error,
+        detailsOfProposedLighting,
+        detailsOfProposedLighting_defect,
+        detailsOfProposedLighting_error,
+        detailsCNS_ATN,
+        detailsCNS_ATN_defect,
+        detailsCNS_ATN_error,
+        detailsMET_Facilities,
+        detailsMET_Facilities_defect,
+        detailsMET_Facilities_error,
+        otherAviationActivities,
+        otherAviationActivities_defect,
+        otherAviationActivities_error,
+        heaviestAircraftType,
+        heaviestAircraftType_defect,
+        heaviestAircraftType_error,
+        heaviestAircraftLength,
+        heaviestAircraftLength_defect,
+        heaviestAircraftLength_error,
+        heaviestAircraftWeight,
+        heaviestAircraftWeight_defect,
+        heaviestAircraftWeight_error,
+        heaviestAircraftWidth,
+        heaviestAircraftWidth_defect,
+        heaviestAircraftWidth_error} = this.state;
+        
         return (
             <div className="ms-Grid-row" style={{paddingBottom:'100px'}}>
                 <div className={`s-Grid-col ms-sm9 ms-xl9 ${classNames.pivot}`}>

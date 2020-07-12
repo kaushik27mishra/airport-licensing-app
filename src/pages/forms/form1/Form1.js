@@ -51,10 +51,10 @@ export default class Form1 extends Component {
              phone: "",
              phone_defect:false,
              phone_error:"",
-             email="",
+             email: "",
              email_defect:false,
              email_error:"",
-             fax="",
+             fax: "",
              fax_defect:false,
              fax_error:"",
              nationality: "",
@@ -71,6 +71,25 @@ export default class Form1 extends Component {
     }
     
     render() {
+
+        const {
+            name,
+             name_defect,
+             name_error,
+             phone,
+             phone_defect,
+             phone_error,
+             email,
+             email_defect,
+             email_error,
+             fax,
+             fax_defect,
+             fax_error,
+             nationality,
+             nationality_defect,
+             nationality_error,
+        } = this.state;
+        
         return (
             <div className="ms-Grid-row" style={{paddingBottom:'100px'}}>
                 <div className={`s-Grid-col ms-sm9 ms-xl9 ${classNames.pivot}`}>
