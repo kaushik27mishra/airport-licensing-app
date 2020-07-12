@@ -87,9 +87,9 @@ class Form2 extends Component {
         })
     }
 
-    handleChangeDropdown = (e) => {
+    handleChangeOwnerDropdown = (e, option) => {
         this.setState({
-            [e.target.name]:options.text
+            owner:option.text
         })
     }
 
@@ -136,8 +136,7 @@ class Form2 extends Component {
                                     label="Place name by which the aerodrome 
                                         is to be known in all future references"/>
                                 <Dropdown
-                                    name="owner" 
-                                    onChange={this.handleChangeDropdown} 
+                                    onChange={this.handleChangeOwnerDropdown} 
                                     value={owner} 
                                     errorMessage={owner_error}
                                     disabled={owner_defect}
