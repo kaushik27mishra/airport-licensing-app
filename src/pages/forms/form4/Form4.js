@@ -97,16 +97,16 @@ export default class Form4 extends Component {
              startingPeriod: '2020-07-13', // default value
              startingPeriod_error: "",
              startingPeriod_defect: null,
-             endingPeriod: "",
+             endingPeriod: "2020-07-13",
              endingPeriod_error: "",
              endingPeriod_defect: null,
-             termination: "",
+             termination: "2020-07-13",
              termination_error: "",
              termination_defect: null,
         }
     }
 
-    _onChangeowner = (ev, option) => {
+    _onChangeowner = (option) => {
         this.setState({owner:option.key})
     }
 
@@ -180,7 +180,7 @@ export default class Form4 extends Component {
                                         <Text 
                                             variant='medium'>
                                                 The period from which you hold these rights
-                                        </Text> {/*Needs to be made DateField*/}
+                                        </Text>
                                         <DatePicker
                                             className={controlClass.control}
                                             onSelectDate={(e)=> {this.onDateChange(e,'startingPeriod')}} // change the second input
@@ -195,13 +195,13 @@ export default class Form4 extends Component {
                                         <Text 
                                             variant='medium'>
                                                 The period to which you hold these rights
-                                        </Text> {/*Needs to be made DateField*/}
+                                        </Text>
                                         <DatePicker
-                                            name="endingPeriod" 
-                                            onChange={this.handleChange} 
-                                            value={endingPeriod} 
-                                            errorMessage={endingPeriod_error} 
-                                            disabled={endingPeriod_defect}
+                                            onSelectDate={(e)=> {this.onDateChange(e,'endingPeriod')}} 
+                                            firstDayOfWeek={DayOfWeek.Sunday}
+                                            value={this.onParseDateFromString(endingPeriod)}
+                                            disabled={!(endingPeriod_defect==null) && !endingPeriod_defect}
+                                            errorMessage={endingPeriod_error}
                                             className={controlClass.control}
                                             strings={DayPickerStrings}
                                             placeholder="Select a date."
@@ -210,11 +210,11 @@ export default class Form4 extends Component {
 
                                         <Text variant='medium'>Termination of these rights</Text> {/*Needs to be made DateField*/}
                                         <DatePicker
-                                            name="termination" 
-                                            onChange={this.handleChange} 
-                                            value={termination} 
-                                            errorMessage={termination_error} 
-                                            disabled={termination_defect}
+                                            onSelectDate={(e)=> {this.onDateChange(e,'termination')}} 
+                                            firstDayOfWeek={DayOfWeek.Sunday}
+                                            value={this.onParseDateFromString(termination)}
+                                            disabled={!(termination_defect==null) && !termination_defect}
+                                            errorMessage={termination_error}
                                             className={controlClass.control}
                                             strings={DayPickerStrings}
                                             placeholder="Select a date."

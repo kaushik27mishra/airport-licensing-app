@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 //ui
 import { Text, PrimaryButton, Stack, DefaultButton } from 'office-ui-fabric-react';
 import { Card } from '@uifabric/react-cards';
-import { DatePicker, mergeStyleSets } from 'office-ui-fabric-react';
+import { DatePicker, DayOfWeek, mergeStyleSets } from 'office-ui-fabric-react';
 import { ActionButton} from 'office-ui-fabric-react';
 
 
@@ -83,20 +83,37 @@ export default class Form1 extends Component {
         super(props)
     
         this.state = {
-            dateApprovalOfOwnerOfLand: "",
-            dateApprovalOfOwnerOfLand_defect:false,
+            dateApprovalOfOwnerOfLand: "2020-07-13",
+            dateApprovalOfOwnerOfLand_defect:null,
             dateApprovalOfOwnerOfLand_error:"",
-            dateApprovalOfLocalAuthority: "",
-            dateApprovalOfLocalAuthority_defect:false,
+            dateApprovalOfLocalAuthority: "2020-07-13",
+            dateApprovalOfLocalAuthority_defect:null,
             dateApprovalOfLocalAuthority_error:"",
         
         }
+    }
+
+    onFormatDate = (date) => {
+        return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
     }
 
     handleChange=(e) => {
         this.setState({
             [e.target.name]:e.target.value
         })
+    }
+
+    onDateChange = (date,name) => {
+        this.setState({
+            [name] : this.onFormatDate(date)
+        })
+    }
+
+    onParseDateFromString = (val) => {
+        if(typeof(val)=='string') {
+            var parts = val.split('-');
+            return new Date(parts[0], parts[1]-1, parts[2]);
+        }
     }
     
     render() {
@@ -139,11 +156,11 @@ export default class Form1 extends Component {
                                         Mention Date of Approval of Owner of Land
                                 </Text>
                                 <DatePicker
-                                    name="dateApprovalOfOwnerOfLand" 
-                                    onChange={this.handleChange} 
-                                    value={dateApprovalOfOwnerOfLand} 
-                                    errorMessage={dateApprovalOfOwnerOfLand_error} 
-                                    disabled={dateApprovalOfOwnerOfLand_defect}
+                                    onSelectDate={(e)=> {this.onDateChange(e,'dateApprovalOfOwnerOfLand')}} 
+                                    firstDayOfWeek={DayOfWeek.Sunday}
+                                    value={this.onParseDateFromString(dateApprovalOfOwnerOfLand)}
+                                    disabled={!(dateApprovalOfOwnerOfLand_defect==null) && !dateApprovalOfOwnerOfLand_defect}
+                                    errorMessage={dateApprovalOfOwnerOfLand_error}
                                     className={controlClass.control}
                                     strings={DayPickerStrings}
                                     placeholder="Select a date."
@@ -162,11 +179,11 @@ land development Board/ authority of the State or its Country and Town Planning 
 land development Board/ authority of the State or its Country and Town Planning Department
                                 </Text>
                                 <DatePicker
-                                    name="dateApprovalOfLocalAuthority" 
-                                    onChange={this.handleChange} 
-                                    value={dateApprovalOfLocalAuthority} 
-                                    errorMessage={dateApprovalOfLocalAuthority_error} 
-                                    disabled={dateApprovalOfLocalAuthority_defect}
+                                    onSelectDate={(e)=> {this.onDateChange(e,'dateApprovalOfLocalAuthority')}} 
+                                    firstDayOfWeek={DayOfWeek.Sunday}
+                                    value={this.onParseDateFromString(dateApprovalOfLocalAuthority)}
+                                    disabled={!(dateApprovalOfLocalAuthority_defect==null) && !dateApprovalOfLocalAuthority_defect}
+                                    errorMessage={dateApprovalOfLocalAuthority_error}
                                     className={controlClass.control}
                                     strings={DayPickerStrings}
                                     placeholder="Select a date."
