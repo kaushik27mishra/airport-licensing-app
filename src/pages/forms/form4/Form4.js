@@ -207,7 +207,7 @@ export default class Form4 extends Component {
                                             placeholder="Select a date."
                                             ariaLabel="Select a date"
                                         /> 
-
+                                        {endingPeriod_error===''? null : <Text style={{color:'#FF0000',marginTop:'0'}} variant='small'>{endingPeriod_error}</Text>}
                                         <Text variant='medium'>Termination of these rights</Text> {/*Needs to be made DateField*/}
                                         <DatePicker
                                             onSelectDate={(e)=> {this.onDateChange(e,'termination')}} 
@@ -220,6 +220,7 @@ export default class Form4 extends Component {
                                             placeholder="Select a date."
                                             ariaLabel="Select a date"
                                         />
+                                        {termination_error===''? null : <Text style={{color:'#FF0000',marginTop:'0'}} variant='small'>{termination_error}</Text>}
                                     </>
                                     : null
                                 }

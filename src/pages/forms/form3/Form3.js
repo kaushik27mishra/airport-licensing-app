@@ -53,7 +53,7 @@ const options = [
 export default class Form3 extends Component {
     constructor(props) {
         super(props)
-        
+
         this.state = {
              usage: 'Pub',
              onlyYourAircraft : 'Yes',
@@ -127,13 +127,13 @@ export default class Form3 extends Component {
         heaviestAircraftWidth,
         heaviestAircraftWidth_defect,
         heaviestAircraftWidth_error} = this.state;
-        
+
         return (
             <div className="ms-Grid-row" style={{paddingBottom:'100px'}}>
                 <div className={`s-Grid-col ms-sm9 ms-xl9 ${classNames.pivot}`}>
                     <Card styles={styles.cardStyles}>
                         <Card.Section>
-                                <Text variant={'xxLarge'} >Aerodrome Activities</Text>
+                                <Text variant={'xxLarge'}>Aerodrome Activities</Text>
 
                                 <ChoiceGroup
                                     name="usage"
@@ -142,38 +142,38 @@ export default class Form3 extends Component {
                                     onChange={this._onChange}
                                     label="Pick one"
                                     required={true}/>
-                                {  
-                                    this.state.usage==='Pvt' ? 
+                                {
+                                    this.state.usage==='Pvt' ?
                                     <>
                                         <TextField
-                                            name="purposeOfPrivate" 
-                                            onChange={this.handleChange} 
-                                            value={purposeOfPrivate} 
-                                            errorMessage={purposeOfPrivate_error} 
-                                            disabled={purposeOfPrivate_defect}        
+                                            name="purposeOfPrivate"
+                                            onChange={this.handleChange}
+                                            value={purposeOfPrivate}
+                                            errorMessage={purposeOfPrivate_error}
+                                            disabled={purposeOfPrivate_defect}
                                             label="Indicate the purpose for which the aerodrome
                                                 will be used e.g. joy rides, air displays, miscellaneous instructional 
-                                                flying, private flying etc." 
+                                                flying, private flying etc."
                                             placeholder="Please enter text here"
-                                            multiline rows={3} /> 
-                                        <ChoiceGroup 
+                                            multiline rows={3}/>
+                                        <ChoiceGroup
                                             name="onlyYourAircraft"
-                                            defaultSelectedKey="No" 
-                                            options={options} 
+                                            defaultSelectedKey="No"
+                                            options={options}
                                             onChange={this._onChange}
                                             label="Whether your own aircraft only will use the aerodrome or do you 
                                                 propose to use the aerodrome by own aircraft as well as other aircraft ?" 
                                             required={true}/>
                                         {
                                             this.state.onlyYourAircraft==='No' ?
-                                                <ChoiceGroup 
+                                                <ChoiceGroup
                                                 name="priorPermissionForOtherAircraft"
-                                                defaultSelectedKey="Yes" 
-                                                options={options} 
+                                                defaultSelectedKey="Yes"
+                                                options={options}
                                                 onChange={this._onChange}
                                                 label="Whether your own aircraft only will use the aerodrome or do you 
                                                     propose to use the aerodrome by own aircraft as well as other aircraft ?" 
-                                                required={true}/> 
+                                                required={true}/>
                                                 : null
                                         }
                                     </>
@@ -181,85 +181,85 @@ export default class Form3 extends Component {
                                 }
                                 <ChoiceGroup 
                                     name="allWeatherRequired"
-                                    defaultSelectedKey="No" 
-                                    options={options} 
+                                    defaultSelectedKey="No"
+                                    options={options}
                                     onChange={this._onChange}
-                                    label="Is a license for NIGHT USE/ ALL WEATHER required?" 
+                                    label="Is a license for NIGHT USE/ ALL WEATHER required?"
                                     required={true}/>
                                 {
                                     this.state.allWeatherRequired==="Yes" ?
-                                    <TextField 
-                                        name="detailsOfProposedLighting" 
-                                        onChange={this.handleChange} 
-                                        value={detailsOfProposedLighting} 
-                                        errorMessage={detailsOfProposedLighting_error} 
+                                    <TextField
+                                        name="detailsOfProposedLighting"
+                                        onChange={this.handleChange}
+                                        value={detailsOfProposedLighting}
+                                        errorMessage={detailsOfProposedLighting_error}
                                         disabled={detailsOfProposedLighting_defect}
                                         label="Please provide details of proposed lighting
-                                            along with lighting plan" 
+                                            along with lighting plan"
                                         placeholder="Please enter text here"
-                                        multiline rows={3} />
+                                        multiline rows={3}/>
                                     : null
                                 }
                                 <TextField
-                                        name="detailsCNS_ATN" 
-                                        onChange={this.handleChange} 
-                                        value={detailsCNS_ATN} 
-                                        errorMessage={detailsCNS_ATN_error} 
+                                        name="detailsCNS_ATN"
+                                        onChange={this.handleChange}
+                                        value={detailsCNS_ATN}
+                                        errorMessage={detailsCNS_ATN_error}
                                         disabled={detailsCNS_ATN_defect}
-                                        label="Please provide details of proposed CNS-ATM facilities" 
+                                        label="Please provide details of proposed CNS-ATM facilities"
                                         placeholder="Please enter text here"
                                         multiline rows={3}/>
                                 <TextField
-                                        name="detailsMET_Facilities" 
-                                        onChange={this.handleChange} 
-                                        value={detailsMET_Facilities} 
-                                        errorMessage={detailsMET_Facilities_error} 
+                                        name="detailsMET_Facilities"
+                                        onChange={this.handleChange}
+                                        value={detailsMET_Facilities}
+                                        errorMessage={detailsMET_Facilities_error}
                                         disabled={detailsMET_Facilities_defect}
-                                        label="Please provide details of proposed MET facilities" 
+                                        label="Please provide details of proposed MET facilities"
                                         placeholder="Please enter text here"
                                         multiline rows={3}/>
                                 <TextField
-                                        name="otherAviationActivities" 
-                                        onChange={this.handleChange} 
-                                        value={otherAviationActivities} 
-                                        errorMessage={otherAviationActivities_error} 
+                                        name="otherAviationActivities"
+                                        onChange={this.handleChange}
+                                        value={otherAviationActivities}
+                                        errorMessage={otherAviationActivities_error}
                                         disabled={otherAviationActivities_defect}
                                         label="Please give details of other proposed aviation activities
-                                            (for example gliding, parachuting, micro lights)." 
+                                            (for example gliding, parachuting, micro lights)."
                                         placeholder="Please enter text here"
                                         multiline rows={3}/>
                                 <TextField
-                                        name="heaviestAircraftType" 
-                                        onChange={this.handleChange} 
-                                        value={heaviestAircraftType} 
-                                        errorMessage={heaviestAircraftType_error} 
+                                        name="heaviestAircraftType"
+                                        onChange={this.handleChange}
+                                        value={heaviestAircraftType}
+                                        errorMessage={heaviestAircraftType_error}
                                         disabled={heaviestAircraftType_defect}
                                         label="Mention the type of the largest / heaviest aircraft 
                                             for which the aerodrome is designed"
                                         placeholder="Please enter text here"/>
                                 <TextField
-                                        name="heaviestAircraftWeight" 
-                                        onChange={this.handleChange} 
-                                        value={heaviestAircraftWeight} 
-                                        errorMessage={heaviestAircraftWeight_error} 
+                                        name="heaviestAircraftWeight"
+                                        onChange={this.handleChange}
+                                        value={heaviestAircraftWeight}
+                                        errorMessage={heaviestAircraftWeight_error}
                                         disabled={heaviestAircraftWeight_defect}
                                         label="Mention the maximum total weight of the largest / heaviest aircraft 
                                             for which the aerodrome is designed"
                                         placeholder="Please enter text here"/>
                                 <TextField
-                                        name="heaviestAircraftLength" 
-                                        onChange={this.handleChange} 
-                                        value={heaviestAircraftLength} 
-                                        errorMessage={heaviestAircraftLength_error} 
+                                        name="heaviestAircraftLength"
+                                        onChange={this.handleChange}
+                                        value={heaviestAircraftLength}
+                                        errorMessage={heaviestAircraftLength_error}
                                         disabled={heaviestAircraftLength_defect}
                                         label="Mention thr overall length of the largest / heaviest aircraft 
                                             for which the aerodrome is designed"
                                         placeholder="Please enter text here"/>
                                 <TextField
-                                        name="heaviestAircraftWidth" 
-                                        onChange={this.handleChange} 
-                                        value={heaviestAircraftWidth} 
-                                        errorMessage={heaviestAircraftWidth_error} 
+                                        name="heaviestAircraftWidth"
+                                        onChange={this.handleChange}
+                                        value={heaviestAircraftWidth}
+                                        errorMessage={heaviestAircraftWidth_error}
                                         disabled={heaviestAircraftWidth_defect}
                                         label="Mention the maximum fuselage width of the largest / heaviest aircraft 
                                             for which the aerodrome is designed"

@@ -166,6 +166,7 @@ export default class Form1 extends Component {
                                     placeholder="Select a date."
                                     ariaLabel="Select a date"
                                 />
+                                {dateApprovalOfOwnerOfLand_error===''? null : <Text style={{color:'#FF0000',marginTop:'0'}} variant='small'>{dateApprovalOfOwnerOfLand_error}</Text>}
                                 <ActionButton
                                     //State to be added
                                     iconProps={fileRequestIcon} 
@@ -189,8 +190,7 @@ land development Board/ authority of the State or its Country and Town Planning 
                                     placeholder="Select a date."
                                     ariaLabel="Select a date"
                                 />
-                            
-                                
+                                {dateApprovalOfLocalAuthority_error===''? null : <Text style={{color:'#FF0000',marginTop:'0'}} variant='small'>{dateApprovalOfLocalAuthority_error}</Text>}
                                 <Stack horizontal tokens={stackTokens}>
                                     <DefaultButton text="Back" allowDisabledFocus />
                                     <PrimaryButton text="Next" allowDisabledFocus />

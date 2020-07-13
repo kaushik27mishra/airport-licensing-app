@@ -1,4 +1,3 @@
-// work in progress
 import React, { Component } from 'react'
 
 //ui
@@ -50,13 +49,12 @@ const stackTokens = { childrenGap: 20 };
 const options = [
     { key: 1234, text: 'Theresa' },
     { key: 5678, text: 'Stefan' },
-
   ];
 
 class Form2 extends Component {
     constructor(props) {
         super(props)
-    
+
         this.state = {
             placeName: "",
             placeName_defect: false,
@@ -80,7 +78,7 @@ class Form2 extends Component {
             elevationMeter_error: "",
         }
     }
-    
+
     handleChange=(e) => {
         this.setState({
             [e.target.name]:e.target.value
@@ -118,7 +116,7 @@ class Form2 extends Component {
             elevationFeet_error,
             elevationMeter_error
         } = this.state;
-        
+
         return (
             <div className="ms-Grid-row" style={{paddingBottom:'100px'}}>
                 <div className={`s-Grid-col ms-sm9 ms-xl9 ${classNames.pivot}`}>
@@ -128,16 +126,16 @@ class Form2 extends Component {
                                     Details of aerodrome<em>(as required to be shown on the licence)</em>
                                 </Text>
                                 <TextField
-                                    name="placeName" 
-                                    onChange={this.handleChange} 
-                                    value={placeName} 
-                                    errorMessage={placeName_error} 
+                                    name="placeName"
+                                    onChange={this.handleChange}
+                                    value={placeName}
+                                    errorMessage={placeName_error}
                                     disabled={placeName_defect}
-                                    label="Place name by which the aerodrome 
+                                    label="Place name by which the aerodrome
                                         is to be known in all future references"/>
                                 <Dropdown
-                                    onChange={this.handleChangeOwnerDropdown} 
-                                    value={owner} 
+                                    onChange={this.handleChangeOwnerDropdown}
+                                    value={owner}
                                     errorMessage={owner_error}
                                     disabled={owner_defect}
                                     placeholder="Select a name"
@@ -146,76 +144,81 @@ class Form2 extends Component {
                                     styles={dropdownStyles}
                                 />
                                 {/*Fax number to be added to Person, and this dropdown needs to be connected to Person*/}
-                                
+
                                 <TextField
-                                    name="situation" 
-                                    onChange={this.handleChange} 
-                                    value={situation} 
-                                    errorMessage={situation_error} 
+                                    name="situation"
+                                    onChange={this.handleChange}
+                                    value={situation}
+                                    errorMessage={situation_error}
                                     disabled={situation_defect}
-                                    label="Situation of the aerodrome site with 
-                                        reference to the nearest airport, railway 
-                                        station and town/village" 
+                                    label="Situation of the aerodrome site with
+                                        reference to the nearest airport, railway
+                                        station and town/village"
                                     multiline rows={3}/>
                                 <TextField
-                                    name="statedistrict" 
-                                    onChange={this.handleChange} 
-                                    value={statedistrict} 
-                                    errorMessage={statedistrict_error} 
+                                    name="statedistrict"
+                                    onChange={this.handleChange}
+                                    value={statedistrict}
+                                    errorMessage={statedistrict_error}
                                     disabled={statedistrict_defect}
                                     label="State/District which situated"/> {/*To be added in db*/}
                                 <TextField
-                                    name="grid" 
-                                    onChange={this.handleChange} 
-                                    value={grid} 
-                                    errorMessage={grid_error} 
+                                    name="grid"
+                                    onChange={this.handleChange}
+                                    value={grid}
+                                    errorMessage={grid_error}
                                     disabled={grid_defect}
-                                    label="Grid Reference in WGS 84" 
+                                    label="Grid Reference in WGS 84"
                                     multiline rows={3}/>
 
                                 <ActionButton   // To be added in db
                                     //State to be added
-                                    iconProps={fileRequestIcon} 
-                                    allowDisabledFocus>             
+                                    iconProps={fileRequestIcon}
+                                    allowDisabledFocus>
                                  Attach a survey map, scale1:10,000 showing by means of broken line 
                                  the exact boundaries of the aerodrome.
                                 </ActionButton>
-                                <TextField 
-                                    name="elevationFeet" 
-                                    onChange={this.handleChange} 
-                                    value={elevationFeet} 
-                                    errorMessage={elevationFeet_error} 
+                                <TextField
+                                    name="elevationFeet"
+                                    onChange={this.handleChange}
+                                    value={elevationFeet}
+                                    errorMessage={elevationFeet_error}
                                     disabled={elevationFeet_defect}
                                     label="Elevation of the Aerodrome reference point (AMSL) in feet"/>
                                 <TextField
-                                    name="elevationMeter" 
-                                    onChange={this.handleChange} 
-                                    value={elevationMeter} 
-                                    errorMessage={elevationMeter_error} 
+                                    name="elevationMeter"
+                                    onChange={this.handleChange}
+                                    value={elevationMeter}
+                                    errorMessage={elevationMeter_error}
                                     disabled={elevationMeter_defect}
                                     label="Elevation of the Aerodrome reference point (AMSL) in metres"/>
-
-                                <Text 
+                                <Text
                                     variant={'medium'}>
                                         Enter Details about <strong>runway(s)</strong>
                                 </Text>
                                 <ActionButton   // Need to add information for multiple runway(s) in db
-                                    iconProps={addIcon} 
+                                    iconProps={addIcon}
                                     allowDisabledFocus
                                     // This onCLick listener isn't working as expected
                                     onClick={() => (
                                         <>
-                                            <TextField label="Length of runway in metres" required/> 
-                                            <TextField label="Length of runway in metres" required/> 
+                                            <TextField label="Length of runway in metres" required/>
+                                            <TextField label="Length of runway in metres" required/>
                                             <TextField label="Orientation of runway" required/>
                                         </>
-                                    )}>             
+                                    )}>
                                  Click for more runway(s).
-                                </ActionButton> 
+                                </ActionButton>
                                 {/*need to add length and feet in db while having one Orientation*/}
-                                <TextField label="Length of runway in metres" required/> 
-                                <TextField label="Length of runway in metres" required/> 
-                                <TextField label="Orientation of runway" required/>
+                                <TextField
+                                    label="Length of runway in metres"
+                                    required/> 
+                                <TextField
+                                    label="Length of runway in metres"
+                                    required/> 
+                                <TextField
+                                    label="Orientation of runway"
+                                    required/>
                                 <Stack horizontal tokens={stackTokens}>
                                     <DefaultButton text="Back" allowDisabledFocus />
                                     <PrimaryButton text="Next" allowDisabledFocus />
