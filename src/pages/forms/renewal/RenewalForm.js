@@ -2,12 +2,11 @@ import React, { Component } from 'react'
 
 
 //ui
-import { Text, PrimaryButton, Stack, DefaultButton, ChoiceGroup, ActionButton,DatePicker } from 'office-ui-fabric-react';
-import { TextField, MaskedTextField } from 'office-ui-fabric-react/lib/TextField';
-import { Checkbox, ICheckboxProps } from 'office-ui-fabric-react/lib/Checkbox';
+import { Text, PrimaryButton, Stack, DefaultButton, ActionButton,DatePicker } from 'office-ui-fabric-react';
+import { TextField } from 'office-ui-fabric-react/lib/TextField';
+import { Checkbox } from 'office-ui-fabric-react/lib/Checkbox';
 import { Card } from '@uifabric/react-cards';
 import { mergeStyleSets } from 'office-ui-fabric-react/lib/Styling';
-import Form8 from '../form8/Form8';
 
 //style
 const styles = {
@@ -47,11 +46,6 @@ const controlClass = mergeStyleSets({
 
 const addIcon = { iconName: 'Add' };
 const stackTokens = { childrenGap: 20 };
-
-const options = [
-    {key:true},
-    {key:false}
-]
     
 
 const DayPickerStrings = {

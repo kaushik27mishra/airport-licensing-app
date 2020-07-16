@@ -75,7 +75,7 @@ export default class SampleForm extends Component {
                         <Card.Section>
                                 <Text variant={'xxLarge'} >Aerodrome Details {standard}</Text>
                                 {/* Yahan se dekhein */}
-                                <TextField name="standard" label="Standard"
+                                <TextField label="Standard"
                                     name="standard" //yeh bhi add karna padega waise state waale variable ke saath same naam rahega 
                                     onChange={this.handleChange} 
                                     value={standard} 
