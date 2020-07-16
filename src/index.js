@@ -11,17 +11,14 @@ import { UserProvider } from "./context/UserContext";
 import { Fabric } from '@fluentui/react'
 
 //apollo
-import {ApolloProvider, createNetworkInterace, ApolloClient} from 'react-apollo'
+import { ApolloClient, InMemoryCache, ApolloProvider} from '@apollo/client'
 
 import * as serviceWorker from './serviceWorker';
 
-const networkInterface = createNetworkInterace({
-  uri: 'https://4b9b6fd4f94b.ngrok.io/'
-})
-
 const client = new ApolloClient({
-  networkInterface
-})
+  uri: 'https://4b9b6fd4f94b.ngrok.io',
+  cache: new InMemoryCache()
+});
 
 ReactDOM.render(
   <ApolloProvider client={client}>

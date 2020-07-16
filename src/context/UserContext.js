@@ -1,5 +1,4 @@
 import React from "react";
-import { gql, graphql } from 'react-apollo'
 
 var UserStateContext = React.createContext();
 var UserDispatchContext = React.createContext();
@@ -81,4 +80,4 @@ function signOut(dispatch, history) {
 
 // const CREATE_LINK_MUTATION = gql`
 //   mutation CreateLinkMutation($description: String!)
-// `
+// `;
