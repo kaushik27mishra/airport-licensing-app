@@ -10,6 +10,7 @@ import { Dropdown } from 'office-ui-fabric-react/lib/Dropdown';
 
 //style
 import './style.css'
+
 const styles = {
     cardStyles: {
         root: {
@@ -41,8 +42,9 @@ const classNames = mergeStyleSets({
     }
 });
 
-const fileRequestIcon = { iconName: 'Upload' };
 const addIcon = { iconName: 'Add' };
+
+const removeIcon = { iconName: 'Remove' };
 
 const stackTokens = { childrenGap: 20 };
 
@@ -72,6 +74,7 @@ class Form2 extends Component {
             grid: null,
             grid_defect: false,
             grid_error: "",
+            runways:[{meters:'',orientation:''}],
             elevationFeet: "",
             elevationFeet_defect: false,
             elevationMeter: "",
@@ -98,6 +101,31 @@ class Form2 extends Component {
         })
     }
 
+    handleRunwayChange = evt => {
+        this.setState({ [evt.target.name]: evt.target.value });
+    };
+
+    handleRunwayNameChange = idx => evt => {
+        const newRunways = this.state.runways.map((runway, sidx) => {
+            if (idx !== sidx) return runway;
+            return { ...runway, [evt.target.name]: evt.target.value };
+        });
+    
+        this.setState({ runways: newRunways });
+    };
+    
+    handleAddRunway = () => {
+        this.setState({
+            runways: this.state.runways.concat([{ name: "",orientation: "" }])
+        });
+    };
+
+    handleRemoveRunway = idx => () => {
+        this.setState({
+            runways: this.state.runways.filter((s, sidx) => idx !== sidx)
+        });
+    };
+
     render() {
 
         const {
@@ -116,6 +144,7 @@ class Form2 extends Component {
             grid,
             grid_defect,
             grid_error,
+            runways,
             elevationFeet,
             elevationFeet_defect,
             elevationMeter,
@@ -207,26 +236,22 @@ class Form2 extends Component {
                                 <ActionButton   // Need to add information for multiple runway(s) in db
                                     iconProps={addIcon}
                                     allowDisabledFocus
-                                    // This onCLick listener isn't working as expected
-                                    onClick={() => (
-                                        <>
-                                            <TextField label="Length of runway in metres" required/>
-                                            <TextField label="Length of runway in metres" required/>
-                                            <TextField label="Orientation of runway" required/>
-                                        </>
-                                    )}>
+                                    onClick={this.handleAddRunway}>
                                  Click for more runway(s).
                                 </ActionButton>
-                                {/*need to add length and feet in db while having one Orientation*/}
-                                <TextField
-                                    label="Length of runway in metres"
-                                    required/> 
-                                <TextField
-                                    label="Length of runway in metres"
-                                    required/> 
-                                <TextField
-                                    label="Orientation of runway"
-                                    required/>
+                                {this.state.runways.map((runway, idx) => (
+                                    <>
+                                     <TextField label={`Length of ${idx+1} runway in metres`} value={runway.name} onChange={this.handleRunwayNameChange(idx)} name="meters" required/>
+                                     <TextField label={`Orientation  ${idx+1} of runway`} value={runway.orientation} onChange={this.handleRunwayNameChange(idx)} name="orientation" required/>
+                                     <ActionButton  
+                                        iconProps={removeIcon}
+                                        allowDisabledFocus
+                                        // style={{color:'#922427'}}
+                                        onClick={this.handleRemoveRunway(idx)}>
+                                        Remove a runway
+                                     </ActionButton>
+                                    </>
+                                ))}
                                 <Stack horizontal tokens={stackTokens}>
                                     <DefaultButton text="Back" allowDisabledFocus />
                                     <PrimaryButton text="Next" allowDisabledFocus />
