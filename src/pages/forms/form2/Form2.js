@@ -9,6 +9,7 @@ import { ActionButton} from 'office-ui-fabric-react';
 import { Dropdown } from 'office-ui-fabric-react/lib/Dropdown';
 
 //style
+import './style.css'
 const styles = {
     cardStyles: {
         root: {
@@ -68,7 +69,7 @@ class Form2 extends Component {
             statedistrict: "",
             statedistrict_defect: false,
             statedistrict_error: "",
-            grid: "",
+            grid: null,
             grid_defect: false,
             grid_error: "",
             elevationFeet: "",
@@ -81,13 +82,19 @@ class Form2 extends Component {
 
     handleChange=(e) => {
         this.setState({
-            [e.target.name]:e.target.value
+            [e.target.name]:e.input.value
         })
     }
 
     handleChangeOwnerDropdown = (e, option) => {
         this.setState({
             owner:option.text
+        })
+    }
+
+    handleFileChange=(e) => {
+        this.setState({
+            [e.target.name]:e.target.files[0]
         })
     }
 
@@ -170,14 +177,15 @@ class Form2 extends Component {
                                     disabled={grid_defect}
                                     label="Grid Reference in WGS 84"
                                     multiline rows={3}/>
-
-                                <ActionButton   // To be added in db
-                                    //State to be added
-                                    iconProps={fileRequestIcon}
-                                    allowDisabledFocus>
-                                 Attach a survey map, scale1:10,000 showing by means of broken line 
-                                 the exact boundaries of the aerodrome.
-                                </ActionButton>
+                                <Text variant={'medium'}>
+                                    Attach a survey map, scale1:10,000 showing by means of broken line the exact boundaries of the aerodrome.
+                                </Text>
+                                <div class="button-wrap">
+                                    <label class ="new-button" for="upload"> Upload File
+                                    <input id="upload" name="grid" type="file" onChange={this.handleFileChange}/>
+                                    </label>
+                                    {grid!=null ? `${grid.name}` : ''}
+                                </div>
                                 <TextField
                                     name="elevationFeet"
                                     onChange={this.handleChange}
