@@ -60,13 +60,23 @@ export default class Form1 extends Component {
              nationality: "",
              nationality_defect:false,
              nationality_error:"",
-
+             licenseeAddress: {}
         }
     }
 
     handleChange=(e) => {
         this.setState({
             [e.target.name]:e.target.value
+        })
+    }
+
+    handleAdressChange = (e,item=null) => {
+        this.setState({
+            licenseeAddress : {
+                ...this.state.licenseeAddress,
+                [e.target.name]: e.target.value,
+                state: item ? item.key : this.state.licenseeAddress.state
+            }
         })
     }
 
@@ -88,6 +98,7 @@ export default class Form1 extends Component {
              nationality,
              nationality_defect,
              nationality_error,
+             licenseeAddress
         } = this.state;
 
         return (
@@ -132,7 +143,7 @@ export default class Form1 extends Component {
                                     errorMessage={nationality_error}
                                     disabled={nationality_defect}
                                     label="Nationality"/>
-                                <Address>Address of Licensee</Address>
+                                <Address text="Address of Licensee" handleChange={this.handleAdressChange} address={licenseeAddress}/>
                                 <Stack horizontal tokens={stackTokens}>
                                     <DefaultButton text="Back" allowDisabledFocus/>
                                     <PrimaryButton text="Next" allowDisabledFocus/>

@@ -19,21 +19,49 @@ const StateOptions = [
 
 const Address = (props) => (
     <div style={{paddingTop:'20px',paddingBottom:'20px'}}>  
-        <Text variant={'large'}><em>{props.children}</em></Text>
+        <Text variant={'large'}><em>{props.text}</em></Text>
         <hr style={{border: '1px solid black'}} />
-        <TextField label="Line 1"/>
-        <TextField label="Line 2"/>
+        <TextField
+            name="line1"
+            onChange={(e) => props.handleChange(e)}
+            value={props.address.line1}
+            label="Line 1"
+        />
+        <TextField
+            name='line2' 
+            onChange={props.handleChange}
+            value={props.address.line2}
+            label="Line 2"
+        />
         <Stack horizontal tokens={stackTokens} verticalAlign="end">
             <Dropdown
                 placeholder="Select"
                 label="Enter State"
                 options={StateOptions}
-                required
+                onChange={props.handleChange}
+                selectedKey={props.address.state ? props.address.state.key : undefined}
                 styles={dropdownStyles}
             />
-            <TextField label="City" styles={TextStyles}/>
-            <TextField label="Pincode" styles={TextStyles}/>
+            <TextField
+                name='city' 
+                label="City" 
+                styles={TextStyles}
+                onChange={props.handleChange}
+                value={props.address.city}
+            />
+            <TextField 
+                name='pincode'
+                label="Pincode" 
+                styles={TextStyles}
+                onChange={props.handleChange}
+                value={props.address.pincode}
+            />
         </Stack>
+        {/* {props.address.line1} */}
+        {/* {props.address.line2} */}
+        {/* {props.address.state} */}
+        {/* {props.address.city} */}
+        {/* {props.address.pincode} */}
     </div>
 )
 
