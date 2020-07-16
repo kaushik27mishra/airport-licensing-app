@@ -3,7 +3,7 @@ import React, { Component, Fragment } from 'react'
 
 //ui
 import { Text, PrimaryButton, Stack, DefaultButton, ChoiceGroup, ActionButton } from 'office-ui-fabric-react';
-import { TextField, MaskedTextField } from 'office-ui-fabric-react/lib/TextField';
+import { TextField } from 'office-ui-fabric-react/lib/TextField';
 import { Card } from '@uifabric/react-cards';
 import { mergeStyleSets } from 'office-ui-fabric-react/lib/Styling';
 

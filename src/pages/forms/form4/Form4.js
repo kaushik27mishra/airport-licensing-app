@@ -5,7 +5,7 @@ import { Text, PrimaryButton, Stack, DefaultButton } from 'office-ui-fabric-reac
 import { TextField} from 'office-ui-fabric-react/lib/TextField';
 import { Card } from '@uifabric/react-cards';
 import { ChoiceGroup } from 'office-ui-fabric-react/lib/ChoiceGroup';
-import { DatePicker, mergeStyleSets } from 'office-ui-fabric-react';
+import { DatePicker, DayOfWeek, mergeStyleSets } from 'office-ui-fabric-react';
 
 
 //style
@@ -91,15 +91,63 @@ export default class Form4 extends Component {
     
         this.state = {
              owner: true,
+             rightsIfNotOver: "",
+             rightsIfNotOver_error: "",
+             rightsIfNotOver_defect: null,
+             startingPeriod: '2020-07-13', // default value
+             startingPeriod_error: "",
+             startingPeriod_defect: null,
+             endingPeriod: "2020-07-13",
+             endingPeriod_error: "",
+             endingPeriod_defect: null,
+             termination: "2020-07-13",
+             termination_error: "",
+             termination_defect: null,
         }
     }
 
-    _onChangeowner = (ev, option) => {
-        //console.dir(option.key);
+    _onChangeowner = (option) => {
         this.setState({owner:option.key})
+    }
+
+    onFormatDate = (date) => {
+        return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
+    }
+
+    handleChange=(e) => {
+        this.setState({
+            [e.target.name]:e.target.value
+        })
+    }
+
+    onDateChange = (date,name) => {
+        this.setState({
+            [name] : this.onFormatDate(date)
+        })
+    }
+
+    onParseDateFromString = (val) => {
+        if(typeof(val)=='string') {
+            var parts = val.split('-');
+            return new Date(parts[0], parts[1]-1, parts[2]);
+        }
     }
     
     render() {
+        const {
+             rightsIfNotOver,
+             rightsIfNotOver_error,
+             rightsIfNotOver_defect,
+             startingPeriod,
+             startingPeriod_error,
+             startingPeriod_defect,
+             endingPeriod,
+             endingPeriod_error,
+             endingPeriod_defect,
+             termination,
+             termination_error,
+             termination_defect,
+        } = this.state;
         return (
             <div className="ms-Grid-row" style={{paddingBottom:'100px'}}>
                 <div className={`s-Grid-col ms-sm9 ms-xl9 ${classNames.pivot}`}>
@@ -107,7 +155,7 @@ export default class Form4 extends Component {
                         <Card.Section>
                             <Text 
                                 variant={'xxLarge'} >
-                                    Control of the Aerodrome
+                                    Control of the Aerodrome {startingPeriod}
                             </Text>
                             <ChoiceGroup 
                                 defaultSelectedKey={true}
@@ -118,7 +166,12 @@ export default class Form4 extends Component {
                                 {
                                     this.state.owner===false ? 
                                     <>
-                                        <TextField 
+                                        <TextField
+                                            name="rightsIfNotOver" 
+                                            onChange={this.handleChange} 
+                                            value={rightsIfNotOver} 
+                                            errorMessage={rightsIfNotOver_error} 
+                                            disabled={rightsIfNotOver_defect}
                                             label="Please state the details of the
                                                 rights you hold over the land" 
                                             placeholder="Please enter details here"
@@ -127,32 +180,47 @@ export default class Form4 extends Component {
                                         <Text 
                                             variant='medium'>
                                                 The period from which you hold these rights
-                                        </Text> {/*Needs to be made DateField*/}
+                                        </Text>
                                         <DatePicker
                                             className={controlClass.control}
-                                            strings={DayPickerStrings}
+                                            onSelectDate={(e)=> {this.onDateChange(e,'startingPeriod')}} // change the second input
+                                            firstDayOfWeek={DayOfWeek.Sunday} // no need to change
+                                            value={this.onParseDateFromString(startingPeriod)} // change the name of input variable
+                                            strings={DayPickerStrings} // no need to change
+                                            disabled={!(startingPeriod_defect==null) && !startingPeriod_defect}
                                             placeholder="Select a date."
                                             ariaLabel="Select a date"
                                         />
-
+                                        {startingPeriod_error===''? null : <Text style={{color:'#FF0000',marginTop:'0'}} variant='small'>{startingPeriod_error}</Text>}
                                         <Text 
                                             variant='medium'>
                                                 The period to which you hold these rights
-                                        </Text> {/*Needs to be made DateField*/}
+                                        </Text>
                                         <DatePicker
+                                            onSelectDate={(e)=> {this.onDateChange(e,'endingPeriod')}} 
+                                            firstDayOfWeek={DayOfWeek.Sunday}
+                                            value={this.onParseDateFromString(endingPeriod)}
+                                            disabled={!(endingPeriod_defect==null) && !endingPeriod_defect}
+                                            errorMessage={endingPeriod_error}
                                             className={controlClass.control}
                                             strings={DayPickerStrings}
                                             placeholder="Select a date."
                                             ariaLabel="Select a date"
                                         /> 
-
+                                        {endingPeriod_error===''? null : <Text style={{color:'#FF0000',marginTop:'0'}} variant='small'>{endingPeriod_error}</Text>}
                                         <Text variant='medium'>Termination of these rights</Text> {/*Needs to be made DateField*/}
                                         <DatePicker
+                                            onSelectDate={(e)=> {this.onDateChange(e,'termination')}} 
+                                            firstDayOfWeek={DayOfWeek.Sunday}
+                                            value={this.onParseDateFromString(termination)}
+                                            disabled={!(termination_defect==null) && !termination_defect}
+                                            errorMessage={termination_error}
                                             className={controlClass.control}
                                             strings={DayPickerStrings}
                                             placeholder="Select a date."
                                             ariaLabel="Select a date"
                                         />
+                                        {termination_error===''? null : <Text style={{color:'#FF0000',marginTop:'0'}} variant='small'>{termination_error}</Text>}
                                     </>
                                     : null
                                 }
