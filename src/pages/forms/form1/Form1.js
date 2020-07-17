@@ -60,7 +60,13 @@ export default class Form1 extends Component {
              nationality: "",
              nationality_defect:false,
              nationality_error:"",
-             licenseeAddress: {}
+             licenseeAddress: {
+                 line1:'',
+                 line2:'',
+                 state: null,
+                 city:'',
+                 pincode:''
+             }
         }
     }
 
@@ -70,12 +76,20 @@ export default class Form1 extends Component {
         })
     }
 
-    handleAdressChange = (e,item=null) => {
+    handleAdressStateChange = (e,item) => {
+        this.setState({
+            licenseeAddress : {
+                ...this.state.licenseeAddress,
+                state: item,
+            }
+        })
+    }
+
+    handleAdressChange = (e) => {
         this.setState({
             licenseeAddress : {
                 ...this.state.licenseeAddress,
                 [e.target.name]: e.target.value,
-                state: item ? item.key : this.state.licenseeAddress.state
             }
         })
     }
@@ -143,7 +157,11 @@ export default class Form1 extends Component {
                                     errorMessage={nationality_error}
                                     disabled={nationality_defect}
                                     label="Nationality"/>
-                                <Address text="Address of Licensee" handleChange={this.handleAdressChange} address={licenseeAddress}/>
+                                <Address 
+                                    text="Address of Licensee" 
+                                    handleChange={this.handleAdressChange} 
+                                    handleAdressStateChange={this.handleAdressStateChange} 
+                                    address={licenseeAddress}/>
                                 <Stack horizontal tokens={stackTokens}>
                                     <DefaultButton text="Back" allowDisabledFocus/>
                                     <PrimaryButton text="Next" allowDisabledFocus/>
