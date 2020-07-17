@@ -89,6 +89,11 @@ export default class Form1 extends Component {
             dateApprovalOfLocalAuthority: "2020-07-13",
             dateApprovalOfLocalAuthority_defect:null,
             dateApprovalOfLocalAuthority_error:"",
+            DefenceFile: null,
+            HomeAffairsFile: null,
+            OwnerFile: null,
+            LocalFile: null,
+
         
         }
     }
@@ -116,6 +121,12 @@ export default class Form1 extends Component {
         }
     }
     
+    handleFileChange=(e) => {
+        this.setState({
+            [e.target.name]:e.target.files[0]
+        })
+    }
+    
     render() {
 
         const {
@@ -125,6 +136,10 @@ export default class Form1 extends Component {
             dateApprovalOfLocalAuthority,
             dateApprovalOfLocalAuthority_defect,
             dateApprovalOfLocalAuthority_error,
+            DefenceFile,
+            HomeAffairsFile,
+            OwnerFile,
+            LocalFile,
 
         } = this.state;
         return (
@@ -133,24 +148,32 @@ export default class Form1 extends Component {
                     <Card styles={styles.cardStyles}>
                         <Card.Section>
                                 <Text variant={'xxLarge'}>Permissions and Approvals</Text>
-                                <ActionButton
-                                    //State to be added
-                                    iconProps={fileRequestIcon} 
-                                    allowDisabledFocus>             
-                                 Attach an application and documents that are required by the Ministry of Defence
-                                </ActionButton>
-                                <ActionButton
-                                    //State to be added
-                                    iconProps={fileRequestIcon} 
-                                    allowDisabledFocus>             
-                                 Attach an application and documents that are required by the Ministry of Home Affairs
-                                </ActionButton>
-                                <ActionButton
-                                    //State to be added
-                                    iconProps={fileRequestIcon} 
-                                    allowDisabledFocus>             
-                                 Attach attested copy of approval of Owner of Land
-                                </ActionButton>
+                                <Text variant={'medium'} >Attach an application and documents that 
+                                are required by the Ministry of Defence</Text>
+                                <div class="button-wrap">
+                                    <label class ="new-button" for="upload"> Upload File
+                                    <input id="upload" name="grid" type="file" onChange={this.handleFileChange}/>
+                                    </label>
+                                    {DefenceFile!=null ? `${DefenceFile.name}` : ''}
+                                </div>
+
+                                <Text variant={'medium'} >Attach an application and documents that 
+                                are required by the Ministry of Home Affairs</Text>
+                                <div class="button-wrap">
+                                    <label class ="new-button" for="upload"> Upload File
+                                    <input id="upload" name="grid" type="file" onChange={this.handleFileChange}/>
+                                    </label>
+                                    {HomeAffairsFile!=null ? `${HomeAffairsFile.name}` : ''}
+                                </div>
+
+                                <Text variant={'medium'} >Attach attested copy of approval of Owner of Land</Text>
+                                <div class="button-wrap">
+                                    <label class ="new-button" for="upload"> Upload File
+                                    <input id="upload" name="grid" type="file" onChange={this.handleFileChange}/>
+                                    </label>
+                                    {OwnerFile!=null ? `${OwnerFile.name}` : ''}
+                                </div>
+
                                 <Text 
                                     variant='medium'>
                                         Mention Date of Approval of Owner of Land
@@ -167,17 +190,25 @@ export default class Form1 extends Component {
                                     ariaLabel="Select a date"
                                 />
                                 {dateApprovalOfOwnerOfLand_error===''? null : <Text style={{color:'#FF0000',marginTop:'0'}} variant='small'>{dateApprovalOfOwnerOfLand_error}</Text>}
-                                <ActionButton
-                                    //State to be added
-                                    iconProps={fileRequestIcon} 
-                                    allowDisabledFocus>             
-                                 Attach attested copy of approval of Local authority such as municipal corporation / committee or urban
-land development Board/ authority of the State or its Country and Town Planning Department
-                                </ActionButton>
                                 <Text 
                                     variant='medium'>
-                                        Mention Date of Approval of Local authority such as municipal corporation / committee or urban
-land development Board/ authority of the State or its Country and Town Planning Department
+                                        Attach attested copy of approval of Local authority such 
+                                        as municipal corporation / committee or urban and development 
+                                        Board/ authority of the State or its Country and Town Planning
+                                         Department
+                                </Text>
+                                <div class="button-wrap">
+                                    <label class ="new-button" for="upload"> Upload File
+                                    <input id="upload" name="grid" type="file" onChange={this.handleFileChange}/>
+                                    </label>
+                                    {LocalFile!=null ? `${LocalFile.name}` : ''}
+                                </div>
+
+                                <Text 
+                                    variant='medium'>
+                                        Mention Date of Approval of Local authority such as municipal 
+                                        corporation / committee or urban land development Board/ authority 
+                                        of the State or its Country and Town Planning Department
                                 </Text>
                                 <DatePicker
                                     onSelectDate={(e)=> {this.onDateChange(e,'dateApprovalOfLocalAuthority')}} 

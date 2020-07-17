@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 
 
 //ui
-import { Text, PrimaryButton, Stack, DefaultButton, ChoiceGroup,ActionButton } from 'office-ui-fabric-react';
+import { Text, PrimaryButton, Stack, DefaultButton, ChoiceGroup} from 'office-ui-fabric-react';
 import { TextField } from 'office-ui-fabric-react/lib/TextField';
 import { Card } from '@uifabric/react-cards';
 import { mergeStyleSets } from 'office-ui-fabric-react/lib/Styling';
@@ -34,7 +34,7 @@ const classNames = mergeStyleSets({
         margin: 'auto',
     }
 });
-const addIcon = { iconName: 'Add' };
+
 const stackTokens = { childrenGap: 20 };
 
 const options = [
@@ -47,32 +47,72 @@ export default class Form7 extends Component {
         super(props)
     
         this.state = {
-             check:""
+             manualEnclosed:"Yes",
+             dateToBeSubmitted: "",
+             dateToBeSubmitted_error:"",
+             dateToBeSubmitted_defect: null,
+             aerodromeManual: null,
         }
     }
 
     _onChange = (ev, option) => {
         console.dir(option);
-        this.setState({check:option.key})
+        this.setState({manualEnclosed:option.key})
+    }
+
+    handleFileChange=(e) => {
+        this.setState({
+            [e.target.name]:e.target.files[0]
+        })
+    }
+    handleChange=(e) => {
+        this.setState({
+            [e.target.name]:e.target.value
+        })
     }
     
     render() {
+
+        const {
+            dateToBeSubmitted,
+            dateToBeSubmitted_error,
+            dateToBeSubmitted_defect,
+            aerodromeManual,
+        } = this.state;
+
         return (
             <div className="ms-Grid-row" style={{paddingBottom:'100px'}}>
                 <div className={`s-Grid-col ms-sm9 ms-xl9 ${classNames.pivot}`}>
                     <Card styles={styles.cardStyles}>
                         <Card.Section>
                                 <Text variant={'xxLarge'} >Aerodrome Manual</Text>
-                                <ChoiceGroup defaultSelectedKey="Yes" options={options} onChange={this._onChange} label="Is manual enclosed?" required={true} />
+                                <ChoiceGroup 
+                                    defaultSelectedKey="Yes"
+                                    options={options}
+                                    onChange={this._onChange}
+                                    label="Is manual enclosed?"
+                                    required={true}
+                                />
                                 {
-                                    this.state.check==="No" ? 
-                                    <div>
-                                        <TextField label="Please indicate when this is likel to be submitted to DGCA." multiline rows={3}/>
-                                        <Text variant={'small'} >( Note: An Aerodrome Licence will not be granted until an acceptable aerodrome Manual has been received by DGCA)</Text>
-                                    </div>  :
-                                    <ActionButton //to be added in db
-                                        iconProps={addIcon} allowDisabledFocus><em>Upload Manual</em>
-                                    </ActionButton> 
+                                    this.state.manualEnclosed==="No" ? 
+                                        <div>
+                                            <TextField
+                                                label="Please indicate when this is likely to be submitted to DGCA."
+                                                multiline rows={3}
+                                                name="dateToBeSubmitted"
+                                                onChange={this.handleChange} 
+                                                value={dateToBeSubmitted} 
+                                                errorMessage={dateToBeSubmitted_error} 
+                                                disabled={dateToBeSubmitted_defect}
+                                            />
+                                            <Text variant={'small'} >( Note: An Aerodrome Licence will not be granted until an acceptable aerodrome Manual has been received by DGCA)</Text>
+                                        </div>  :
+                                    <div class="button-wrap"> {/*tobe added in db*/}
+                                        <label class ="new-button" for="upload"> Upload File
+                                        <input id="upload" name="aerodromeManual" type="file" onChange={this.handleFileChange}/>
+                                        </label>
+                                        {aerodromeManual!=null ? `${aerodromeManual.name}` : ''}
+                                    </div>
                                 }
                                 <Stack horizontal tokens={stackTokens}>
                                     <DefaultButton text="Back" allowDisabledFocus />
