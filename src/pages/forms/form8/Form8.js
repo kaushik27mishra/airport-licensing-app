@@ -2,10 +2,9 @@ import React, { Component } from 'react'
 
 
 //ui
-import { Text, PrimaryButton, Stack, DefaultButton,  ActionButton,DatePicker } from 'office-ui-fabric-react';
+import { Text, PrimaryButton, Stack, DefaultButton, DatePicker, DayOfWeek, mergeStyleSets  } from 'office-ui-fabric-react';
 import { TextField} from 'office-ui-fabric-react/lib/TextField';
 import { Card } from '@uifabric/react-cards';
-import {  mergeStyleSets } from 'office-ui-fabric-react/lib/Styling';
 
 //style
 const styles = {
@@ -41,7 +40,6 @@ const controlClass = mergeStyleSets({
     },
   });
 
-const addIcon = { iconName: 'Add' };
 const stackTokens = { childrenGap: 20 };
 
 const DayPickerStrings = {
@@ -80,7 +78,22 @@ export default class Form8 extends Component {
         super(props)
     
         this.state = {
-             check:""
+             check:"",
+             challanNo:"",
+             challanNo_error: "",
+             challanNo_defect: null,
+             amount:"",
+             amount_error: "",
+             amount_defect: null,
+             calculationSheet: null,
+             nameOfDraweeBank: "",
+             nameOfDraweeBank_error: "",
+             nameOfDraweeBank_defect: null,
+             dateOfDraweeBank: "2020-07-13",
+             dateOfDraweeBank_defect:null,
+             dateOfDraweeBank_error:"",
+
+
         }
     }
 
@@ -88,20 +101,97 @@ export default class Form8 extends Component {
         console.dir(option);
         this.setState({check:option.key})
     }
+
+    onFormatDate = (date) => {
+        return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
+    }
+    
+    onDateChange = (date,name) => {
+        this.setState({
+            [name] : this.onFormatDate(date)
+        })
+    }
+
+    onParseDateFromString = (val) => {
+        if(typeof(val)=='string') {
+            var parts = val.split('-');
+            return new Date(parts[0], parts[1]-1, parts[2]);
+        }
+    }
+
+    handleChange=(e) => {
+        this.setState({
+            [e.target.name]:e.target.value
+        })
+    }
+
+    handleFileChange=(e) => {
+        this.setState({
+            [e.target.name]:e.target.files[0]
+        })
+    }
     
     render() {
+
+        const {
+             challanNo,
+             challanNo_error,
+             challanNo_defect,
+             amount,
+             amount_error,
+             amount_defect,
+             calculationSheet,
+             nameOfDraweeBank,
+             nameOfDraweeBank_error,
+             nameOfDraweeBank_defect,
+             dateOfDraweeBank,
+             dateOfDraweeBank_defect,
+             dateOfDraweeBank_error,
+
+        } = this.state;
         return (
             <div className="ms-Grid-row" style={{paddingBottom:'100px'}}>
                 <div className={`s-Grid-col ms-sm9 ms-xl9 ${classNames.pivot}`}>
                     <Card styles={styles.cardStyles}>
                         <Card.Section>
                                 <Text variant={'xxLarge'} >Details of Fees</Text>
-                                <TextField label="Challan Number for online deposit of Application Fee" />
-                                <TextField label="Amount" />
-                                <ActionButton iconProps={addIcon} allowDisabledFocus>Attach a sheet showing the calculation of amount as per runway length</ActionButton>
-                                <TextField label="Name of the drawee bank" />
+                                <TextField
+                                    label="Challan Number for online deposit of Application Fee"
+                                    name="challanNo"
+                                    onChange={this.handleChange} 
+                                    value={challanNo} 
+                                    errorMessage={challanNo_error} 
+                                    disabled={challanNo_defect}
+                                />
+                                <TextField
+                                    label="Amount"
+                                    name="amount"
+                                    onChange={this.handleChange} 
+                                    value={amount} 
+                                    errorMessage={amount_error} 
+                                    disabled={amount_defect}
+                                />
+                                <Text variant={'small'} >Attach a sheet showing the calculation of amount as per runway length</Text>
+                                <div class="button-wrap"> {/*to be added in db*/}
+                                    <label class ="new-button" for="upload"> Upload File
+                                    <input id="upload" name="calculationSheet" type="file" onChange={this.handleFileChange}/>
+                                    </label>
+                                    {calculationSheet!=null ? `${calculationSheet.name}` : ''}
+                                </div>
+                                <TextField
+                                    label="Name of the drawee bank"
+                                    name="nameOfDraweeBank"
+                                    onChange={this.handleChange} 
+                                    value={nameOfDraweeBank} 
+                                    errorMessage={nameOfDraweeBank_error} 
+                                    disabled={nameOfDraweeBank_defect}/>
                                 <Text variant='medium'>Select the date on which challan was submitted in the bank</Text>
                                 <DatePicker
+                                    onSelectDate={(e)=> {this.onDateChange(e,'dateOfDraweeBank')}} 
+                                    firstDayOfWeek={DayOfWeek.Sunday}
+                                    value={this.onParseDateFromString(dateOfDraweeBank)}
+                                    disabled={!(dateOfDraweeBank_defect==null) && !dateOfDraweeBank_defect}
+                                    errorMessage={dateOfDraweeBank_error}
                                     className={controlClass.control}
                                     strings={DayPickerStrings}
                                     placeholder="Select a Date."
