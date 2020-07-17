@@ -63,7 +63,7 @@ export default class Form1 extends Component {
              licenseeAddress: {
                  line1:'',
                  line2:'',
-                 state: null,
+                 state:  null,
                  city:'',
                  pincode:''
              }
@@ -76,18 +76,18 @@ export default class Form1 extends Component {
         })
     }
 
-    handleAdressStateChange = (e,item) => {
+    handleAdressStateChange = (name,e,item) => {
         this.setState({
-            licenseeAddress : {
+            [name] : {
                 ...this.state.licenseeAddress,
                 state: item,
             }
         })
     }
 
-    handleAdressChange = (e) => {
+    handleAdressChange = (name,e) => {
         this.setState({
-            licenseeAddress : {
+            [name] : {
                 ...this.state.licenseeAddress,
                 [e.target.name]: e.target.value,
             }
@@ -157,10 +157,10 @@ export default class Form1 extends Component {
                                     errorMessage={nationality_error}
                                     disabled={nationality_defect}
                                     label="Nationality"/>
-                                <Address 
+                                <Address
                                     text="Address of Licensee" 
-                                    handleChange={this.handleAdressChange} 
-                                    handleAdressStateChange={this.handleAdressStateChange} 
+                                    handleChange={(e) => this.handleAdressChange('licenseeAddress',e)} 
+                                    handleAdressStateChange={(e,item) => this.handleAdressStateChange('licenseeAddress',e,item)} 
                                     address={licenseeAddress}/>
                                 <Stack horizontal tokens={stackTokens}>
                                     <DefaultButton text="Back" allowDisabledFocus/>

@@ -77,7 +77,20 @@ function signOut(dispatch, history) {
   history.push("/login");
 }
 
-
-// const CREATE_LINK_MUTATION = gql`
-//   mutation CreateLinkMutation($description: String!)
-// `;
+// const LOGIN = gql`
+// query SignIn(
+//   $email: String!,
+//   $password: String!,
+//   $signCertFile: Upload!,
+//   $privatekeyFile: Upload! ){
+//     signIn(
+//       email: $email,
+//       password: $password,
+//       privatekeyFile: $privatekeyFile,
+//       signCertFile: $signCertFile){
+//     token
+//     user{
+//       email
+//     }
+//   	}
+//   }`;
