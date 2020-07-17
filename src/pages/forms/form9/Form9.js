@@ -43,7 +43,10 @@ export default class Form9 extends Component {
         super(props)
     
         this.state = {
-             isChecked:false
+             isChecked:false,
+             anyOtherInformation: "",
+             anyOtherInformation_error: "",
+             anyOtherInformation_defect: null,
         };
         
     }
@@ -51,20 +54,43 @@ export default class Form9 extends Component {
         var ans=this.state.isChecked
         this.setState({isChecked:!ans})
     }
+
+    handleChange=(e) => {
+        this.setState({
+            [e.target.name]:e.target.value
+        })
+    }
+
     render() {
+
+        const {
+             anyOtherInformation,
+             anyOtherInformation_error,
+             anyOtherInformation_defect,
+        } = this.state;
         return (
             <div className="ms-Grid-row" style={{paddingBottom:'100px'}}>
                 <div className={`s-Grid-col ms-sm9 ms-xl9 ${classNames.pivot}`}>
                     <Card styles={styles.cardStyles}>
                         <Card.Section>
                                 <Text variant={'xxLarge'} >Further Information</Text>
-                                <TextField  label="ANY OTHER INFORMATION: The information may include details in annex1, annex2 and annex3." multiline rows={7}/>
+                                <TextField  
+                                    label="ANY OTHER INFORMATION: The information may include details 
+                                    in annex1, annex2 and annex3."
+                                    multiline rows={7}
+                                    name="anyOtherInformation"
+                                    onChange={this.handleChange} 
+                                    value={anyOtherInformation} 
+                                    errorMessage={anyOtherInformation_error} 
+                                    disabled={anyOtherInformation_defect}
+                                />
                                 {/*Create links to anexx1,annex2 and annex3 in text above */}
                                 <Checkbox 
                                     checked={this.state.isChecked} 
                                     onChange={this._onChangeCheckbox} 
                                     defaultChecked={false}
-                                    label="I hereby certify that the forgoing information is correct in every respect and no relevant information has been withheld." />
+                                    label="I hereby certify that the forgoing information is correct in
+                                    every respect and no relevant information has been withheld." />
                                 <Stack horizontal tokens={stackTokens}>
                                     <DefaultButton text="Back" allowDisabledFocus />
                                     <PrimaryButton text="Submit" allowDisabledFocus disabled={!this.state.isChecked} />
