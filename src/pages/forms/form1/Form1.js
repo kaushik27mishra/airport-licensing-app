@@ -60,13 +60,37 @@ export default class Form1 extends Component {
              nationality: "",
              nationality_defect:false,
              nationality_error:"",
-
+             licenseeAddress: {
+                 line1:'',
+                 line2:'',
+                 state:  null,
+                 city:'',
+                 pincode:''
+             }
         }
     }
 
     handleChange=(e) => {
         this.setState({
             [e.target.name]:e.target.value
+        })
+    }
+
+    handleAdressStateChange = (name,e,item) => {
+        this.setState({
+            [name] : {
+                ...this.state.licenseeAddress,
+                state: item,
+            }
+        })
+    }
+
+    handleAdressChange = (name,e) => {
+        this.setState({
+            [name] : {
+                ...this.state.licenseeAddress,
+                [e.target.name]: e.target.value,
+            }
         })
     }
 
@@ -88,6 +112,7 @@ export default class Form1 extends Component {
              nationality,
              nationality_defect,
              nationality_error,
+             licenseeAddress
         } = this.state;
 
         return (
@@ -132,7 +157,11 @@ export default class Form1 extends Component {
                                     errorMessage={nationality_error}
                                     disabled={nationality_defect}
                                     label="Nationality"/>
-                                <Address>Address of Licensee</Address>
+                                <Address
+                                    text="Address of Licensee" 
+                                    handleChange={(e) => this.handleAdressChange('licenseeAddress',e)} 
+                                    handleAdressStateChange={(e,item) => this.handleAdressStateChange('licenseeAddress',e,item)} 
+                                    address={licenseeAddress}/>
                                 <Stack horizontal tokens={stackTokens}>
                                     <DefaultButton text="Back" allowDisabledFocus/>
                                     <PrimaryButton text="Next" allowDisabledFocus/>

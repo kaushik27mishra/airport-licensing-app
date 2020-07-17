@@ -76,3 +76,21 @@ function signOut(dispatch, history) {
   dispatch({ type: "SIGN_OUT_SUCCESS" });
   history.push("/login");
 }
+
+// const LOGIN = gql`
+// query SignIn(
+//   $email: String!,
+//   $password: String!,
+//   $signCertFile: Upload!,
+//   $privatekeyFile: Upload! ){
+//     signIn(
+//       email: $email,
+//       password: $password,
+//       privatekeyFile: $privatekeyFile,
+//       signCertFile: $signCertFile){
+//     token
+//     user{
+//       email
+//     }
+//   	}
+//   }`;

@@ -49,8 +49,8 @@ export default class SampleForm extends Component {
         this.state = {
              check:"",
              standard:"", // value change karke dekhen kya ho rha hai
-             standardbool:false, // value change karke dekhen kya ho rha hai 
-             standardError:"Error yahan pe aayega" // value change karke dekhen kya ho rha hai
+             standard_defect:false, // value change karke dekhen kya ho rha hai 
+             standard_error:"Error yahan pe aayega" // value change karke dekhen kya ho rha hai
         }
     }
 
@@ -67,7 +67,7 @@ export default class SampleForm extends Component {
     }
     
     render() {
-        const {standardError,standard,standardbool} =this.state;
+        const {standard_error,standard,standard_defect} =this.state;
         return (
             <div className="ms-Grid-row" style={{paddingBottom:'100px'}}>
                 <div className={`s-Grid-col ms-sm9 ms-xl9 ${classNames.pivot}`}>
@@ -79,8 +79,8 @@ export default class SampleForm extends Component {
                                     name="standard" //yeh bhi add karna padega waise state waale variable ke saath same naam rahega 
                                     onChange={this.handleChange} 
                                     value={standard} 
-                                    errorMessage={standardError} 
-                                    disabled={standardbool} 
+                                    errorMessage={standard_error} 
+                                    disabled={!standard_defect} 
                                 />
                                 {/* iske neeche nahi */}
                                 <TextField label="Standard" />

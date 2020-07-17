@@ -12,29 +12,57 @@ const TextStyles = { root: { width: 300 } };
 const StateOptions = [
     { key: 'A', text: 'Option a', title: 'I am option a.' },
     { key: 'B', text: 'Option b' },
-    { key: 'C', text: 'Option c', disabled: true },
+    { key: 'C', text: 'Option c' },
     { key: 'D', text: 'Option d' },
     { key: 'E', text: 'Option e' },
 ]
 
-const Address = (props) => (
-    <div style={{paddingTop:'20px',paddingBottom:'20px'}}>  
-        <Text variant={'large'}><em>{props.children}</em></Text>
-        <hr style={{border: '1px solid black'}} />
-        <TextField label="Line 1"/>
-        <TextField label="Line 2"/>
-        <Stack horizontal tokens={stackTokens} verticalAlign="end">
-            <Dropdown
-                placeholder="Select"
-                label="Enter State"
-                options={StateOptions}
-                required
-                styles={dropdownStyles}
-            />
-            <TextField label="City" styles={TextStyles}/>
-            <TextField label="Pincode" styles={TextStyles}/>
-        </Stack>
-    </div>
-)
+function Address(props) {
+    const onChange = (event,item) => {
+        props.handleAdressStateChange(event,item)
+    };
 
-export default Address
+    return(
+        <div style={{paddingTop:'20px',paddingBottom:'20px'}}>  
+            <Text variant={'large'}><em>{props.text}</em></Text>
+            <hr style={{border: '1px solid black'}} />
+            <TextField
+                name="line1"
+                onChange={props.handleChange}
+                value={props.address.line1}
+                label="Line 1"
+            />
+            <TextField
+                name='line2' 
+                onChange={props.handleChange}
+                value={props.address.line2}
+                label="Line 2"
+            />
+            <Stack horizontal tokens={stackTokens} verticalAlign="end">
+                <Dropdown
+                    placeholder="Select"
+                    label="Enter State"
+                    onChange={onChange}
+                    options={StateOptions}
+                    styles={dropdownStyles}
+                />
+                <TextField
+                    name='city' 
+                    label="City" 
+                    styles={TextStyles}
+                    onChange={props.handleChange}
+                    value={props.address.city}
+                />
+                <TextField 
+                    name='pincode'
+                    label="Pincode" 
+                    styles={TextStyles}
+                    onChange={props.handleChange}
+                    value={props.address.pincode}
+                />
+            </Stack>
+        </div>
+    )
+}
+
+export default Address;

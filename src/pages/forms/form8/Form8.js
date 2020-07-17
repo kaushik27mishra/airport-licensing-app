@@ -102,11 +102,11 @@ export default class Form8 extends Component {
                                 <TextField label="Name of the drawee bank" />
                                 <Text variant='medium'>Select the date on which challan was submitted in the bank</Text>
                                 <DatePicker
-                                className={controlClass.control}
-                                strings={DayPickerStrings}
-                                placeholder="Select a Date."
-                                ariaLabel="Select a Date."/>
-                                
+                                    className={controlClass.control}
+                                    strings={DayPickerStrings}
+                                    placeholder="Select a Date."
+                                    ariaLabel="Select a Date."
+                                />
                                 <Stack horizontal tokens={stackTokens}>
                                     <DefaultButton text="Back" allowDisabledFocus />
                                     <PrimaryButton text="Next" allowDisabledFocus />
