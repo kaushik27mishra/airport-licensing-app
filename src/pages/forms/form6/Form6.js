@@ -2,10 +2,13 @@ import React, { Component, Fragment } from 'react'
 
 
 //ui
-import { Text, PrimaryButton, Stack, DefaultButton, ChoiceGroup, ActionButton } from 'office-ui-fabric-react';
+import { Text, PrimaryButton, Stack, DefaultButton, ChoiceGroup } from 'office-ui-fabric-react';
 import { TextField } from 'office-ui-fabric-react/lib/TextField';
 import { Card } from '@uifabric/react-cards';
 import { mergeStyleSets } from 'office-ui-fabric-react/lib/Styling';
+
+//components
+import Address from '../../../components/form/Address'
 
 //style
 const styles = {
@@ -35,8 +38,6 @@ const classNames = mergeStyleSets({
     }
 });
 
-//const fileRequestIcon = { iconName: 'Upload' };
-const addIcon = { iconName: 'Add' };
 
 const stackTokens = { childrenGap: 20 };
 
@@ -50,7 +51,119 @@ class Form6 extends Component {
         super(props)
     
         this.state = {
-             check:""
+             check:"No",
+             managingDirectorName: "",
+             managingDirectorName_error: "",
+             managingDirectorName_defect: null,
+             managingDirectorEmail: "",
+             managingDirectorEmail_error: "",
+             managingDirectorEmail_defect: null,
+             managingDirectorDesignation: "",
+             managingDirectorDesignation_error: "",
+             managingDirectorDesignation_defect: null,
+             managingDirectorTelephone: "",
+             managingDirectorTelephone_error: "",
+             managingDirectorTelephone_defect: null,
+             dayToDayInchargeName: "",
+             dayToDayInchargeName_error: "",
+             dayToDayInchargeName_defect: null,
+             dayToDayInchargeEmail: "",
+             dayToDayInchargeEmail_error: "",
+             dayToDayInchargeEmail_defect: null,
+             dayToDayInchargeDesignation: "",
+             dayToDayInchargeDesignation_error: "",
+             dayToDayInchargeDesignation_defect: null,
+             dayToDayInchargeTelephone: "",
+             dayToDayInchargeTelephone_error: "",
+             dayToDayInchargeTelephone_defect: null,
+             daytoDayInchargeCV: null,
+             aerodromeSafetyName: "",
+             aerodromeSafetyName_error: "",
+             aerodromeSafetyrName_defect: null,
+             aerodromeSafetyEmail: "",
+             aerodromeSafetyEmail_error: "",
+             aerodromeSafetyEmail_defect: null,
+             aerodromeSafetyDesignation: "",
+             aerodromeSafetyDesignation_error: "",
+             aerodromeSafetyDesignation_defect: null,
+             aerodromeSafetyTelephone: "",
+             aerodromeSafetyTelephone_error: "",
+             aerodromeSafetyTelephone_defect: null,
+             aerodromeSafetyCV: null,
+             providerCNSATMName: "",
+             providerCNSATMName_error: "",
+             providerCNSATMName_defect: null,
+             providerCNSATMEmail: "",
+             providerCNSATMEmail_error: "",
+             providerCNSATMEmail_defect: null,
+             providerCNSATMAddress: {
+                line1:'',
+                line2:'',
+                state:  null,
+                city:'',
+                pincode:''
+             },
+             providerMETName: "",
+             providerMETName_error: "",
+             providerMETName_defect: null,
+             providerMETEmail: "",
+             providerMETEmail_error: "",
+             providerMETEmail_defect: null,
+             providerMETAddress: {
+                line1:'',
+                line2:'',
+                state:  null,
+                city:'',
+                pincode:''
+             },
+             dayToDayATMName: "",
+             dayToDayATMName_error: "",
+             dayToDayATMName_defect: null,
+             dayToDayATMEmail: "",
+             dayToDayATMEmail_error: "",
+             dayToDayATMEmail_defect: null,
+             dayToDayATMDesignation: "",
+             dayToDayATMDesignation_error: "",
+             dayToDayATMDesignation_defect: null,
+             dayToDayATMTelephone: "",
+             dayToDayATMTelephone_error: "",
+             dayToDayATMTelephone_defect: null,
+             dayToDayCNSName: "",
+             dayToDayCNSName_error: "",
+             dayToDayCNSName_defect: null,
+             dayToDayCNSEmail: "",
+             dayToDayCNSEmail_error: "",
+             dayToDayCNSEmail_defect: null,
+             dayToDayCNSDesignation: "",
+             dayToDayCNSDesignation_error: "",
+             dayToDayCNSDesignation_defect: null,
+             dayToDayCNSTelephone: "",
+             dayToDayCNSTelephone_error: "",
+             dayToDayCNSTelephone_defect: null,
+             dayToDayRFFName: "",
+             dayToDayRFFName_error: "",
+             dayToDayRFFName_defect: null,
+             dayToDayRFFEmail: "",
+             dayToDayRFFEmail_error: "",
+             dayToDayRFFEmail_defect: null,
+             dayToDayRFFDesignation: "",
+             dayToDayRFFDesignation_error: "",
+             dayToDayRFFDesignation_defect: null,
+             dayToDayRFFTelephone: "",
+             dayToDayRFFTelephone_error: "",
+             dayToDayRFFTelephone_defect: null,
+             dayToDayMETName: "",
+             dayToDayMETName_error: "",
+             dayToDayMETName_defect: null,
+             dayToDayMETEmail: "",
+             dayToDayMETEmail_error: "",
+             dayToDayMETEmail_defect: null,
+             dayToDayMETDesignation: "",
+             dayToDayMETDesignation_error: "",
+             dayToDayMETDesignation_defect: null,
+             dayToDayMETTelephone: "",
+             dayToDayMETTelephone_error: "",
+             dayToDayMETTelephone_defect: null,
              
         }
     }
@@ -65,8 +178,135 @@ class Form6 extends Component {
             [e.target.name]:e.target.value
         })
     }
+
+    handleFileChange=(e) => {
+        this.setState({
+            [e.target.name]:e.target.files[0]
+        })
+    }
+
+    handleAdressStateChange = (name,e,item) => {
+        this.setState({
+            [name] : {
+                ...this.state.licenseeAddress,
+                state: item,
+            }
+        })
+    }
+
+    handleAdressChange = (name,e) => {
+        this.setState({
+            [name] : {
+                ...this.state.licenseeAddress,
+                [e.target.name]: e.target.value,
+            }
+        })
+    }
     
     render() {
+
+        const {
+             managingDirectorName,
+             managingDirectorName_error,
+             managingDirectorName_defect,
+             managingDirectorEmail,
+             managingDirectorEmail_error,
+             managingDirectorEmail_defect,
+             managingDirectorDesignation,
+             managingDirectorDesignation_error,
+             managingDirectorDesignation_defect,
+             managingDirectorTelephone,
+             managingDirectorTelephone_error,
+             managingDirectorTelephone_defect,
+             dayToDayInchargeName,
+             dayToDayInchargeName_error,
+             dayToDayInchargeName_defect,
+             dayToDayInchargeEmail,
+             dayToDayInchargeEmail_error,
+             dayToDayInchargeEmail_defect,
+             dayToDayInchargeDesignation,
+             dayToDayInchargeDesignation_error,
+             dayToDayInchargeDesignation_defect,
+             dayToDayInchargeTelephone,
+             dayToDayInchargeTelephone_error,
+             dayToDayInchargeTelephone_defect,
+             daytoDayInchargeCV,
+             aerodromeSafetyName,
+             aerodromeSafetyName_error,
+             aerodromeSafetyName_defect,
+             aerodromeSafetyEmail,
+             aerodromeSafetyEmail_error,
+             aerodromeSafetyEmail_defect,
+             aerodromeSafetyDesignation,
+             aerodromeSafetyDesignation_error,
+             aerodromeSafetyDesignation_defect,
+             aerodromeSafetyTelephone,
+             aerodromeSafetyTelephone_error,
+             aerodromeSafetyTelephone_defect,
+             aerodromeSafetyCV,
+             providerCNSATMName,
+             providerCNSATMName_error,
+             providerCNSATMName_defect,
+             providerCNSATMEmail,
+             providerCNSATMEmail_error,
+             providerCNSATMEmail_defect,
+             providerCNSATMAddress,
+             providerMETName,
+             providerMETName_error,
+             providerMETName_defect,
+             providerMETEmail,
+             providerMETEmail_error,
+             providerMETEmail_defect,
+             providerMETAddress,
+             dayToDayATMName,
+             dayToDayATMName_error,
+             dayToDayATMName_defect,
+             dayToDayATMEmail,
+             dayToDayATMEmail_error,
+             dayToDayATMEmail_defect,
+             dayToDayATMDesignation,
+             dayToDayATMDesignation_error,
+             dayToDayATMDesignation_defect,
+             dayToDayATMTelephone,
+             dayToDayATMTelephone_error,
+             dayToDayATMTelephone_defect,
+             dayToDayCNSName,
+             dayToDayCNSName_error,
+             dayToDayCNSName_defect,
+             dayToDayCNSEmail,
+             dayToDayCNSEmail_error,
+             dayToDayCNSEmail_defect,
+             dayToDayCNSDesignation,
+             dayToDayCNSDesignation_error,
+             dayToDayCNSDesignation_defect,
+             dayToDayCNSTelephone,
+             dayToDayCNSTelephone_error,
+             dayToDayCNSTelephone_defect,
+             dayToDayRFFName,
+             dayToDayRFFName_error,
+             dayToDayRFFName_defect,
+             dayToDayRFFEmail,
+             dayToDayRFFEmail_error,
+             dayToDayRFFEmail_defect,
+             dayToDayRFFDesignation,
+             dayToDayRFFDesignation_error,
+             dayToDayRFFDesignation_defect,
+             dayToDayRFFTelephone,
+             dayToDayRFFTelephone_error,
+             dayToDayRFFTelephone_defect,
+             dayToDayMETName,
+             dayToDayMETName_error,
+             dayToDayMETName_defect,
+             dayToDayMETEmail,
+             dayToDayMETEmail_error,
+             dayToDayMETEmail_defect,
+             dayToDayMETDesignation,
+             dayToDayMETDesignation_error,
+             dayToDayMETDesignation_defect,
+             dayToDayMETTelephone,
+             dayToDayMETTelephone_error,
+             dayToDayMETTelephone_defect
+        } = this.state;
         return (
             <div className="ms-Grid-row" style={{paddingBottom:'100px'}}>
                 <div className={`s-Grid-col ms-sm9 ms-xl9 ${classNames.pivot}`}>
@@ -149,7 +389,13 @@ class Form6 extends Component {
                                     disabled={dayToDayInchargeTelephone_defect}
                                 />    
                                 <Text variant={'medium'}><em>Please enclose a current Curriculum Vitae [CV]</em></Text>
-                                <ActionButton iconProps={addIcon} allowDisabledFocus><em>Add CV</em></ActionButton>
+                                <div class="button-wrap">
+                                    <label class ="new-button" for="upload"> Upload File
+                                    <input id="upload" name="daytoDayInchargeCV" type="file" onChange={this.handleFileChange}/>
+                                    </label>
+                                    {daytoDayInchargeCV!=null ? `${daytoDayInchargeCV.name}` : ''}
+                                </div>
+                                {/*<ActionButton iconProps={addIcon} allowDisabledFocus><em>Add CV</em></ActionButton>*/}
                                 {/*Email phone address to be added in person*/}
                                 <br/>
                                 <br/>
@@ -166,7 +412,7 @@ class Form6 extends Component {
                                     label="E-Mail"
                                     name="aerodromeSafetyEmail"
                                     onChange={this.handleChange} 
-                                    value={daerodromeSafetyEmail} 
+                                    value={aerodromeSafetyEmail} 
                                     errorMessage={aerodromeSafetyEmail_error} 
                                     disabled={aerodromeSafetyEmail_defect}
                                 />
@@ -200,9 +446,16 @@ class Form6 extends Component {
                                         <Text variant={'medium'}>
                                             <em>Please enclose a current Curriculum Vitae [CV]</em>
                                         </Text> 
-                                        <ActionButton //to be added in db
+                                       {/*} <ActionButton //to be added in db
                                             iconProps={addIcon} allowDisabledFocus><em>Add CV</em>
-                                        </ActionButton>
+                                </ActionButton>*/}
+                                        <div class="button-wrap">
+                                            <label class ="new-button" for="upload"> Upload File
+                                            <input id="upload" name="aerodromeSafetyCV" type="file" onChange={this.handleFileChange}/>
+                                            </label>
+                                            {aerodromeSafetyCV!=null ? `${aerodromeSafetyCV.name}` : ''}
+                                        </div>
+
                                     </Fragment> : null
                                 }
                                 
@@ -226,7 +479,12 @@ class Form6 extends Component {
                                     errorMessage={providerCNSATMEmail_error} 
                                     disabled={providerCNSATMEmail_defect}
                                 />
-                                <TextField label="Address" /> {/*Address Field*/}
+                                <Address
+                                    text="Address" 
+                                    handleChange={(e) => this.handleAdressChange('providerCNSATMAddress',e)} 
+                                    handleAdressStateChange={(e,item) => this.handleAdressStateChange('providerCNSATMAddress',e,item)} 
+                                    address={providerCNSATMAddress}/>
+                                {/*<TextField label="Address" /> Address Field*/}
                                 <br/>
                                 <br/>
                                 {/*Email phone address to be added in person*/}
@@ -247,7 +505,12 @@ class Form6 extends Component {
                                     errorMessage={providerMETEmail_error} 
                                     disabled={providerMETEmail_defect}
                                 />
-                                <TextField label="Address" />   {/*Address Field*/}
+                                <Address
+                                    text="Address" 
+                                    handleChange={(e) => this.handleAdressChange('providerMETAddress',e)} 
+                                    handleAdressStateChange={(e,item) => this.handleAdressStateChange('providerMETAddress',e,item)} 
+                                    address={providerMETAddress}/>
+                                {/*<TextField label="Address" />   Address Field*/}
                                 <br/>
                                 <br/>
                                 {/*Email phone address to be added in person*/}
@@ -292,25 +555,25 @@ class Form6 extends Component {
                                     label="Name"
                                     name="dayToDayCNSName"
                                     onChange={this.handleChange} 
-                                    value={dayToDayATMName} 
-                                    errorMessage={dayToDayATMName_error} 
-                                    disabled={dayToDayATMName_defect} 
+                                    value={dayToDayCNSName} 
+                                    errorMessage={dayToDayCNSName_error} 
+                                    disabled={dayToDayCNSName_defect} 
                                />
                                 <TextField 
                                     label="E-Mail"
                                     name="dayToDayCNSEmail"
                                     onChange={this.handleChange} 
-                                    value={dayToDayATMEmail} 
-                                    errorMessage={dayToDayATMEmail_error} 
-                                    disabled={dayToDayATMEmail_defect}
+                                    value={dayToDayCNSEmail} 
+                                    errorMessage={dayToDayCNSEmail_error} 
+                                    disabled={dayToDayCNSEmail_defect}
                                 />
                                 <TextField
                                     label="Status/Designation"
                                     name="dayToDayCNSDesignation"
                                     onChange={this.handleChange} 
-                                    value={dayToDayATMDesignation} 
-                                    errorMessage={dayToDayATMDesignation_error} 
-                                    disabled={dayToDayATMDesignation_defect}
+                                    value={dayToDayCNSDesignation} 
+                                    errorMessage={dayToDayCNSDesignation_error} 
+                                    disabled={dayToDayCNSDesignation_defect}
                                 />
                                 <TextField
                                     label="Telephone Number"
