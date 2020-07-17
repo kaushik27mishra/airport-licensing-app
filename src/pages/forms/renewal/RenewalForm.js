@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 
 
 //ui
-import { Text, PrimaryButton, Stack, DefaultButton, ActionButton,DatePicker } from 'office-ui-fabric-react';
+import { Text, PrimaryButton, Stack, DefaultButton, DatePicker, DayOfWeek } from 'office-ui-fabric-react';
 import { TextField } from 'office-ui-fabric-react/lib/TextField';
 import { Checkbox } from 'office-ui-fabric-react/lib/Checkbox';
 import { Card } from '@uifabric/react-cards';
@@ -85,7 +85,34 @@ export default class RenewalForm extends Component {
         super(props)
     
         this.state = {
-             isChecked:false
+             isChecked:false,
+             aerodromeLicenseNumber: "",
+             aerodromeLicenseNumber_defect: null,
+             aerodromeLicenseNumber_error: "",
+             aerodromeName: "",
+             aerodromeName_defect: null,
+             aerodromeName_error: "",
+             aerodromeLicense: null,
+             selfInspectionReport: null,
+             navCalibrationReport: null,
+             frictionTestReport: null,
+             updatedAerodromeManual: null,
+             trainingRecord: null,
+             changeManagementStatus: null,
+             temporaryExemptionReview: null,
+             permanentExemptionReview: null,
+             challan: "",
+             challanNumber_defect: null,
+             challanNumber_error: "",
+             amount: "",
+             amount_defect: null,
+             amount_error: "",
+             nameDraweeBank: "",
+             nameDraweeBank_defect: null,
+             nameDraweeBank_error: "",
+             dateChallanSubmission: "2020-01-20",
+             dateChallanSubmission_defect: null,
+             dateChallanSubmission_error: "",
         }
     }
 
@@ -93,53 +120,195 @@ export default class RenewalForm extends Component {
         var ans=this.state.isChecked
         this.setState({isChecked: !ans})
     }
+
+    handleFileChange=(e) => {
+        this.setState({
+            [e.target.name]:e.target.files[0]
+        })
+    }
+
+    onFormatDate = (date) => {
+        return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
+    }
+
+    handleChange=(e) => {
+        this.setState({
+            [e.target.name]:e.target.value
+        })
+    }
+
+    onDateChange = (date,name) => {
+        this.setState({
+            [name] : this.onFormatDate(date)
+        })
+    }
+
+    onParseDateFromString = (val) => {
+        if(typeof(val)=='string') {
+            var parts = val.split('-');
+            return new Date(parts[0], parts[1]-1, parts[2]);
+        }
+    }
     
     render() {
+
+        const {
+            aerodromeLicenseNumber,
+             aerodromeLicenseNumber_defect,
+             aerodromeLicenseNumber_error,
+             aerodromeName,
+             aerodromeName_defect,
+             aerodromeName_error,
+             aerodromeLicense,
+             selfInspectionReport,
+             navCalibrationReport,
+             frictionTestReport,
+             updatedAerodromeManual,
+             trainingRecord,
+             changeManagementStatus,
+             temporaryExemptionReview,
+             permanentExemptionReview,
+             challanNumber,
+             challanNumber_defect,
+             challanNumber_error,
+             amount,
+             amount_defect,
+             amount_error,
+             nameDraweeBank,
+             nameDraweeBank_defect,
+             nameDraweeBank_error,
+             dateChallanSubmission,
+             dateChallanSubmission_defect,
+             dateChallanSubmission_error,
+        } = this.state;
         return (
             <div className="ms-Grid-row" style={{paddingBottom:'100px'}}>
                 <div className={`s-Grid-col ms-sm9 ms-xl9 ${classNames.pivot}`}>
                     <Card styles={styles.cardStyles}>
                         <Card.Section>
                                 <Text variant={'xxLarge'} >Application for Renewal of Aerodrome License</Text>
-                                <TextField label="Aerodrome License Number" />
-                                <TextField label="Name of the Aerodrome" />
+                                <TextField 
+                                    label="Aerodrome License Number"
+                                    name="aerodromeLicenseNumber"
+                                    onChange={this.handleChange} 
+                                    value={aerodromeLicenseNumber} 
+                                    errorMessage={aerodromeLicenseNumber_error} 
+                                    disabled={aerodromeLicenseNumber_defect}
+                                />
+                                <TextField label="Name of the Aerodrome"
+                                    name="aerodromeName"
+                                    onChange={this.handleChange} 
+                                    value={aerodromeName} 
+                                    errorMessage={aerodromeName_error} 
+                                    disabled={aerodromeName_defect}
+                                />
                                 <Text variant={'medium'} >Enclose the aerodrome license in original</Text>
-                                <ActionButton iconProps={addIcon} allowDisabledFocus><em>Upload</em></ActionButton>
+                                <div class="button-wrap">
+                                    <label class ="new-button" for="upload"> Upload File
+                                    <input id="upload" name="grid" type="file" onChange={this.handleFileChange}/>
+                                    </label>
+                                    {aerodromeLicense!=null ? `${aerodromeLicense.name}` : ''}
+                                </div>
 
                                 <Text variant={'medium'} >Enclose copy of last self-inspection report</Text>
-                                <ActionButton iconProps={addIcon} allowDisabledFocus><em>Upload </em></ActionButton>
+                                <div class="button-wrap">
+                                    <label class ="new-button" for="upload"> Upload File
+                                    <input id="upload" name="grid" type="file" onChange={this.handleFileChange}/>
+                                    </label>
+                                    {selfInspectionReport!=null ? `${selfInspectionReport.name}` : ''}
+                                </div>
 
                                 <Text variant={'medium'} >Enclose copy of latest Nav-aids Calibration report</Text>
-                                <ActionButton iconProps={addIcon} allowDisabledFocus><em>Upload</em></ActionButton>
+                                <div class="button-wrap">
+                                    <label class ="new-button" for="upload"> Upload File
+                                    <input id="upload" name="grid" type="file" onChange={this.handleFileChange}/>
+                                    </label>
+                                    {navCalibrationReport!=null ? `${navCalibrationReport.name}` : ''}
+                                </div>
 
                                 <Text variant={'medium'} >Enclose the copy of latest friction test report along with corrective action taken (if any)</Text>
-                                <ActionButton iconProps={addIcon} allowDisabledFocus><em>Upload</em></ActionButton>
+                                <div class="button-wrap">
+                                    <label class ="new-button" for="upload"> Upload File
+                                    <input id="upload" name="grid" type="file" onChange={this.handleFileChange}/>
+                                    </label>
+                                    {frictionTestReport!=null ? `${frictionTestReport.name}` : ''}
+                                </div>
 
                                 <Text variant={'medium'} >Enclose the copy of updated Aerodrome Manual</Text>
-                                <ActionButton iconProps={addIcon} allowDisabledFocus><em>Upload</em></ActionButton>
+                                <div class="button-wrap">
+                                    <label class ="new-button" for="upload"> Upload File
+                                    <input id="upload" name="grid" type="file" onChange={this.handleFileChange}/>
+                                    </label>
+                                    {updatedAerodromeManual!=null ? `${updatedAerodromeManual.name}` : ''}
+                                </div>
 
                                 <Text variant={'medium'} >Enclose the training records of all the operational staff (Carried out during the currency of aerodrome license along with annual training plan.)</Text>
-                                <ActionButton iconProps={addIcon} allowDisabledFocus><em>Upload</em></ActionButton>
+                                <div class="button-wrap">
+                                    <label class ="new-button" for="upload"> Upload File
+                                    <input id="upload" name="grid" type="file" onChange={this.handleFileChange}/>
+                                    </label>
+                                    {trainingRecord!=null ? `${trainingRecord.name}` : ''}
+                                </div>
 
                                 <Text variant={'medium'} >Status of Change Management ( use separate sheet for each project to include DGCA approval number,progress status with respect to approved timelines, delay, review of Hazlog as accepted etc.)</Text>
-                                <ActionButton iconProps={addIcon} allowDisabledFocus><em>Upload</em></ActionButton>
+                                <div class="button-wrap">
+                                    <label class ="new-button" for="upload"> Upload File
+                                    <input id="upload" name="grid" type="file" onChange={this.handleFileChange}/>
+                                    </label>
+                                    {changeManagementStatus!=null ? `${changeManagementStatus.name}` : ''}
+                                </div>
 
                                 <Text variant={'medium'} >Status of Temporary Exemptions and review report of mitigation measures</Text>
-                                <ActionButton iconProps={addIcon} allowDisabledFocus><em>Upload</em></ActionButton>
-
+                                <div class="button-wrap">
+                                    <label class ="new-button" for="upload"> Upload File
+                                    <input id="upload" name="grid" type="file" onChange={this.handleFileChange}/>
+                                    </label>
+                                    {temporaryExemptionReview!=null ? `${temporaryExemptionReview.name}` : ''}
+                                </div>
                                 <Text variant={'medium'} >Status of Permanent exemption with respect to employed mitigation measures.</Text>
-                                <ActionButton iconProps={addIcon} allowDisabledFocus><em>Upload</em></ActionButton>
+                                <div class="button-wrap">
+                                    <label class ="new-button" for="upload"> Upload File
+                                    <input id="upload" name="grid" type="file" onChange={this.handleFileChange}/>
+                                    </label>
+                                    {permanentExemptionReview!=null ? `${permanentExemptionReview.name}` : ''}
+                                </div>
                                 
-                                <TextField label="Challan Number for online deposit of Renewal Fee" />
-                                <TextField label="Amount" />
+                                <TextField
+                                    label="Challan Number for online deposit of Renewal Fee"
+                                    name="challanNumber"
+                                    onChange={this.handleChange} 
+                                    value={challanNumber} 
+                                    errorMessage={challanNumber_error} 
+                                    disabled={challanNumber_defect}
+                                />
+                                <TextField
+                                    label="Amount"
+                                    name="amount"
+                                    onChange={this.handleChange} 
+                                    value={amount} 
+                                    errorMessage={amount_error} 
+                                    disabled={amount_defect}
+                                />
                                 {/*<ActionButton iconProps={addIcon} allowDisabledFocus>Attach a sheet showing the calculation of amount as per runway length</ActionButton>*/}
-                                <TextField label="Name of the drawee bank" />
+                                <TextField
+                                    label="Name of the drawee bank"
+                                    name="nameDraweeBank"
+                                    onChange={this.handleChange} 
+                                    value={nameDraweeBank} 
+                                    errorMessage={nameDraweeBank_error} 
+                                    disabled={nameDraweeBank_defect}/>
                                 <Text variant='medium'>Select the date on which challan was submitted in the bank</Text>
                                 <DatePicker
-                                className={controlClass.control}
-                                strings={DayPickerStrings}
-                                placeholder="Select a Date."
-                                ariaLabel="Select a Date."/>
+                                    onSelectDate={(e)=> {this.onDateChange(e,'dateChallanSubmission')}} 
+                                    firstDayOfWeek={DayOfWeek.Sunday}
+                                    value={this.onParseDateFromString(dateChallanSubmission)}
+                                    disabled={!(dateChallanSubmission_defect==null) && !dateChallanSubmission_defect}
+                                    errorMessage={dateChallanSubmission_error}
+                                    className={controlClass.control}
+                                    strings={DayPickerStrings}
+                                    placeholder="Select a Date."
+                                    ariaLabel="Select a Date."
+                                />
                                 <Checkbox 
                                     checked={this.state.isChecked} 
                                     onChange={this._onChangeCheckbox} 
