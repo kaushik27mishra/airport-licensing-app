@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 
+//components
+import SignaturePad from '../../components/form/SignaturePad'
 
 //ui
 import { Text, PrimaryButton, Stack, DefaultButton, ChoiceGroup } from 'office-ui-fabric-react';
@@ -50,7 +52,8 @@ export default class SampleForm extends Component {
              check:"",
              standard:"", // value change karke dekhen kya ho rha hai
              standard_defect:false, // value change karke dekhen kya ho rha hai 
-             standard_error:"Error yahan pe aayega" // value change karke dekhen kya ho rha hai
+             standard_error:"Error yahan pe aayega", // value change karke dekhen kya ho rha hai
+             sign:null
         }
     }
 
@@ -65,8 +68,53 @@ export default class SampleForm extends Component {
             [e.target.name]:e.target.value
         })
     }
-    
+
+    setImageURL = (imageURL) =>{
+        const whiteURL = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAC0lEQVQYV2NgAAIAAAUAAarVyFEAAAAASUVORK5CYII=";
+        if(imageURL!==whiteURL && imageURL!==this.state.sign)
+        {   
+            /* converting base 64 to blob
+            // converting image to blob 
+            // var block = imageURL.split(";");
+            // var contentType = block[0].split(":")[1];
+            // var realData = block[1].split(",")[1];
+            // var blob = b64toBlob(realData, contentType);
+            */
+            this.setState({
+                sign:imageURL
+            })    
+        }
+    };
+
+    /*
+    converting base64 to blob
+    b64toBlob(b64Data, contentType, sliceSize) {
+        contentType = contentType || '';
+        sliceSize = sliceSize || 512;
+
+        var byteCharacters = atob(b64Data);
+        var byteArrays = [];
+
+        for (var offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+            var slice = byteCharacters.slice(offset, offset + sliceSize);
+
+            var byteNumbers = new Array(slice.length);
+            for (var i = 0; i < slice.length; i++) {
+                byteNumbers[i] = slice.charCodeAt(i);
+            }
+
+            var byteArray = new Uint8Array(byteNumbers);
+
+            byteArrays.push(byteArray);
+        }
+
+      var blob = new Blob(byteArrays, {type: contentType});
+      return blob;
+    }
+    */
+
     render() {
+
         const {standard_error,standard,standard_defect} =this.state;
         return (
             <div className="ms-Grid-row" style={{paddingBottom:'100px'}}>
@@ -95,6 +143,9 @@ export default class SampleForm extends Component {
                                 {
                                     this.state.check==="Yes" ? <TextField label="With placeholder" placeholder="Please enter text here" /> : null
                                 }
+                                 <Stack horizontal tokens={stackTokens}>
+                                    <SignaturePad setImageURL={this.setImageURL}/>
+                                </Stack>
                                 <Stack horizontal tokens={stackTokens}>
                                     <DefaultButton text="Standard" allowDisabledFocus />
                                     <PrimaryButton text="Primary" allowDisabledFocus />
