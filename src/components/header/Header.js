@@ -1,5 +1,8 @@
 import React from 'react'
 
+//auth
+import { useUserDispatch, signOut } from "../../context/UserContext";
+
 //ui
 import { CommandBar } from 'office-ui-fabric-react/lib/CommandBar';
 
@@ -13,28 +16,30 @@ const menuStyles = {
     subComponentStyles: { menuItem: itemStyles },
 };
 
-const _farItems = [
-    {
-        key: 'profile',
-        iconOnly: true,
-        iconProps: { 
-            iconName: 'Contact',
-        },
-        subMenuProps: {
-            styles: menuStyles,
-            items: [
-              {
-                key: 'logout',
-                text: 'Logout',
-                iconProps: { iconName: 'BlockContact' },
-                onClick: () => console.log('Share'),
-              },
-            ]
-        }
-    }
-]
-
 function Header(props) {
+    
+    var userDispatch = useUserDispatch();
+    const _farItems = [
+        {
+            key: 'profile',
+            iconOnly: true,
+            iconProps: { 
+                iconName: 'Contact',
+            },
+            subMenuProps: {
+                styles: menuStyles,
+                items: [
+                  {
+                    key: 'logout',
+                    text: 'Logout',
+                    iconProps: { iconName: 'BlockContact' },
+                    onClick: () => signOut(userDispatch, props.history),
+                  },
+                ]
+            }
+        }
+    ]
+
     return (
         <div>
             <CommandBar
@@ -46,3 +51,4 @@ function Header(props) {
 }
 
 export default Header
+

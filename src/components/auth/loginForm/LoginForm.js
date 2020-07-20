@@ -1,48 +1,89 @@
-import React,{useState} from 'react'
+import React,{ useState } from 'react'
 
 //context
 import { useUserDispatch, loginUser } from "../../../context/UserContext";
 
 //ui
-import { TextField} from 'office-ui-fabric-react/lib/TextField';
-import { Text, PrimaryButton, Stack, DefaultButton,ActionButton} from 'office-ui-fabric-react';
+import { TextField } from 'office-ui-fabric-react/lib/TextField';
+import { Text, PrimaryButton, MessageBar, MessageBarType } from 'office-ui-fabric-react';
+import { mergeStyleSets } from 'office-ui-fabric-react/lib/Styling';
+import { Card } from '@uifabric/react-cards';
 
-const fileRequestIcon = { iconName: 'Upload' };
+const styles = {
+    cardStyles: {
+        root: {
+          background: 'white',
+          paddingTop: 30,
+          paddingLeft: 50,
+          paddingRight: 50,
+          paddingBottom: 50,
+          width: '100%',
+          maxWidth: '100%',
+          margin: 'auto',
+          marginTop: 60,
+        }
+    }
+}
+
+const classNames = mergeStyleSets({
+    pivot: {
+        margin: 'auto',
+    }
+});
 
 function LoginForm(props) {
-    var userDispatch = useUserDispatch();
-    var [isLoading, setIsLoading] = useState(false);
-    var [error, setError] = useState(null);
-    var [activeTabId, setActiveTabId] = useState(0);
-    var [nameValue, setNameValue] = useState("");
-    var [loginValue, setLoginValue] = useState("");
-    var [passwordValue, setPasswordValue] = useState("");
-    const [percentComplete, setPercentComplete] = React.useState(0);
+    const userDispatch = useUserDispatch();
+
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState(null);
+    const [loginValue, setLoginValue] = useState("");
+    const [passwordValue, setPasswordValue] = useState("");
+    const [certKey, setCertKey] = useState(null);
+    const [privateKey, setPrivateKey] = useState(null);
     
     return (
-        <div>
-            <Text variant={'xxLarge'} >Login form</Text>
-                <TextField 
-                    name="Email" 
-                    onChange={(e) => {setLoginValue(e.target.value)}} 
-                    value={loginValue} 
-                    label="Email"
-                />
-                <TextField
-                    name="phone"
-                    type="password" 
-                    onChange={(e)=>{setPasswordValue(e.target.value)}} 
-                    value={passwordValue} 
-                    label="Password"
-                />
-                <PrimaryButton 
-                    onClick={() => loginUser(userDispatch,loginValue,passwordValue,props.history,setIsLoading,setError)} 
-                    text="Submit"  
-                    allowDisabledFocus
-                />
-                <ActionButton iconProps={fileRequestIcon} allowDisabledFocus>Sign Certi</ActionButton>
-                <ActionButton iconProps={fileRequestIcon} allowDisabledFocus>Key</ActionButton>
-        </div>
+            <> 
+                <div className="ms-Grid-row" style={{paddingBottom:'300px'}}>
+                    <div className={`s-Grid-col ms-sm6 ms-xl6 ${classNames.pivot}`}>
+                        <Card styles={styles.cardStyles}>
+                            <Card.Section>                
+                            {error ? <MessageBar messageBarType={MessageBarType.error} isMultiline={false} dismissButtonAriaLabel="Close" >{error}</MessageBar>:null}
+                            <Text variant={'xxLarge'}>Login Form Airport Licensing App</Text>
+                            <TextField 
+                                name="Email" 
+                                value={loginValue} 
+                                onChange={(e) => {setLoginValue(e.target.value)}} 
+                                label="Email"
+                            />
+                            <TextField
+                                name="phone"
+                                type="password" 
+                                value={passwordValue} 
+                                onChange={(e)=>{setPasswordValue(e.target.value)}} 
+                                label="Password"
+                            />
+                            <div class="button-wrap">
+                                <label class ="new-button" for="upload1"> Upload Private Key File
+                                    <input id="upload1" name="grid" type="file" onChange={(e) => setPrivateKey(e.target.files[0])}/>
+                                </label>
+                                {privateKey!=null ? `${privateKey.name}` : ''}
+                            </div>
+                            <div class="button-wrap">
+                                <label class ="new-button" for="upload2"> Upload Cert Key File
+                                    <input id="upload2" name="grid" type="file" onChange={(e) => setCertKey(e.target.files[0])}/>
+                                </label>
+                                {certKey!=null ? `${certKey.name}` : ''}
+                            </div>
+                            <PrimaryButton 
+                                disabled={isLoading} 
+                                text="Submit" 
+                                onClick={() =>loginUser(userDispatch,loginValue,passwordValue,privateKey,certKey,props.history,setIsLoading,setError)}
+                            />
+                            </Card.Section>
+                        </Card>
+                    </div>
+                </div>
+            </>
     )
 }
 

@@ -23,11 +23,6 @@ const styles = {
           margin: 'auto',
           marginTop: 60,
         }
-    },
-    textFieldStyles: {
-        root: {
-            width:'100%'
-        }
     }
 }
 

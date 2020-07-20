@@ -34,7 +34,7 @@ export default function App(props) {
         />
         <Route path="/app" component={Layout} />
         <PublicRoute path="/login" component={Login} />
-        <Route component={Error} />
+        <PrivateRoute component={Error} />
       </Switch>
     </HashRouter>
   );

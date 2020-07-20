@@ -22,6 +22,7 @@ import Form7 from "../pages/forms/form7/Form7";
 import Form8 from "../pages/forms/form8/Form8";
 import Form9 from "../pages/forms/form9/Form9";
 import RenewalForm from "../pages/forms/renewal/RenewalForm";
+
 function Layout(props) {
 
   return (
@@ -33,21 +34,21 @@ function Layout(props) {
               </div>
               <div className="main-element ms-Grid-col ms-sm10 ms-xl10">
                 <div className="ms-Grid-row">
-                  <Header/>
+                  <Header history={props.history}/>
                 </div>
                 <Switch>
-                  <Route path="/app/dashboard" component={Dashboard} />
-                  <Route path="/app/sampleform" component={SampleForm} />
-                  <Route path="/app/licensee_detail_form" component={Form1}/>
-                  <Route path="/app/aerodrome_detail_form" component={Form2}/>
-                  <Route path="/app/aerodrome_activities" component={Form3}/>
-                  <Route path="/app/control_of_aerodrome" component={Form4}/>
-                  <Route path="/app/permissions_and_approvals" component={Form5}/>
-                  <Route path="/app/aerodrome_management_personnel" component={Form6}/>
-                  <Route path="/app/aerodrome_manual" component={Form7}/>
-                  <Route path="/app/details_of_fees" component={Form8}/>
-                  <Route path="/app/further_info" component={Form9}/>
-                  <Route path="/app/renewal_form" component={RenewalForm}/>
+                    <Route path="/app/dashboard" component={Dashboard} />
+                    <Route path="/app/sampleform" component={SampleForm} />
+                    <Route path="/app/licensee_detail_form" component={Form1}/>
+                    <Route path="/app/aerodrome_detail_form" component={Form2}/>
+                    <Route path="/app/aerodrome_activities" component={Form3}/>
+                    <Route path="/app/control_of_aerodrome" component={Form4}/>
+                    <Route path="/app/permissions_and_approvals" component={Form5}/>
+                    <Route path="/app/aerodrome_management_personnel" component={Form6}/>
+                    <Route path="/app/aerodrome_manual" component={Form7}/>
+                    <Route path="/app/details_of_fees" component={Form8}/>
+                    <Route path="/app/further_info" component={Form9}/>
+                    <Route path="/app/renewal_form" component={RenewalForm}/>
                 </Switch>
               </div>
             </div>
