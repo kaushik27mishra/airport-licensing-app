@@ -56,7 +56,7 @@ function LoginForm(props) {
         setIsLoading(false)
         setError(true);
         dispatch({ type: "LOGIN_FAILURE" });
-      }
+    }
     
     if(data) {
       localStorage.setItem('id_token', data.token)
