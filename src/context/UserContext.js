@@ -47,50 +47,10 @@ function useUserDispatch() {
   return context;
 }
 
-export { UserProvider, useUserState, useUserDispatch, loginUser, signOut };
-
-// ###########################################################
-
-function loginUser(dispatch, login, password, privateKey, certKey, history, setIsLoading, setError) {
-  setError(false);
-  setIsLoading(true);
-
-  if (!!login && !!password) {
-    setTimeout(() => {
-      localStorage.setItem('id_token', 1)
-      setError(null)
-      setIsLoading(false)
-      dispatch({ type: 'LOGIN_SUCCESS' })
-
-      history.push('/app/dashboard')
-    }, 2000);
-  } else {
-    dispatch({ type: "LOGIN_FAILURE" });
-    setError(true);
-    setIsLoading(false);
-  }
-}
+export { UserProvider, useUserState, useUserDispatch, signOut };
 
 function signOut(dispatch, history) {
   localStorage.removeItem("id_token");
   dispatch({ type: "SIGN_OUT_SUCCESS" });
   history.push("/login");
 }
-
-// const LOGIN = gql`
-// query SignIn(
-//   $email: String!,
-//   $password: String!,
-//   $signCertFile: Upload!,
-//   $privatekeyFile: Upload! ){
-//     signIn(
-//       email: $email,
-//       password: $password,
-//       privatekeyFile: $privatekeyFile,
-//       signCertFile: $signCertFile){
-//     token
-//     user{
-//       email
-//     }
-//   	}
-//   }`;
