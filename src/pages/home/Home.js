@@ -1,13 +1,18 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 
 //components
 import HeaderHomePage from '../../components/header/HeaderHomepage'
-import Banner from '../../components/banner/Banner'
-import AAILogo from '../../assets/logoWithName.png'
+import AAILogo from '../../assets/logo.png'
 import TechStack from '../../assets/TechStack.png'
+
+//ui
+import { Text, Stack } from 'office-ui-fabric-react';
+import { Icon } from '@fluentui/react/lib/Icon';
 
 //style 
 import './style.css'
+
+const stackTokens = { childrenGap: 20 };
 
 function Home() {
     return (
@@ -16,45 +21,53 @@ function Home() {
                 <div className="ms-Grid-row">
                     <HeaderHomePage/>
                 </div>
-                <div className="ms-Grid-row">
-                    
-                </div>
-                
-                <div style = {{padding:'5em'}}>
-                <div class="ms-Grid-col ms-sm6 ms-smPush6">
-                        <img src={AAILogo} alt="Airports Authority of India"/>
-                    </div>
-                    <div class="ms-Grid-col ms-sm6 ms-smPull6">
-                        <h1 style={{color:'#4fe5ff',paddingLeft:'20px',height:'100%', fontSize:'80px'}}>
-                            Aerodrome <br/>Licensing <br/>Portal 
-                        </h1>
+                <div style={{padding:'5em'}}>
+                    <div style={{minHeight:"650px"}} className="ms-Grid-row">
+                        <div class="ms-Grid-col ms-sm6 ms-sm6">
+                            <Text style={{color:'#ffffff',height:'100%', fontSize:'100px'}} variant={'xxLarge'}><div className="portal">Aerodrome<br/> Licensing <br/> Portal</div></Text>
+                        </div>
+                        <div class="ms-Grid-col ms-sm6 ms-sm6">
+                            <img src={AAILogo} width="95%" alt="Airports Authority of India"/>
+                        </div>
                     </div>
                 </div>
-                <div class="ms-Grid-col ms-sm7 ms-smPush6">
-                    <div style = {{padding:'10em'}}>
-                        <h1 style={{color: 'white', fontSize:'40px'}}>
-                            Features
-                        </h1>
-                        <ul style={{color: 'white', fontSize:'30px'}}>
-                            <li>Immutable Records</li>
-                            <li>Data Integrity</li>
-                            <li>Online E-License Generation</li>
-                            <li>E-Signatures and Online Approvals</li>
-                            <li>completely Online Form filling</li>
-                            <li>Integration of Ministry of Defence and ministry of Home Affairs</li>
-                            <li>Two-Factor Authentication</li>
-                            <li>Notification Services</li>
-                            <li>Dedicated Dashboards to all Users with Restricted Access</li>
-                            <li>Transparency with Speed</li>
-                        </ul>
+                <div className="ms-Grid-row" style={{minHeight:'384px',backgroundColor:'#CF8FFF'}}>
+                    <div class="ms-Grid-col ms-sm6 ms-sm6">
+                        <br/>
+                        <br/>
+                        <Text style={{marginLeft:"80px",paddingTop:"80px",height:'100%',color:'#000000'}} variant={'mega'}>Features</Text>
                     </div>
+                    <div class="ms-Grid-col ms-sm6 ms-sm6">
+                        <div style={{marginTop:"100px"}}>
+                            <Stack tokens={stackTokens}>
+                                <Fragment>
+                                    <Text variant={'xxLarge'} style={{color:'#000000',marginBottom:"10px"}}><Icon iconName="Forward" style={{fontSize:"28px"}} className="ms-IconExample" /> Immutable Records</Text>
+                                    <Text variant={'xxLarge'} style={{color:'#000000',marginBottom:"10px"}}><Icon iconName="Forward" style={{fontSize:"28px"}} className="ms-IconExample" /> Two-Factor Authentication</Text>
+                                    <Text variant={'xxLarge'} style={{color:'#000000',marginBottom:"10px"}}><Icon iconName="Forward" style={{fontSize:"28px"}} className="ms-IconExample" /> E-Signatures and Online Approvals</Text>
+                                    <Text variant={'xxLarge'} style={{color:'#000000',marginBottom:"10px"}}><Icon iconName="Forward" style={{fontSize:"28px"}} className="ms-IconExample" /> Online E-License Generation</Text>
+                                </Fragment>    
+                            </Stack>
+                            
+                        {/* <div style = {{padding:'10em'}}>
+                            <h1 style={{color: 'white', fontSize:'40px'}}>
+                                Features
+                            </h1>
+                            <ul style={{color: 'white', fontSize:'30px'}}>
+                                <li>Immutable Records</li>
+                                <li>Data Integrity</li>
+                                <li>Online E-License Generation</li>
+                                <li>E-Signatures and Online Approvals</li>
+                                <li>completely Online Form filling</li>
+                                <li>Integration of Ministry of Defence and ministry of Home Affairs</li>
+                                <li>Two-Factor Authentication</li>
+                                <li>Notification Services</li>
+                                <li>Dedicated Dashboards to all Users with Restricted Access</li>
+                                <li>Transparency with Speed</li>
+                            </ul>
+                        </div> */}
+                        </div>
                     </div>
-                    <div class="ms-Grid-col ms-sm5 ms-smPull6">
-                        <h1 style={{color:'#4fe5ff',paddingLeft:'20px',height:'90%', fontSize:'80px'}}>
-                            <img src={TechStack} alt="Tech stack" style={{width:'100%'}}/>
-                        </h1>
-                    </div>
-                
+                </div>
             </div>
         </div>
     )
