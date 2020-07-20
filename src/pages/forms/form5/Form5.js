@@ -4,8 +4,6 @@ import React, { Component } from 'react'
 import { Text, PrimaryButton, Stack, DefaultButton } from 'office-ui-fabric-react';
 import { Card } from '@uifabric/react-cards';
 import { DatePicker, DayOfWeek, mergeStyleSets } from 'office-ui-fabric-react';
-import { ActionButton} from 'office-ui-fabric-react';
-
 
 //style
 const styles = {
@@ -28,9 +26,6 @@ const styles = {
         }
     }
 }
-
-
-const fileRequestIcon = { iconName: 'Upload' };
 
 const controlClass = mergeStyleSets({
     control: {

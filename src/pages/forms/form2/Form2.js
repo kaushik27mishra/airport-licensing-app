@@ -239,7 +239,7 @@ class Form2 extends Component {
                                     onClick={this.handleAddRunway}>
                                  Click for more runway(s).
                                 </ActionButton>
-                                {this.state.runways.map((runway, idx) => (
+                                {runways.map((runway, idx) => (
                                     <>
                                      <TextField label={`Length of ${idx+1} runway in metres`} value={runway.name} onChange={this.handleRunwayNameChange(idx)} name="meters" required/>
                                      <TextField label={`Orientation  ${idx+1} of runway`} value={runway.orientation} onChange={this.handleRunwayNameChange(idx)} name="orientation" required/>

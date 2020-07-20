@@ -51,7 +51,7 @@ export { UserProvider, useUserState, useUserDispatch, loginUser, signOut };
 
 // ###########################################################
 
-function loginUser(dispatch, login, password, history, setIsLoading, setError) {
+function loginUser(dispatch, login, password, privateKey, certKey, history, setIsLoading, setError) {
   setError(false);
   setIsLoading(true);
 

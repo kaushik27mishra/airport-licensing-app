@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 
-
 //ui
 import { Text, PrimaryButton, Stack, DefaultButton, DatePicker, DayOfWeek } from 'office-ui-fabric-react';
 import { TextField } from 'office-ui-fabric-react/lib/TextField';
@@ -22,11 +21,6 @@ const styles = {
           margin: 'auto',
           marginTop: 60,
         }
-    },
-    textFieldStyles: {
-        root: {
-            width:'100%'
-        }
     }
 }
 
@@ -44,7 +38,6 @@ const controlClass = mergeStyleSets({
   });
 
 
-const addIcon = { iconName: 'Add' };
 const stackTokens = { childrenGap: 20 };
     
 
@@ -204,71 +197,71 @@ export default class RenewalForm extends Component {
                                 />
                                 <Text variant={'medium'} >Enclose the aerodrome license in original</Text>
                                 <div class="button-wrap">
-                                    <label class ="new-button" for="upload"> Upload File
-                                    <input id="upload" name="grid" type="file" onChange={this.handleFileChange}/>
+                                    <label class ="new-button" for="upload1"> Upload File
+                                        <input id="upload1" name="grid" type="file" onChange={this.handleFileChange}/>
                                     </label>
                                     {aerodromeLicense!=null ? `${aerodromeLicense.name}` : ''}
                                 </div>
 
                                 <Text variant={'medium'} >Enclose copy of last self-inspection report</Text>
                                 <div class="button-wrap">
-                                    <label class ="new-button" for="upload"> Upload File
-                                    <input id="upload" name="grid" type="file" onChange={this.handleFileChange}/>
+                                    <label class ="new-button" for="upload2"> Upload File
+                                        <input id="upload2" name="grid" type="file" onChange={this.handleFileChange}/>
                                     </label>
                                     {selfInspectionReport!=null ? `${selfInspectionReport.name}` : ''}
                                 </div>
 
                                 <Text variant={'medium'} >Enclose copy of latest Nav-aids Calibration report</Text>
                                 <div class="button-wrap">
-                                    <label class ="new-button" for="upload"> Upload File
-                                    <input id="upload" name="grid" type="file" onChange={this.handleFileChange}/>
+                                    <label class ="new-button" for="upload3"> Upload File
+                                        <input id="upload3" name="grid" type="file" onChange={this.handleFileChange}/>
                                     </label>
                                     {navCalibrationReport!=null ? `${navCalibrationReport.name}` : ''}
                                 </div>
 
                                 <Text variant={'medium'} >Enclose the copy of latest friction test report along with corrective action taken (if any)</Text>
                                 <div class="button-wrap">
-                                    <label class ="new-button" for="upload"> Upload File
-                                    <input id="upload" name="grid" type="file" onChange={this.handleFileChange}/>
+                                    <label class ="new-button" for="upload4"> Upload File
+                                        <input id="upload4" name="grid" type="file" onChange={this.handleFileChange}/>
                                     </label>
                                     {frictionTestReport!=null ? `${frictionTestReport.name}` : ''}
                                 </div>
 
                                 <Text variant={'medium'} >Enclose the copy of updated Aerodrome Manual</Text>
                                 <div class="button-wrap">
-                                    <label class ="new-button" for="upload"> Upload File
-                                    <input id="upload" name="grid" type="file" onChange={this.handleFileChange}/>
+                                    <label class ="new-button" for="upload5"> Upload File
+                                        <input id="upload5" name="grid" type="file" onChange={this.handleFileChange}/>
                                     </label>
                                     {updatedAerodromeManual!=null ? `${updatedAerodromeManual.name}` : ''}
                                 </div>
 
                                 <Text variant={'medium'} >Enclose the training records of all the operational staff (Carried out during the currency of aerodrome license along with annual training plan.)</Text>
                                 <div class="button-wrap">
-                                    <label class ="new-button" for="upload"> Upload File
-                                    <input id="upload" name="grid" type="file" onChange={this.handleFileChange}/>
+                                    <label class ="new-button" for="upload6"> Upload File
+                                        <input id="upload6" name="grid" type="file" onChange={this.handleFileChange}/>
                                     </label>
                                     {trainingRecord!=null ? `${trainingRecord.name}` : ''}
                                 </div>
 
                                 <Text variant={'medium'} >Status of Change Management ( use separate sheet for each project to include DGCA approval number,progress status with respect to approved timelines, delay, review of Hazlog as accepted etc.)</Text>
                                 <div class="button-wrap">
-                                    <label class ="new-button" for="upload"> Upload File
-                                    <input id="upload" name="grid" type="file" onChange={this.handleFileChange}/>
+                                    <label class ="new-button" for="upload7"> Upload File
+                                        <input id="upload7" name="grid" type="file" onChange={this.handleFileChange}/>
                                     </label>
                                     {changeManagementStatus!=null ? `${changeManagementStatus.name}` : ''}
                                 </div>
 
                                 <Text variant={'medium'} >Status of Temporary Exemptions and review report of mitigation measures</Text>
                                 <div class="button-wrap">
-                                    <label class ="new-button" for="upload"> Upload File
-                                    <input id="upload" name="grid" type="file" onChange={this.handleFileChange}/>
+                                    <label class ="new-button" for="upload8"> Upload File
+                                        <input id="upload8" name="grid" type="file" onChange={this.handleFileChange}/>
                                     </label>
                                     {temporaryExemptionReview!=null ? `${temporaryExemptionReview.name}` : ''}
                                 </div>
                                 <Text variant={'medium'} >Status of Permanent exemption with respect to employed mitigation measures.</Text>
                                 <div class="button-wrap">
-                                    <label class ="new-button" for="upload"> Upload File
-                                    <input id="upload" name="grid" type="file" onChange={this.handleFileChange}/>
+                                    <label class ="new-button" for="upload9"> Upload File
+                                        <input id="upload9" name="grid" type="file" onChange={this.handleFileChange}/>
                                     </label>
                                     {permanentExemptionReview!=null ? `${permanentExemptionReview.name}` : ''}
                                 </div>
