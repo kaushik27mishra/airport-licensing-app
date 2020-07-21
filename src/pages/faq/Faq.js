@@ -62,13 +62,13 @@ const faq  = () =>   (
                             </Text>
                         </div>
                     </Card.Section>*/}
-                
                 <div className={`s-Grid-col ms-sm9 ms-xl9 ${classNames.pivot}`}>
                     <Card styles={styles.cardStyles}>
                         <Card.Section>
                             <Text 
                                 variant='xLarge'>
                                     What is the duration of the process?
+                                <hr style={{border: '1px solid black'}} />
                             </Text>
                         </Card.Section>
                         <Card.Section>
@@ -84,12 +84,13 @@ const faq  = () =>   (
                             <Text 
                                 variant='xLarge'>
                                     Who can tell me the documents required for licensing?
+                                    <hr style={{border: '1px solid black'}} />
                             </Text>
                         </Card.Section>
                         <Card.Section>
                         <Text 
                             variant='large'>
-                                You can visit <u><a className='css-54' href="http://dgca.nic.in/manuals/ProceMan_Aero.pdf">here</a></u> to get all the process details.
+                                You can visit <a href="http://dgca.nic.in/manuals/ProceMan_Aero.pdf">here</a> to get all the process details.
                             </Text>
                         </Card.Section>
                     </Card>
@@ -99,6 +100,7 @@ const faq  = () =>   (
                             <Text 
                                 variant='xLarge'>
                                     Do we provide a license for both public and private use?
+                                    <hr style={{border: '1px solid black'}} />
                             </Text>
                         </Card.Section>
                         <Card.Section>
@@ -114,6 +116,7 @@ const faq  = () =>   (
                             <Text 
                                 variant='xLarge'>
                                     Who will inspect us onsite?
+                                    <hr style={{border: '1px solid black'}} />
                             </Text>
                         </Card.Section>
                         <Card.Section>
@@ -129,6 +132,7 @@ const faq  = () =>   (
                             <Text 
                                 variant='xLarge'>
                                     Who will provide us a license?
+                                    <hr style={{border: '1px solid black'}} />
                             </Text>
                         </Card.Section>
                         <Card.Section>
@@ -144,6 +148,7 @@ const faq  = () =>   (
                             <Text 
                                 variant='xLarge'>
                                     What if our application for new application is rejected at any phase?
+                                    <hr style={{border: '1px solid black'}} />
                             </Text>
                         </Card.Section>
                         <Card.Section>
@@ -159,16 +164,16 @@ const faq  = () =>   (
                             <Text 
                                 variant='xLarge'>
                                     After how many days we have to renew the license?
+                                    <hr style={{border: '1px solid black'}} />
                             </Text>
                         </Card.Section>
                         <Card.Section>
                         <Text 
-                            variant='medium'>
+                            variant='large'>
                               The license should be renewed in every two years.
                             </Text>
                         </Card.Section>
                     </Card>
-                    
                 </div>
             </div>
     </div>
