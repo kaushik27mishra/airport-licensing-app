@@ -73,7 +73,7 @@ const faq  = () =>   (
                         </Card.Section>
                         <Card.Section>
                         <Text 
-                            variant='medium'>
+                            variant='large'>
                                 The process is of 90 days.
                             </Text>
                         </Card.Section>
@@ -88,8 +88,8 @@ const faq  = () =>   (
                         </Card.Section>
                         <Card.Section>
                         <Text 
-                            variant='medium'>
-                                You can visit <a href="http://dgca.nic.in/manuals/ProceMan_Aero.pdf">here</a> to get all the process details.
+                            variant='large'>
+                                You can visit <u><a className='css-54' href="http://dgca.nic.in/manuals/ProceMan_Aero.pdf">here</a></u> to get all the process details.
                             </Text>
                         </Card.Section>
                     </Card>
@@ -103,7 +103,7 @@ const faq  = () =>   (
                         </Card.Section>
                         <Card.Section>
                         <Text 
-                            variant='medium'>
+                            variant='large'>
                                 Yes.
                             </Text>
                         </Card.Section>
@@ -118,7 +118,7 @@ const faq  = () =>   (
                         </Card.Section>
                         <Card.Section>
                         <Text 
-                            variant='medium'>
+                            variant='large'>
                                 Director General of Civil Aviation will assign an Aerodrome Inspector with his team, who will be responsible for onsite inspection.
                             </Text>
                         </Card.Section>
@@ -133,7 +133,7 @@ const faq  = () =>   (
                         </Card.Section>
                         <Card.Section>
                         <Text 
-                            variant='medium'>
+                            variant='large'>
                               Once DOAS recommend DGCA for grant of a license, DOAS generate license number and update license register, then an online license is generated.
                             </Text>
                         </Card.Section>
@@ -148,7 +148,7 @@ const faq  = () =>   (
                         </Card.Section>
                         <Card.Section>
                         <Text 
-                            variant='medium'>
+                            variant='large'>
                               The Aerodrome Inspector will recommend changes and action plan.
                             </Text>
                         </Card.Section>
