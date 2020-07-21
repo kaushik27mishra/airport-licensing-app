@@ -3,7 +3,6 @@ import React, { Fragment } from 'react'
 //components
 import HeaderHomePage from '../../components/header/HeaderHomepage'
 import AAILogo from '../../assets/logo.png'
-import TechStack from '../../assets/TechStack.png'
 
 //ui
 import { Text, Stack } from 'office-ui-fabric-react';

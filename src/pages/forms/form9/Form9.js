@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 
+//components
+import SignaturePad from '../../../components/form/SignaturePad'
 
 //ui
 import { Text, PrimaryButton, Stack, DefaultButton } from 'office-ui-fabric-react';
@@ -47,6 +49,7 @@ export default class Form9 extends Component {
              anyOtherInformation: "",
              anyOtherInformation_error: "",
              anyOtherInformation_defect: null,
+             sign: null
         };
         
     }
@@ -60,6 +63,16 @@ export default class Form9 extends Component {
             [e.target.name]:e.target.value
         })
     }
+
+    setImageURL = (imageURL) =>{
+        const whiteURL = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAC0lEQVQYV2NgAAIAAAUAAarVyFEAAAAASUVORK5CYII=";
+        if(imageURL!==whiteURL && imageURL!==this.state.sign)
+        {   
+            this.setState({
+                sign:imageURL
+            })    
+        }
+    };
 
     render() {
 
@@ -91,6 +104,9 @@ export default class Form9 extends Component {
                                     defaultChecked={false}
                                     label="I hereby certify that the forgoing information is correct in
                                     every respect and no relevant information has been withheld." />
+                                <Stack horizontal tokens={stackTokens}>
+                                    <SignaturePad setImageURL={this.setImageURL}/>
+                                </Stack>
                                 <Stack horizontal tokens={stackTokens}>
                                     <DefaultButton text="Back" allowDisabledFocus />
                                     <PrimaryButton text="Submit" allowDisabledFocus disabled={!this.state.isChecked} />
