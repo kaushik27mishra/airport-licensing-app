@@ -41,13 +41,6 @@ const styles = {
       paddingBottom: 20,
       paddingTop: 30,
     }
-  },
-  percentage: {
-    root: {
-      fontSize: 16,
-      fontWeight: 'bold',
-      color: '#0078d4',
-    }
   }
 };
 
@@ -55,20 +48,14 @@ const cards_one_two_three = [
   {
     title: 'Details of Licensee',
     status: 'Submitted',
-    icon: 'Forward',
-    percentage: '100%'
   },
   {
     title: 'Details of Aerodrome',
     status: 'Submitted',
-    icon: 'Forward',
-    percentage: '100%'
   },
   {
     title: 'Aerodrome Activities',
     status: 'Processing',
-    icon: 'Forward',
-    percentage: '75%'
   }
 ]
 
@@ -76,20 +63,14 @@ const cards_four_five_six = [
     {
       title: 'Control of the Aerodrome',
       status: 'Submitted',
-      icon: 'Forward',
-      percentage: '100%'
     },
     {
       title: 'Permissions and Approvals',
       status: 'Submitted',
-      icon: 'Forward',
-      percentage: '100%'
     },
     {
       title: 'Aerodrome Management Personnel',
       status: 'Processing',
-      icon: 'Forward',
-      percentage: '75%'
     }
   ]
 
@@ -97,22 +78,29 @@ const cards_four_five_six = [
     {
       title: 'Aerodrome Manual',
       status: 'Submitted',
-      icon: 'Forward',
-      percentage: '100%'
     },
     {
       title: 'Details of Fees',
       status: 'Submitted',
-      icon: 'Forward',
-      percentage: '100%'
     },
     {
       title: 'Any Other Information',
       status: 'Processing',
-      icon: 'Forward',
-      percentage: '75%'
     }
   ]
+
+   const receiveIcon = (status) =>
+  {
+      switch(status){
+        case "Submitted" : return 'Accept'
+        case "Edited" : return 'EditSolidMirrored12'
+        case "Processing" : return 'DelveAnalyticsLogo'
+        case "Not Approved" :return 'Clear'
+        case "Approved" : return 'AcceptMedium'
+        default : return 'Forward'
+
+      }
+  }
 
 const CardsSection = (props) => {
   initializeIcons();
@@ -124,7 +112,7 @@ const CardsSection = (props) => {
             <Card styles={styles.cardStyles}>
                 <Card.Section>
                 <Card.Item>
-                    <i style={icon} className={`ms-Icon ms-Icon--${cards_one_two_three.icon}`} aria-hidden="true"></i>
+                    <i style={icon} className={`ms-Icon ms-Icon--${receiveIcon(cards_one_two_three.status)}`} aria-hidden="true"></i>
                     <Text styles={styles.header}>{cards_one_two_three.title}</Text>
                 </Card.Item>
                 {
@@ -132,9 +120,6 @@ const CardsSection = (props) => {
                     <>
                         <Card.Item>
                             <Text styles={styles.status}>Form status - {cards_one_two_three.status}</Text>
-                        </Card.Item>
-                        <Card.Item>
-                            <Text styles={styles.percentage}>{cards_one_two_three.percentage}</Text>
                         </Card.Item>
                     </>
                     :
@@ -144,17 +129,11 @@ const CardsSection = (props) => {
                             <Card.Item>
                                 <Text styles={styles.status}>Approval Status - {cards_one_two_three.status}</Text>
                             </Card.Item>
-                            <Card.Item>
-                                <Text styles={styles.percentage}>{cards_one_two_three.percentage}</Text>
-                            </Card.Item>
                         </>
                         :
                         <>
                             <Card.Item>
                                 <Text styles={styles.status}>Filling Status - {cards_one_two_three.status}</Text>
-                            </Card.Item>
-                            <Card.Item>
-                                <Text styles={styles.percentage}>{cards_one_two_three.percentage}</Text>
                             </Card.Item>
                         </>
                         }
@@ -173,7 +152,7 @@ const CardsSection = (props) => {
             <Card styles={styles.cardStyles}>
                 <Card.Section>
                 <Card.Item>
-                    <i style={icon} className={`ms-Icon ms-Icon--${cards_four_five_six.icon}`} aria-hidden="true"></i>
+                    <i style={icon} className={`ms-Icon ms-Icon--${receiveIcon(cards_four_five_six.status)}`} aria-hidden="true"></i>
                     <Text styles={styles.header}>{cards_four_five_six.title}</Text>
                 </Card.Item>
                 {
@@ -181,9 +160,6 @@ const CardsSection = (props) => {
                     <>
                         <Card.Item>
                             <Text styles={styles.status}>Form status - {cards_four_five_six.status}</Text>
-                        </Card.Item>
-                        <Card.Item>
-                            <Text styles={styles.percentage}>{cards_four_five_six.percentage}</Text>
                         </Card.Item>
                     </>
                     :
@@ -193,17 +169,11 @@ const CardsSection = (props) => {
                             <Card.Item>
                                 <Text styles={styles.status}>Approval Status - {cards_four_five_six.status}</Text>
                             </Card.Item>
-                            <Card.Item>
-                                <Text styles={styles.percentage}>{cards_four_five_six.percentage}</Text>
-                            </Card.Item>
                         </>
                         :
                         <>
                             <Card.Item>
                                 <Text styles={styles.status}>Filling Status - {cards_four_five_six.status}</Text>
-                            </Card.Item>
-                            <Card.Item>
-                                <Text styles={styles.percentage}>{cards_four_five_six.percentage}</Text>
                             </Card.Item>
                         </>
                         }
@@ -223,7 +193,7 @@ const CardsSection = (props) => {
             <Card styles={styles.cardStyles}>
                 <Card.Section>
                 <Card.Item>
-                    <i style={icon} className={`ms-Icon ms-Icon--${cards_seven_eight_nine.icon}`} aria-hidden="true"></i>
+                    <i style={icon} className={`ms-Icon ms-Icon--${receiveIcon(cards_seven_eight_nine.status)}`} aria-hidden="true"></i>
                     <Text styles={styles.header}>{cards_seven_eight_nine.title}</Text>
                 </Card.Item>
                 {
@@ -231,9 +201,6 @@ const CardsSection = (props) => {
                     <>
                         <Card.Item>
                             <Text styles={styles.status}>Form status - {cards_seven_eight_nine.status}</Text>
-                        </Card.Item>
-                        <Card.Item>
-                            <Text styles={styles.percentage}>{cards_seven_eight_nine.percentage}</Text>
                         </Card.Item>
                     </>
                     :
@@ -243,17 +210,11 @@ const CardsSection = (props) => {
                             <Card.Item>
                                 <Text styles={styles.status}>Approval Status - {cards_seven_eight_nine.status}</Text>
                             </Card.Item>
-                            <Card.Item>
-                                <Text styles={styles.percentage}>{cards_seven_eight_nine.percentage}</Text>
-                            </Card.Item>
                         </>
                         :
                         <>
                             <Card.Item>
                                 <Text styles={styles.status}>Filling Status - {cards_seven_eight_nine.status}</Text>
-                            </Card.Item>
-                            <Card.Item>
-                                <Text styles={styles.percentage}>{cards_seven_eight_nine.percentage}</Text>
                             </Card.Item>
                         </>
                         }
@@ -269,7 +230,7 @@ const CardsSection = (props) => {
         </div>
       </>
     
-  );
+  )
 }
 
 export default CardsSection;
