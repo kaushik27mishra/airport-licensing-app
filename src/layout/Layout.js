@@ -22,6 +22,8 @@ import Form7 from "../pages/forms/form7/Form7";
 import Form8 from "../pages/forms/form8/Form8";
 import Form9 from "../pages/forms/form9/Form9";
 import RenewalForm from "../pages/forms/renewal/RenewalForm";
+import DGCACards from "../pages/dgca/FormsList"
+import OperatorCards from "../pages/operator/FormsList"
 
 function Layout(props) {
 
@@ -37,6 +39,8 @@ function Layout(props) {
                   <Header history={props.history}/>
                 </div>
                 <Switch>
+                    <Route path="/app/dgca" component={DGCACards}/>
+                    <Route path="/app/operator" component={OperatorCards}/>
                     <Route path="/app/dashboard" component={Dashboard} />
                     <Route path="/app/sampleform" component={SampleForm} />
                     <Route path="/app/licensee_detail_form" component={Form1}/>
