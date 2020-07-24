@@ -68,7 +68,7 @@ query SignIn(
     if(loading) {
         return <div>Loading</div>
     }
-
+    console.log(data);
 
     if(error) {
         console.log(error);
