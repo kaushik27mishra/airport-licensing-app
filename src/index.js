@@ -13,12 +13,27 @@ import { Fabric } from '@fluentui/react'
 import { initializeIcons } from '@uifabric/icons';
 
 //apollo
-import { ApolloClient, InMemoryCache, ApolloProvider} from '@apollo/client'
+import { ApolloClient, createHttpLink, InMemoryCache, ApolloProvider } from '@apollo/client';
+import { setContext } from '@apollo/client/link/context';
 
 import * as serviceWorker from './serviceWorker';
 
+const httpLink = createHttpLink({
+  uri: 'http://4f1a7909e98e.ngrok.io',
+});
+
+const authLink = setContext((_, { headers }) => {
+  const token = localStorage.getItem('id_token');
+  return {
+    headers: {
+      ...headers,
+      authorization: token ? `Bearer ${token}` : "",
+    }
+  }
+});
+
 const client = new ApolloClient({
-  uri: 'https://4b9b6fd4f94b.ngrok.io',
+  link: authLink.concat(httpLink),
   cache: new InMemoryCache()
 });
 
