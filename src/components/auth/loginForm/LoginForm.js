@@ -131,3 +131,21 @@ query SignIn(
 
 export default LoginForm;
 
+const LOGIN = gql`
+mutation SignIn(
+    $email: String!,
+    $password: String!,
+    $signCertFile: Upload!,
+    $privatekeyFile: Upload! ){
+      signIn(
+        email: $email,
+        password: $password,
+        privatekeyFile: $privatekeyFile,
+        signCertFile: $signCertFile){
+      token
+      user{
+        email
+      }
+        }
+    }
+`;

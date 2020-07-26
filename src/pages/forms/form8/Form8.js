@@ -98,7 +98,6 @@ export default class Form8 extends Component {
     }
 
     _onChange = (ev, option) => {
-        console.dir(option);
         this.setState({check:option.key})
     }
 
