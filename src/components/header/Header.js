@@ -21,7 +21,7 @@ const menuStyles = {
 
 function Header(props) {
 
-    const { client, loading, data: { currentUser } } = useQuery(
+    const { client, error, data } = useQuery(
         PROFILE_QUERY,
         { fetchPolicy: "network-only" }
     );
@@ -56,25 +56,35 @@ function Header(props) {
         history.push("/login");
     }
 
-    if(currentUser) {
-        return (
-            <div>
-                <CommandBar
-                    farItems={_farItems}
-                    ariaLabel="Use left and right arrow keys to navigate between commands"
-                />
-            </div>
-        )
+    if(error) {
+        props.history.push('/login')
+        localStorage.removeItem("id_token");
+        client.resetStore()
+        userDispatch({ type: "SIGN_OUT_SUCCESS" });
     }
+
+    // if(data) {
+    //     console.log(data.me);
+    // }
+
+    return (
+        <div>
+            <CommandBar
+                farItems={_farItems}
+                ariaLabel="Use left and right arrow keys to navigate between commands"
+            />
+        </div>
+    )
 }
 
 export default Header
 
 const PROFILE_QUERY = gql`
-query me {
-  User {
-    id
+query { 
+    me {
+        id
+        role
+    }
   }
-}
 `;
 

@@ -22,6 +22,7 @@ import * as serviceWorker from './serviceWorker';
 const uploadLink = createUploadLink({
   uri: process.env.REACT_APP_BACKENDURL,
 })
+
 const authLink = setContext((_, { headers }) => {
   const token = localStorage.getItem('id_token');
   return {
