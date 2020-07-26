@@ -32,9 +32,9 @@ export default function App(props) {
           path="/app"
           render={() => <Redirect to="/app/dashboard" />}
         />
-        <Route path="/app" component={Layout} />
+        <PrivateRoute path="/app" component={Layout} />
         <PublicRoute path="/login" component={Login} />
-        <PrivateRoute component={Error} />
+        <Route component={Error} />
       </Switch>
     </HashRouter>
   );

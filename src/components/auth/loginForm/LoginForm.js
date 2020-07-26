@@ -1,7 +1,7 @@
 import React,{ useState } from 'react'
 
 //graphql
-import { gql, useMutation } from '@apollo/client';
+import { gql, useLazyQuery } from '@apollo/client';
 
 //context
 import { useUserDispatch } from "../../../context/UserContext";
@@ -38,36 +38,42 @@ function LoginForm(props) {
 
     const dispatch = useUserDispatch();
 
-    const [isLoading, setIsLoading] = useState(false);
-    const [error, setError] = useState(null);
     const [loginValue, setLoginValue] = useState("");
     const [passwordValue, setPasswordValue] = useState("");
     const [certKey, setCertKey] = useState(null);
     const [privateKey, setPrivateKey] = useState(null);
 
-    const [loginFunction, { loading: mutationLoading, error: mutationError, data }] = useMutation(LOGIN);
+    const LOGIN = gql`
+query SignIn(
+    $email: String!,
+    $password: String!,
+    $signCertFile: Upload!,
+    $privatekeyFile: Upload! ){
+      signIn(
+        email: $email,
+        password: $password,
+        privatekeyFile: $privatekeyFile,
+        signCertFile: $signCertFile){
+      token
+      user{
+        email
+      }
+        }
+    }`;
 
-    if(mutationLoading) {
-        setIsLoading(true);
-        setError(false);
-    }
+    const [ loginFunction,{loading, error, data }] = useLazyQuery(LOGIN);
 
-    if(mutationError) {
-        setIsLoading(false)
-        setError(true);
-        dispatch({ type: "LOGIN_FAILURE" });
+    if(error) {
+        console.log(error);
     }
     
     if(data) {
-      localStorage.setItem('id_token', data.token)
-      setError(null)
-      setIsLoading(false)
-      dispatch({ type: 'LOGIN_SUCCESS' })
-      props.history.push('/app/dashboard')
+        // console.log(data.signIn);
+        localStorage.setItem('id_token', data.signIn.token)
+        dispatch({ type: 'LOGIN_SUCCESS' })
+        props.history.push('/app/dashboard')
     }
 
-
-    
     return (
             <> 
                 <div className="ms-Grid-row" style={{paddingBottom:'300px'}}>
@@ -76,35 +82,44 @@ function LoginForm(props) {
                             <Card.Section>                
                             {error ? <MessageBar messageBarType={MessageBarType.error} isMultiline={false} dismissButtonAriaLabel="Close" >There is an error processesing your request</MessageBar>:null}
                             <Text variant={'xxLarge'}>Login Form Airport Licensing App</Text>
-                            <TextField 
+                            <TextField
+                                disabled={loading} 
                                 name="Email" 
                                 value={loginValue} 
                                 onChange={(e) => {setLoginValue(e.target.value)}} 
                                 label="Email"
                             />
                             <TextField
+                                disabled={loading} 
                                 name="phone"
                                 type="password" 
                                 value={passwordValue} 
                                 onChange={(e)=>{setPasswordValue(e.target.value)}} 
                                 label="Password"
                             />
-                            <div class="button-wrap">
-                                <label class ="new-button" for="upload1"> Upload Private Key File
-                                    <input id="upload1" name="grid" type="file" onChange={(e) => setPrivateKey(e.target.files[0])}/>
+                            <div className="button-wrap">
+                                <label className="new-button" htmlFor="upload1"> Upload Private Key File
+                                    <input id="upload1" name="grid" type="file" onChange={({target: {files}}) => {
+                                        const file = files[0]
+                                        file && setPrivateKey(file)}}/>
                                 </label>
                                 {privateKey!=null ? `${privateKey.name}` : ''}
                             </div>
-                            <div class="button-wrap">
-                                <label class ="new-button" for="upload2"> Upload Cert Key File
-                                    <input id="upload2" name="grid" type="file" onChange={(e) => setCertKey(e.target.files[0])}/>
+                            <div className="button-wrap">
+                                <label className="new-button" htmlFor="upload2"> Upload Cert Key File
+                                    <input id="upload2" name="grid" type="file" onChange={({target: {files}}) => {
+                                        const file = files[0]
+                                        file && setCertKey(file)}}/>
                                 </label>
                                 {certKey!=null ? `${certKey.name}` : ''}
                             </div>
                             <PrimaryButton 
-                                disabled={isLoading} 
+                                disabled={loading} 
                                 text="Submit" 
-                                onClick={() =>  loginFunction({variables: {email: loginValue, password: passwordValue, privatekeyFile: privateKey, signCertFile: certKey}})}
+                                onClick={() =>  {
+                                        loginFunction({variables: {email: loginValue, password: passwordValue, privatekeyFile: privateKey, signCertFile: certKey}})
+                                    }
+                                }
                             />
                             </Card.Section>
                         </Card>

@@ -76,8 +76,8 @@ function CardsSection() {
   initializeIcons();
   return (
     <div style={container}>
-      {cards.map((card) => (
-        <div className="s-Grid-col ms-sm3 ms-xl3">
+      {cards.map((card,i) => (
+        <div key={i} className="s-Grid-col ms-sm3 ms-xl3">
           <Card styles={styles.cardStyles}>
             <Card.Section>
               <Card.Item>
