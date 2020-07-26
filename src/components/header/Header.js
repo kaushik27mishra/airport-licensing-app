@@ -56,12 +56,12 @@ function Header(props) {
         history.push("/login");
     }
 
-    if(error) {
-        props.history.push('/login')
-        localStorage.removeItem("id_token");
-        client.resetStore()
-        userDispatch({ type: "SIGN_OUT_SUCCESS" });
-    }
+    // if(error) {
+    //     props.history.push('/login')
+    //     localStorage.removeItem("id_token");
+    //     client.resetStore()
+    //     userDispatch({ type: "SIGN_OUT_SUCCESS" });
+    // }
 
     // if(data) {
     //     console.log(data.me);
