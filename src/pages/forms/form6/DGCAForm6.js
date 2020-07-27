@@ -101,7 +101,17 @@ export default class DGCAForm extends Component {
                                             value={manual} 
                                             handleChange={this.handleManualValueChange} 
                                             onChange={this.handleManualCheckboxChange}
-                                        />{/*to add download button*/}
+                                        />{/*to check download button*/}
+                                        <tr>
+                                            <td></td>
+                                            <td>
+                                                <div class="button-wrap">
+                                                    <form method="get" action={manual}>
+                                                        <button type="submit">Download Manual</button>
+                                                    </form>
+                                                </div>
+                                            </td>
+                                        </tr>
                                         <tr>
                                             <td style={{maxWidth:"150px"}}>
                                                 <Text variant={'large'}>If no, when this is likely to be submitted to DGCA.</Text>

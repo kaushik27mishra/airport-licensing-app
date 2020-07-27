@@ -116,7 +116,17 @@ export default class DGCAForm extends Component {
                                             handleChange={this.handleCalculationSheetValueChange} 
                                             onChange={this.handleCalculationSheetCheckboxChange}
                                         />
-                                        {/*to add file download button*/}
+                                        {/*to check download button*/}
+                                        <tr>
+                                            <td></td>
+                                            <td>
+                                                <div class="button-wrap">
+                                                    <form method="get" action={calculationSheet}>
+                                                        <button type="submit">Download Sheet</button>
+                                                    </form>
+                                                </div>
+                                            </td>
+                                        </tr>
                                     <tr>
                                         <td style={{maxWidth:"150px"}}>
                                             <Text variant={'large'}>Name of the drawee bank</Text>

@@ -260,7 +260,17 @@ export default class DGCAForm extends Component {
                                             value={personInchargeResume} 
                                             handleChange={this.handlePersonInchargeResumeValueChange} 
                                             onChange={this.handlePersonInchargeResumeCheckboxChange}
-                                        />{/*to add download button*/}
+                                        />{/*to check download button*/}
+                                        <tr>
+                                            <td></td>
+                                            <td>
+                                                <div class="button-wrap">
+                                                    <form method="get" action={aerodromeSafetyResume}>
+                                                        <button type="submit">Download Resume</button>
+                                                    </form>
+                                                </div>
+                                            </td>
+                                        </tr>
 
                                         <tr>
                                             <td>
@@ -306,7 +316,17 @@ export default class DGCAForm extends Component {
                                             value={aerodromeSafetyResume} 
                                             handleChange={this.handleAerodromeSafetyResumeValueChange} 
                                             onChange={this.handleAerodromeSafetyResumeCheckboxChange}
-                                        />{/*to add download button*/}
+                                        />{/*to check download button*/}
+                                        <tr>
+                                            <td></td>
+                                            <td>
+                                                <div class="button-wrap">
+                                                    <form method="get" action={aerodromeSafetyResume}>
+                                                        <button type="submit">Download Resume</button>
+                                                    </form>
+                                                </div>
+                                            </td>
+                                        </tr>
 
                                         <tr>
                                             <td>
