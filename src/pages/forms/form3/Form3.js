@@ -4,8 +4,8 @@ import React, { Component } from 'react'
 import { Text, PrimaryButton, Stack, DefaultButton } from 'office-ui-fabric-react';
 import { TextField} from 'office-ui-fabric-react/lib/TextField';
 import { Card } from '@uifabric/react-cards';
-import { mergeStyleSets } from 'office-ui-fabric-react/lib/Styling';
 import { ChoiceGroup } from 'office-ui-fabric-react/lib/ChoiceGroup';
+import { DatePicker, DayOfWeek, mergeStyleSets } from 'office-ui-fabric-react';
 
 
 //style
@@ -36,238 +36,198 @@ const classNames = mergeStyleSets({
     }
 });
 
+const controlClass = mergeStyleSets({
+    control: {
+      margin: '0 0 15px 0',
+      maxWidth: '300px',
+    },
+  });
+
+
+// For Choice Pickers
+const options = [
+    { key: true, text: 'Yes' },
+    { key: false, text: 'No' },
+];
+
+//For Date Field
+const DayPickerStrings = {
+    months: [
+      'January',
+      'February',
+      'March',
+      'April',
+      'May',
+      'June',
+      'July',
+      'August',
+      'September',
+      'October',
+      'November',
+      'December',
+    ],
+  
+    shortMonths: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+  
+    days: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+  
+    shortDays: ['S', 'M', 'T', 'W', 'T', 'F', 'S'],
+  
+    goToToday: 'Go to today',
+    prevMonthAriaLabel: 'Go to previous month',
+    nextMonthAriaLabel: 'Go to next month',
+    prevYearAriaLabel: 'Go to previous year',
+    nextYearAriaLabel: 'Go to next year',
+    closeButtonAriaLabel: 'Close date picker',
+  };
+
 
 const stackTokens = { childrenGap: 20 };
 
-//for Choice Pickers
-const options_use = [
-    { key: 'Pub', text: 'Public Use' },
-    { key: 'Pvt', text: 'Private Use' },
-  ];
-
-const options = [
-    { key: 'Yes', text: 'Yes' },
-    { key: 'No', text: 'No' },
-];
-
-export default class Form3 extends Component {
+export default class Form4 extends Component {
+    
     constructor(props) {
         super(props)
-
+    
         this.state = {
-             usage: 'Pub',
-             onlyYourAircraft : 'Yes',
-             priorPermissionForOtherAircraft : 'Yes',
-             allWeatherRequired : 'No',
-             purposeOfPrivate : "",
-             purposeOfPrivate_defect : false,
-             purposeOfPrivate_error : "",
-             detailsOfProposedLighting : "",
-             detailsOfProposedLighting_defect: false,
-             detailsOfProposedLighting_error: "",
-             detailsCNS_ATN : "",
-             detailsCNS_ATN_defect: false,
-             detailsCNS_ATN_error: "",
-             detailsMET_Facilities : "",
-             detailsMET_Facilities_defect: false,
-             detailsMET_Facilities_error: "",
-             otherAviationActivities : "",
-             otherAviationActivities_defect: false,
-             otherAviationActivities_error: "",
-             heaviestAircraftType: "",
-             heaviestAircraftType_defect: false,
-             heaviestAircraftType_error: "",
-             heaviestAircraftLength: "",
-             heaviestAircraftLength_defect: false,
-             heaviestAircraftLength_error: "",
-             heaviestAircraftWeight: "",
-             heaviestAircraftWeight_defect: false,
-             heaviestAircraftWeight_error: "",
-             heaviestAircraftWidth: "",
-             heaviestAircraftWidth_defect: false,
-             heaviestAircraftWidth_error: "",
-
+             owner: true,
+             rightsIfNotOver: "",
+             rightsIfNotOver_error: "",
+             rightsIfNotOver_defect: null,
+             startingPeriod: '2020-07-13', // default value
+             startingPeriod_error: "",
+             startingPeriod_defect: null,
+             endingPeriod: "2020-07-13",
+             endingPeriod_error: "",
+             endingPeriod_defect: null,
+             termination: "2020-07-13",
+             termination_error: "",
+             termination_defect: null,
         }
     }
-    _onChange = (ev, option) => {
-        this.setState({[ev.target.name]:option.key})
+
+    _onChangeowner = (option) => {
+        this.setState({owner:option.key})
     }
+
+    onFormatDate = (date) => {
+        return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
+    }
+
     handleChange=(e) => {
         this.setState({
             [e.target.name]:e.target.value
         })
     }
 
+    onDateChange = (date,name) => {
+        this.setState({
+            [name] : this.onFormatDate(date)
+        })
+    }
+
+    onParseDateFromString = (val) => {
+        if(typeof(val)=='string') {
+            var parts = val.split('-');
+            return new Date(parts[0], parts[1]-1, parts[2]);
+        }
+    }
+    
     render() {
         const {
-        purposeOfPrivate,
-        purposeOfPrivate_defect,
-        purposeOfPrivate_error,
-        detailsOfProposedLighting,
-        detailsOfProposedLighting_defect,
-        detailsOfProposedLighting_error,
-        detailsCNS_ATN,
-        detailsCNS_ATN_defect,
-        detailsCNS_ATN_error,
-        detailsMET_Facilities,
-        detailsMET_Facilities_defect,
-        detailsMET_Facilities_error,
-        otherAviationActivities,
-        otherAviationActivities_defect,
-        otherAviationActivities_error,
-        heaviestAircraftType,
-        heaviestAircraftType_defect,
-        heaviestAircraftType_error,
-        heaviestAircraftLength,
-        heaviestAircraftLength_defect,
-        heaviestAircraftLength_error,
-        heaviestAircraftWeight,
-        heaviestAircraftWeight_defect,
-        heaviestAircraftWeight_error,
-        heaviestAircraftWidth,
-        heaviestAircraftWidth_defect,
-        heaviestAircraftWidth_error} = this.state;
-
+             rightsIfNotOver,
+             rightsIfNotOver_error,
+             rightsIfNotOver_defect,
+             startingPeriod,
+             startingPeriod_error,
+             startingPeriod_defect,
+             endingPeriod,
+             endingPeriod_error,
+             endingPeriod_defect,
+             termination,
+             termination_error,
+             termination_defect,
+        } = this.state;
         return (
             <div className="ms-Grid-row" style={{paddingBottom:'100px'}}>
                 <div className={`s-Grid-col ms-sm9 ms-xl9 ${classNames.pivot}`}>
                     <Card styles={styles.cardStyles}>
                         <Card.Section>
-                                <Text variant={'xxLarge'}>Aerodrome Activities</Text>
-
-                                <ChoiceGroup
-                                    name="usage"
-                                    defaultSelectedKey="Pub"
-                                    options={options_use}
-                                    onChange={this._onChange}
-                                    label="Pick one"
-                                    required={true}/>
+                            <Text 
+                                variant={'xxLarge'} >
+                                    Control of the Aerodrome {startingPeriod}
+                            </Text>
+                            <ChoiceGroup 
+                                defaultSelectedKey={true}
+                                options={options}
+                                onChange={this._onChangeowner} 
+                                label="Are you the owner of the aerodrome site" 
+                                required={true}/>
                                 {
-                                    this.state.usage==='Pvt' ?
+                                    this.state.owner===false ? 
                                     <>
                                         <TextField
-                                            name="purposeOfPrivate"
-                                            onChange={this.handleChange}
-                                            value={purposeOfPrivate}
-                                            errorMessage={purposeOfPrivate_error}
-                                            disabled={purposeOfPrivate_defect}
-                                            label="Indicate the purpose for which the aerodrome
-                                                will be used e.g. joy rides, air displays, miscellaneous instructional 
-                                                flying, private flying etc."
-                                            placeholder="Please enter text here"
-                                            multiline rows={3}/>
-                                        <ChoiceGroup
-                                            name="onlyYourAircraft"
-                                            defaultSelectedKey="No"
-                                            options={options}
-                                            onChange={this._onChange}
-                                            label="Whether your own aircraft only will use the aerodrome or do you 
-                                                propose to use the aerodrome by own aircraft as well as other aircraft ?" 
-                                            required={true}/>
-                                        {
-                                            this.state.onlyYourAircraft==='No' ?
-                                                <ChoiceGroup
-                                                name="priorPermissionForOtherAircraft"
-                                                defaultSelectedKey="Yes"
-                                                options={options}
-                                                onChange={this._onChange}
-                                                label="Whether your own aircraft only will use the aerodrome or do you 
-                                                    propose to use the aerodrome by own aircraft as well as other aircraft ?" 
-                                                required={true}/>
-                                                : null
-                                        }
+                                            name="rightsIfNotOver" 
+                                            onChange={this.handleChange} 
+                                            value={rightsIfNotOver} 
+                                            errorMessage={rightsIfNotOver_error} 
+                                            disabled={rightsIfNotOver_defect}
+                                            label="Please state the details of the
+                                                rights you hold over the land" 
+                                            placeholder="Please enter details here"
+                                            multiline rows={3} /> 
+                                        
+                                        <Text 
+                                            variant='medium'>
+                                                The period from which you hold these rights
+                                        </Text>
+                                        <DatePicker
+                                            className={controlClass.control}
+                                            onSelectDate={(e)=> {this.onDateChange(e,'startingPeriod')}} // change the second input
+                                            firstDayOfWeek={DayOfWeek.Sunday} // no need to change
+                                            value={this.onParseDateFromString(startingPeriod)} // change the name of input variable
+                                            strings={DayPickerStrings} // no need to change
+                                            disabled={!(startingPeriod_defect==null) && !startingPeriod_defect}
+                                            placeholder="Select a date."
+                                            ariaLabel="Select a date"
+                                        />
+                                        {startingPeriod_error===''? null : <Text style={{color:'#FF0000',marginTop:'0'}} variant='small'>{startingPeriod_error}</Text>}
+                                        <Text 
+                                            variant='medium'>
+                                                The period to which you hold these rights
+                                        </Text>
+                                        <DatePicker
+                                            onSelectDate={(e)=> {this.onDateChange(e,'endingPeriod')}} 
+                                            firstDayOfWeek={DayOfWeek.Sunday}
+                                            value={this.onParseDateFromString(endingPeriod)}
+                                            disabled={!(endingPeriod_defect==null) && !endingPeriod_defect}
+                                            errorMessage={endingPeriod_error}
+                                            className={controlClass.control}
+                                            strings={DayPickerStrings}
+                                            placeholder="Select a date."
+                                            ariaLabel="Select a date"
+                                        /> 
+                                        {endingPeriod_error===''? null : <Text style={{color:'#FF0000',marginTop:'0'}} variant='small'>{endingPeriod_error}</Text>}
+                                        <Text variant='medium'>Termination of these rights</Text> {/*Needs to be made DateField*/}
+                                        <DatePicker
+                                            onSelectDate={(e)=> {this.onDateChange(e,'termination')}} 
+                                            firstDayOfWeek={DayOfWeek.Sunday}
+                                            value={this.onParseDateFromString(termination)}
+                                            disabled={!(termination_defect==null) && !termination_defect}
+                                            errorMessage={termination_error}
+                                            className={controlClass.control}
+                                            strings={DayPickerStrings}
+                                            placeholder="Select a date."
+                                            ariaLabel="Select a date"
+                                        />
+                                        {termination_error===''? null : <Text style={{color:'#FF0000',marginTop:'0'}} variant='small'>{termination_error}</Text>}
                                     </>
                                     : null
                                 }
-                                <ChoiceGroup 
-                                    name="allWeatherRequired"
-                                    defaultSelectedKey="No"
-                                    options={options}
-                                    onChange={this._onChange}
-                                    label="Is a license for NIGHT USE/ ALL WEATHER required?"
-                                    required={true}/>
-                                {
-                                    this.state.allWeatherRequired==="Yes" ?
-                                    <TextField
-                                        name="detailsOfProposedLighting"
-                                        onChange={this.handleChange}
-                                        value={detailsOfProposedLighting}
-                                        errorMessage={detailsOfProposedLighting_error}
-                                        disabled={detailsOfProposedLighting_defect}
-                                        label="Please provide details of proposed lighting
-                                            along with lighting plan"
-                                        placeholder="Please enter text here"
-                                        multiline rows={3}/>
-                                    : null
-                                }
-                                <TextField
-                                        name="detailsCNS_ATN"
-                                        onChange={this.handleChange}
-                                        value={detailsCNS_ATN}
-                                        errorMessage={detailsCNS_ATN_error}
-                                        disabled={detailsCNS_ATN_defect}
-                                        label="Please provide details of proposed CNS-ATM facilities"
-                                        placeholder="Please enter text here"
-                                        multiline rows={3}/>
-                                <TextField
-                                        name="detailsMET_Facilities"
-                                        onChange={this.handleChange}
-                                        value={detailsMET_Facilities}
-                                        errorMessage={detailsMET_Facilities_error}
-                                        disabled={detailsMET_Facilities_defect}
-                                        label="Please provide details of proposed MET facilities"
-                                        placeholder="Please enter text here"
-                                        multiline rows={3}/>
-                                <TextField
-                                        name="otherAviationActivities"
-                                        onChange={this.handleChange}
-                                        value={otherAviationActivities}
-                                        errorMessage={otherAviationActivities_error}
-                                        disabled={otherAviationActivities_defect}
-                                        label="Please give details of other proposed aviation activities
-                                            (for example gliding, parachuting, micro lights)."
-                                        placeholder="Please enter text here"
-                                        multiline rows={3}/>
-                                <TextField
-                                        name="heaviestAircraftType"
-                                        onChange={this.handleChange}
-                                        value={heaviestAircraftType}
-                                        errorMessage={heaviestAircraftType_error}
-                                        disabled={heaviestAircraftType_defect}
-                                        label="Mention the type of the largest / heaviest aircraft 
-                                            for which the aerodrome is designed"
-                                        placeholder="Please enter text here"/>
-                                <TextField
-                                        name="heaviestAircraftWeight"
-                                        onChange={this.handleChange}
-                                        value={heaviestAircraftWeight}
-                                        errorMessage={heaviestAircraftWeight_error}
-                                        disabled={heaviestAircraftWeight_defect}
-                                        label="Mention the maximum total weight of the largest / heaviest aircraft 
-                                            for which the aerodrome is designed"
-                                        placeholder="Please enter text here"/>
-                                <TextField
-                                        name="heaviestAircraftLength"
-                                        onChange={this.handleChange}
-                                        value={heaviestAircraftLength}
-                                        errorMessage={heaviestAircraftLength_error}
-                                        disabled={heaviestAircraftLength_defect}
-                                        label="Mention thr overall length of the largest / heaviest aircraft 
-                                            for which the aerodrome is designed"
-                                        placeholder="Please enter text here"/>
-                                <TextField
-                                        name="heaviestAircraftWidth"
-                                        onChange={this.handleChange}
-                                        value={heaviestAircraftWidth}
-                                        errorMessage={heaviestAircraftWidth_error}
-                                        disabled={heaviestAircraftWidth_defect}
-                                        label="Mention the maximum fuselage width of the largest / heaviest aircraft 
-                                            for which the aerodrome is designed"
-                                        placeholder="Please enter text here"/>
-                                <Stack horizontal tokens={stackTokens}>
-                                    <DefaultButton text="Back" allowDisabledFocus />
-                                    <PrimaryButton text="Next" allowDisabledFocus />
-                                </Stack>              
+                            <Stack horizontal tokens={stackTokens}>
+                                <DefaultButton text="Back" allowDisabledFocus />
+                                <PrimaryButton text="Next" allowDisabledFocus />
+                            </Stack>
                         </Card.Section>
                     </Card>
                 </div>

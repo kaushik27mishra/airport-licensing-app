@@ -1,15 +1,16 @@
 import React, { Component } from 'react'
 
 //ui
-import { Text, PrimaryButton, Stack, DefaultButton } from 'office-ui-fabric-react';
-import { TextField} from 'office-ui-fabric-react/lib/TextField';
+import { Text, PrimaryButton, Stack, DefaultButton  } from 'office-ui-fabric-react';
+import { TextField } from 'office-ui-fabric-react/lib/TextField';
 import { Card } from '@uifabric/react-cards';
 import { mergeStyleSets } from 'office-ui-fabric-react/lib/Styling';
-
-//components
-import Address from '../../../components/form/Address'
+import { ActionButton} from 'office-ui-fabric-react';
+import { Dropdown } from 'office-ui-fabric-react/lib/Dropdown';
 
 //style
+import './style.css'
+
 const styles = {
     cardStyles: {
         root: {
@@ -23,8 +24,17 @@ const styles = {
           margin: 'auto',
           marginTop: 60,
         }
+    },
+    textFieldStyles: {
+        root: {
+            width:'100%'
+        }
     }
 }
+
+const dropdownStyles = {
+    dropdown: { width: 300 },
+  };
 
 const classNames = mergeStyleSets({
     pivot: {
@@ -32,82 +42,115 @@ const classNames = mergeStyleSets({
     }
 });
 
+const addIcon = { iconName: 'Add' };
+
+const removeIcon = { iconName: 'Remove' };
 
 const stackTokens = { childrenGap: 20 };
 
-export default class Form1 extends Component {
+//For aerodrome owner
+const options = [
+    { key: 1234, text: 'Theresa' },
+    { key: 5678, text: 'Stefan' },
+  ];
+
+class Form2 extends Component {
     constructor(props) {
         super(props)
 
         this.state = {
-             name: "",
-             name_defect:false,
-             name_error:"",
-             phone: "",
-             phone_defect:false,
-             phone_error:"",
-             email: "",
-             email_defect:false,
-             email_error:"",
-             fax: "",
-             fax_defect:false,
-             fax_error:"",
-             nationality: "",
-             nationality_defect:false,
-             nationality_error:"",
-             licenseeAddress: {
-                 line1:'',
-                 line2:'',
-                 state:  null,
-                 city:'',
-                 pincode:''
-             }
+            placeName: "",
+            placeName_defect: false,
+            placeName_error: "",
+            owner: "",
+            owner_defect: false,
+            owner_error: "",
+            situation: "",
+            situation_defect: false,
+            situation_error: "",
+            statedistrict: "",
+            statedistrict_defect: false,
+            statedistrict_error: "",
+            grid: null,
+            grid_defect: false,
+            grid_error: "",
+            runways:[{meters:'',orientation:''}],
+            elevationFeet: "",
+            elevationFeet_defect: false,
+            elevationMeter: "",
+            elevationMeter_defect: false,
+            elevationMeter_error: "",
         }
     }
 
     handleChange=(e) => {
         this.setState({
-            [e.target.name]:e.target.value
+            [e.target.name]:e.input.value
         })
     }
 
-    handleAdressStateChange = (name,e,item) => {
+    handleChangeOwnerDropdown = (e, option) => {
         this.setState({
-            [name] : {
-                ...this.state.licenseeAddress,
-                state: item,
-            }
+            owner:option.text
         })
     }
 
-    handleAdressChange = (name,e) => {
+    handleFileChange=(e) => {
         this.setState({
-            [name] : {
-                ...this.state.licenseeAddress,
-                [e.target.name]: e.target.value,
-            }
+            [e.target.name]:e.target.files[0]
         })
     }
+
+    handleRunwayChange = evt => {
+        this.setState({ [evt.target.name]: evt.target.value });
+    };
+
+    handleRunwayNameChange = idx => evt => {
+        const newRunways = this.state.runways.map((runway, sidx) => {
+            if (idx !== sidx) return runway;
+            return { ...runway, [evt.target.name]: evt.target.value };
+        });
+    
+        this.setState({ runways: newRunways });
+    };
+    
+    handleAddRunway = () => {
+        this.setState({
+            runways: this.state.runways.concat([{ name: "",orientation: "" }])
+        });
+    };
+
+    handleRemoveRunway = idx => () => {
+        this.setState({
+            runways: this.state.runways.filter((s, sidx) => idx !== sidx)
+        });
+    };
 
     render() {
 
         const {
-            name,
-             name_defect,
-             name_error,
-             phone,
-             phone_defect,
-             phone_error,
-             email,
-             email_defect,
-             email_error,
-             fax,
-             fax_defect,
-             fax_error,
-             nationality,
-             nationality_defect,
-             nationality_error,
-             licenseeAddress
+            placeName,
+            placeName_defect,
+            placeName_error,
+            owner,
+            owner_defect,
+            owner_error,
+            situation,
+            situation_defect,
+            situation_error,
+            statedistrict,
+            statedistrict_defect,
+            statedistrict_error,
+            grid,
+            grid_defect,
+            grid_error,
+            runways,
+            elevationFeet,
+            elevationFeet_defect,
+            elevationMeter,
+            elevationMeter_defect,
+            elevationFeet_error,
+            elevationMeter_error
         } = this.state;
 
         return (
@@ -115,51 +158,103 @@ export default class Form1 extends Component {
                 <div className={`s-Grid-col ms-sm9 ms-xl9 ${classNames.pivot}`}>
                     <Card styles={styles.cardStyles}>
                         <Card.Section>
-                                <Text variant={'xxLarge'}>Details of Licensee</Text>
-                                <TextField 
-                                    name="name"
-                                    onChange={this.handleChange}
-                                    value={name}
-                                    errorMessage={name_error}
-                                    disabled={name_defect}
-                                    label="Full Name"/>
+                                <Text variant={'xxLarge'}>
+                                    Details of aerodrome<em>(as required to be shown on the licence)</em>
+                                </Text>
                                 <TextField
-                                    name="phone"
+                                    name="placeName"
                                     onChange={this.handleChange}
-                                    value={phone}
-                                    errorMessage={phone_error}
-                                    disabled={phone_defect}
-                                    label="Telephone Number"/>
-                                {/* To be added in db -> Nationality and Fax Number */}
+                                    value={placeName}
+                                    errorMessage={placeName_error}
+                                    disabled={placeName_defect}
+                                    label="Place name by which the aerodrome
+                                        is to be known in all future references"/>
+                                <Dropdown
+                                    onChange={this.handleChangeOwnerDropdown}
+                                    value={owner}
+                                    errorMessage={owner_error}
+                                    disabled={owner_defect}
+                                    placeholder="Select a name"
+                                    label="Select name of aerodrome owner"
+                                    options={options}
+                                    styles={dropdownStyles}
+                                />
+                                {/*Fax number to be added to Person, and this dropdown needs to be connected to Person*/}
+
                                 <TextField
-                                    name="fax"
+                                    name="situation"
                                     onChange={this.handleChange}
-                                    value={fax}
-                                    errorMessage={fax_error}
-                                    disabled={fax_defect}
-                                    label="Fax Number"/>
+                                    value={situation}
+                                    errorMessage={situation_error}
+                                    disabled={situation_defect}
+                                    label="Situation of the aerodrome site with
+                                        reference to the nearest airport, railway
+                                        station and town/village"
+                                    multiline rows={3}/>
                                 <TextField
-                                    name="email"
+                                    name="statedistrict"
                                     onChange={this.handleChange}
-                                    value={email}
-                                    errorMessage={email_error}
-                                    disabled={email_defect}
-                                    label="Email"/>
+                                    value={statedistrict}
+                                    errorMessage={statedistrict_error}
+                                    disabled={statedistrict_defect}
+                                    label="State/District which situated"/> {/*To be added in db*/}
                                 <TextField
-                                    name="nationality"
+                                    name="grid"
                                     onChange={this.handleChange}
-                                    value={nationality}
-                                    errorMessage={nationality_error}
-                                    disabled={nationality_defect}
-                                    label="Nationality"/>
-                                <Address
-                                    text="Address of Licensee" 
-                                    handleChange={(e) => this.handleAdressChange('licenseeAddress',e)} 
-                                    handleAdressStateChange={(e,item) => this.handleAdressStateChange('licenseeAddress',e,item)} 
-                                    address={licenseeAddress}/>
+                                    value={grid}
+                                    errorMessage={grid_error}
+                                    disabled={grid_defect}
+                                    label="Grid Reference in WGS 84"
+                                    multiline rows={3}/>
+                                <Text variant={'medium'}>
+                                    Attach a survey map, scale1:10,000 showing by means of broken line the exact boundaries of the aerodrome.
+                                </Text>
+                                <div class="button-wrap">
+                                    <label class ="new-button" for="upload"> Upload File
+                                    <input id="upload" name="grid" type="file" onChange={this.handleFileChange}/>
+                                    </label>
+                                    {grid!=null ? `${grid.name}` : ''}
+                                </div>
+                                <TextField
+                                    name="elevationFeet"
+                                    onChange={this.handleChange}
+                                    value={elevationFeet}
+                                    errorMessage={elevationFeet_error}
+                                    disabled={elevationFeet_defect}
+                                    label="Elevation of the Aerodrome reference point (AMSL) in feet"/>
+                                <TextField
+                                    name="elevationMeter"
+                                    onChange={this.handleChange}
+                                    value={elevationMeter}
+                                    errorMessage={elevationMeter_error}
+                                    disabled={elevationMeter_defect}
+                                    label="Elevation of the Aerodrome reference point (AMSL) in metres"/>
+                                <Text
+                                    variant={'medium'}>
+                                        Enter Details about <strong>runway(s)</strong>
+                                </Text>
+                                <ActionButton   // Need to add information for multiple runway(s) in db
+                                    iconProps={addIcon}
+                                    allowDisabledFocus
+                                    onClick={this.handleAddRunway}>
+                                 Click for more runway(s).
+                                </ActionButton>
+                                {runways.map((runway, idx) => (
+                                    <>
+                                     <TextField label={`Length of ${idx+1} runway in metres`} value={runway.name} onChange={this.handleRunwayNameChange(idx)} name="meters" required/>
+                                     <TextField label={`Orientation  ${idx+1} of runway`} value={runway.orientation} onChange={this.handleRunwayNameChange(idx)} name="orientation" required/>
+                                     <ActionButton  
+                                        iconProps={removeIcon}
+                                        allowDisabledFocus
+                                        // style={{color:'#922427'}}
+                                        onClick={this.handleRemoveRunway(idx)}>
+                                        Remove a runway
+                                     </ActionButton>
+                                    </>
+                                ))}
                                 <Stack horizontal tokens={stackTokens}>
-                                    <DefaultButton text="Back" allowDisabledFocus/>
-                                    <PrimaryButton text="Next" allowDisabledFocus/>
+                                    <DefaultButton text="Back" allowDisabledFocus />
+                                    <PrimaryButton text="Next" allowDisabledFocus />
                                 </Stack>
                         </Card.Section>
                     </Card>
@@ -168,3 +263,5 @@ export default class Form1 extends Component {
         )
     }
 }
+
+export default Form2;
