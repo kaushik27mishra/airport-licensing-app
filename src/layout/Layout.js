@@ -24,6 +24,7 @@ import Form8 from "../pages/forms/form8/Form8";
 import RenewalForm from "../pages/forms/renewal/RenewalForm";
 import FormCards from "../pages/FormsCards";
 import DGCAForm from "../pages/forms/DGCAForm";
+import DGCAForm5 from "../pages/forms/form5/DGCAForm5"
 
 function Layout(props) {
 
@@ -52,6 +53,7 @@ function Layout(props) {
                     <Route path="/app/aerodrome_manual" component={Form6}/>
                     <Route path="/app/details_of_fees" component={Form7}/>
                     <Route path="/app/further_info" component={Form8}/>
+                    <Route path="/app/test" component={DGCAForm5}/>
                     <Route path="/app/renewal_form" component={RenewalForm}/>
                 </Switch>
               </div>
