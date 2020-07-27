@@ -24,7 +24,10 @@ import Form8 from "../pages/forms/form8/Form8";
 import RenewalForm from "../pages/forms/renewal/RenewalForm";
 import FormCards from "../pages/FormsCards";
 import DGCAForm from "../pages/forms/DGCAForm";
-import DGCAForm5 from "../pages/forms/form5/DGCAForm5"
+import DGCAForm5 from "../pages/forms/form5/DGCAForm5";
+import DGCAForm6 from "../pages/forms/form6/DGCAForm6";
+import DGCAForm7 from "../pages/forms/form7/DGCAForm7";
+import DGCAForm8 from "../pages/forms/form8/DGCAForm8";
 
 function Layout(props) {
 
@@ -53,8 +56,13 @@ function Layout(props) {
                     <Route path="/app/aerodrome_manual" component={Form6}/>
                     <Route path="/app/details_of_fees" component={Form7}/>
                     <Route path="/app/further_info" component={Form8}/>
-                    <Route path="/app/test" component={DGCAForm5}/>
                     <Route path="/app/renewal_form" component={RenewalForm}/>
+
+                    <Route path="/app/dgca/aerodrome_management_personnel" component={DGCAForm5}/>
+                    <Route path="/app/dgca/aerodrome_manual" component={DGCAForm6}/>
+                    <Route path="/app/dgca/details_of_fees" component={DGCAForm7}/>
+                    <Route path="/app/dgca/further_info" component={DGCAForm8}/>
+                    
                 </Switch>
               </div>
             </div>
