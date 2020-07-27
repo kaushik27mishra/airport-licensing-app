@@ -37,44 +37,45 @@ export default class DGCAForm extends Component {
         super(props)
 
         this.state = {
-            elevationMeter: {
-                data:"100ft",
+            rightsIfNotOver:{
+                data:"Abdkjabd",
                 suggestion:"",
                 checked:false
             }
         }
     }
-    handleElevationMeterValueChange = (e) => {
+
+    handleRightsIfNotOverValueChange = (e) => {
         this.setState({
-            elevationMeter : {
-                ...this.state.elevationMeter,
-                suggestion : e.target.value,
+            rightsIfNotOver : {
+                ...this.state.rightsIfNotOver,
+                suggestion: e.target.value,
             }
         })
     }
-    handleElevationMeterCheckboxChange = (e,checked) => {
+
+    handleRightsIfNotOverCheckboxChange = (e,checked) => {
         this.setState({
-            elevationMeter : {
-                ...this.state.elevationMeter,
+            rightsIfNotOver : {
+                ...this.state.rightsIfNotOver,
                 suggestion:"",
                 checked: !!checked
             }
         })
     }
 
-
-   
+    
 
 
     render() {
-        const {elevationMeter } = this.state;
+        const { rightsIfNotOver } = this.state;
 
         return (
             <div className="ms-Grid-row" style={{paddingBottom:'100px'}}>
                 <div className={`s-Grid-col ms-sm9 ms-xl9 ${classNames.pivot}`}>
                     <Card styles={styles.cardStyles}>
                         <Card.Section>
-                                <Text variant={'xxLarge'}>Review: Form1</Text>
+                                <Text variant={'xxLarge'}>Review: Form3</Text>
                                 <table style={{width:"100%"}}>
                                     <thead>
                                         <th style={{textAlign:'left'}}>Field</th>
@@ -84,11 +85,10 @@ export default class DGCAForm extends Component {
                                     </thead>
                                     <tbody>
                                         <DGCAChecklist 
-                                            field="Elevation of the Aerodrome reference
-                                            point (AMSL)" 
-                                            value={elevationMeter} 
-                                            handleChange={this.handleElevationMeterValueChange} 
-                                            onChange={this.handleElevationMeterCheckboxChange}
+                                            field="Details of the rights you hold over the land" 
+                                            value={rightsIfNotOver} 
+                                            handleChange={this.handleRightsIfNotOverValueChange} 
+                                            onChange={this.handleRightsIfNotOverCheckboxChange}
                                         />
                                     </tbody>
                                 </table>
