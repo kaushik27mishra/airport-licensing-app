@@ -22,7 +22,7 @@ import Form6 from "../pages/forms/form6/Form6";
 import Form7 from "../pages/forms/form7/Form7";
 import Form8 from "../pages/forms/form8/Form8";
 import RenewalForm from "../pages/forms/renewal/RenewalForm";
-import Cards from "../pages/FormsCards";
+import FormCards from "../pages/FormsCards";
 import DGCAForm from "../pages/forms/DGCAForm";
 
 function Layout(props) {
@@ -39,7 +39,7 @@ function Layout(props) {
                   <Header history={props.history}/>
                 </div>
                 <Switch>
-                    <Route path="/app/form_list" component={Cards}/>
+                    <Route path="/app/form_list" component={FormCards}/>
                     <Route path="/app/dashboard" component={Dashboard} />
                     <Route path="/app/DGCASampleForm" component={DGCAForm} />
                     <Route path="/app/sampleform" component={SampleForm} />
