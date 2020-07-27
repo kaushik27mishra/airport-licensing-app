@@ -207,7 +207,7 @@ export class SignupForm extends Component {
                             disabled={loading} 
                             text="Submit" 
                             onClick={() =>  {
-                                    loginFunction({variables: {email: loginValue, password: passwordValue, privatekeyFile: privateKey, signCertFile: certKey}})
+                                signUpFunation({variables: {email: loginValue, password: passwordValue, privatekeyFile: privateKey, signCertFile: certKey}})
                                 }
                             }
                         />
