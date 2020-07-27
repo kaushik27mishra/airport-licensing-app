@@ -16,12 +16,11 @@ import Form1Extra from "../pages/forms/form1Extra/Form1Extra"
 import Form1 from "../pages/forms/form1/Form1"
 import Form2 from "../pages/forms/form2/Form2"
 import Form3 from "../pages/forms/form3/Form3";
-import Form4 from "../pages/forms/form3/Form3";
-import Form5 from "../pages/forms/form4/Form4";
-import Form6 from "../pages/forms/form5/Form5";
-import Form7 from "../pages/forms/form6/Form6";
-import Form8 from "../pages/forms/form7/Form7";
-import Form9 from "../pages/forms/form8/Form8";
+import Form4 from "../pages/forms/form4/Form4";
+import Form5 from "../pages/forms/form5/Form5";
+import Form6 from "../pages/forms/form6/Form6";
+import Form7 from "../pages/forms/form7/Form7";
+import Form8 from "../pages/forms/form8/Form8";
 import RenewalForm from "../pages/forms/renewal/RenewalForm";
 import Cards from "../pages/FormsCards";
 
