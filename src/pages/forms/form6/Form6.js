@@ -42,7 +42,7 @@ const options = [
     { key: 'No', text: 'No' },
 ];
 
-export default class Form7 extends Component {
+export default class Form6 extends Component {
     constructor(props) {
         super(props)
     
@@ -99,6 +99,7 @@ export default class Form7 extends Component {
                                     label="Is manual enclosed?"
                                     required={true}
                                 />
+                                <br/>
                                 {
                                     this.state.manualEnclosed==="No" ? 
                                         <div>
@@ -113,8 +114,8 @@ export default class Form7 extends Component {
                                             />
                                             <Text variant={'small'} >( Note: An Aerodrome Licence will not be granted until an acceptable aerodrome Manual has been received by DGCA)</Text>
                                         </div>  :
-                                    <div class="button-wrap"> {/*tobe added in db*/}
-                                        <label class ="new-button" for="upload"> Upload File
+                                    <div class="button-wrap" style={{paddingBottom:'15px'}}> 
+                                        <label class ="new-button" for="upload"> Upload Aerodrome Manual
                                         <input id="upload" name="aerodromeManual" type="file" onChange={this.handleFileChange}/>
                                         </label>
                                         {aerodromeManual!=null ? `${aerodromeManual.name}` : ''}

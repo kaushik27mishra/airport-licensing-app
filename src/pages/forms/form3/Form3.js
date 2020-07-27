@@ -84,7 +84,7 @@ const DayPickerStrings = {
 
 const stackTokens = { childrenGap: 20 };
 
-export default class Form4 extends Component {
+export default class Form3 extends Component {
     
     constructor(props) {
         super(props)
@@ -106,7 +106,7 @@ export default class Form4 extends Component {
         }
     }
 
-    _onChangeowner = (option) => {
+    _onChangeowner = (ev,option) => {
         this.setState({owner:option.key})
     }
 
@@ -155,7 +155,7 @@ export default class Form4 extends Component {
                         <Card.Section>
                             <Text 
                                 variant={'xxLarge'} >
-                                    Control of the Aerodrome {startingPeriod}
+                                    Control of the Aerodrome 
                             </Text>
                             <ChoiceGroup 
                                 defaultSelectedKey={true}

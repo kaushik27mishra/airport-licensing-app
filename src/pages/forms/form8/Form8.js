@@ -40,7 +40,7 @@ const classNames = mergeStyleSets({
 
 const stackTokens = { childrenGap: 20 };
 
-export default class Form9 extends Component {
+export default class Form8 extends Component {
     constructor(props) {
         super(props)
     

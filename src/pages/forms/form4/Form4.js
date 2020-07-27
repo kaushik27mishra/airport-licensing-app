@@ -73,7 +73,7 @@ const DayPickerStrings = {
 
 const stackTokens = { childrenGap: 20 };
 
-export default class Form1 extends Component {
+export default class Form4 extends Component {
     constructor(props) {
         super(props)
     
@@ -91,10 +91,6 @@ export default class Form1 extends Component {
 
         
         }
-    }
-
-    _onChangeowner = (ev,option) => {
-        this.setState({owner:option.key})
     }
 
     onFormatDate = (date) => {
@@ -225,81 +221,6 @@ export default class Form1 extends Component {
                                     <DefaultButton text="Back" allowDisabledFocus />
                                     <PrimaryButton text="Next" allowDisabledFocus />
                                 </Stack>
-                            <Text 
-                                variant={'xxLarge'} >
-                                    Control of the Aerodrome
-                            </Text>
-                            <ChoiceGroup 
-                                defaultSelectedKey={true}
-                                options={options}
-                                onChange={this._onChangeowner} 
-                                label="Are you the owner of the aerodrome site" 
-                                required={true}/>
-                                {
-                                    this.state.owner===false ? 
-                                    <>
-                                        <TextField
-                                            name="rightsIfNotOver" 
-                                            onChange={this.handleChange} 
-                                            value={rightsIfNotOver} 
-                                            errorMessage={rightsIfNotOver_error} 
-                                            disabled={rightsIfNotOver_defect}
-                                            label="Please state the details of the
-                                                rights you hold over the land" 
-                                            placeholder="Please enter details here"
-                                            multiline rows={3} /> 
-                                        
-                                        <Text 
-                                            variant='medium'>
-                                                The period from which you hold these rights
-                                        </Text>
-                                        <DatePicker
-                                            className={controlClass.control}
-                                            onSelectDate={(e)=> {this.onDateChange(e,'startingPeriod')}} // change the second input
-                                            firstDayOfWeek={DayOfWeek.Sunday} // no need to change
-                                            value={this.onParseDateFromString(startingPeriod)} // change the name of input variable
-                                            strings={DayPickerStrings} // no need to change
-                                            disabled={!(startingPeriod_defect==null) && !startingPeriod_defect}
-                                            placeholder="Select a date."
-                                            ariaLabel="Select a date"
-                                        />
-                                        {startingPeriod_error===''? null : <Text style={{color:'#FF0000',marginTop:'0'}} variant='small'>{startingPeriod_error}</Text>}
-                                        <Text 
-                                            variant='medium'>
-                                                The period to which you hold these rights
-                                        </Text>
-                                        <DatePicker
-                                            onSelectDate={(e)=> {this.onDateChange(e,'endingPeriod')}} 
-                                            firstDayOfWeek={DayOfWeek.Sunday}
-                                            value={this.onParseDateFromString(endingPeriod)}
-                                            disabled={!(endingPeriod_defect==null) && !endingPeriod_defect}
-                                            errorMessage={endingPeriod_error}
-                                            className={controlClass.control}
-                                            strings={DayPickerStrings}
-                                            placeholder="Select a date."
-                                            ariaLabel="Select a date"
-                                        /> 
-                                        {endingPeriod_error===''? null : <Text style={{color:'#FF0000',marginTop:'0'}} variant='small'>{endingPeriod_error}</Text>}
-                                        <Text variant='medium'>Termination of these rights</Text> {/*Needs to be made DateField*/}
-                                        <DatePicker
-                                            onSelectDate={(e)=> {this.onDateChange(e,'termination')}} 
-                                            firstDayOfWeek={DayOfWeek.Sunday}
-                                            value={this.onParseDateFromString(termination)}
-                                            disabled={!(termination_defect==null) && !termination_defect}
-                                            errorMessage={termination_error}
-                                            className={controlClass.control}
-                                            strings={DayPickerStrings}
-                                            placeholder="Select a date."
-                                            ariaLabel="Select a date"
-                                        />
-                                        {termination_error===''? null : <Text style={{color:'#FF0000',marginTop:'0'}} variant='small'>{termination_error}</Text>}
-                                    </>
-                                    : null
-                                }
-                            <Stack horizontal tokens={stackTokens}>
-                                <DefaultButton text="Back" allowDisabledFocus />
-                                <PrimaryButton text="Next" allowDisabledFocus />
-                            </Stack>
                         </Card.Section>
                     </Card>
                 </div>

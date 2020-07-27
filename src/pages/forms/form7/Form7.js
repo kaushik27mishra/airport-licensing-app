@@ -73,7 +73,7 @@ const DayPickerStrings = {
   };
 
 
-export default class Form8 extends Component {
+export default class Form7 extends Component {
     constructor(props) {
         super(props)
     

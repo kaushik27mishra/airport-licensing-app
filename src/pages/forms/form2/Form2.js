@@ -50,7 +50,7 @@ const options = [
     { key: 'No', text: 'No' },
 ];
 
-export default class Form3 extends Component {
+export default class Form2 extends Component {
     constructor(props) {
         super(props)
 
