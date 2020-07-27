@@ -8,6 +8,7 @@ import {
 // components
 import Navigation from "../components/navigation/Navigation";
 import Header from "../components/header/Header";
+import Chatbot from "../components/chatbot/Chatbot"
 
 // pages
 import Dashboard from "../pages/dashboard/Dashboard"
@@ -54,6 +55,7 @@ function Layout(props) {
                     <Route path="/app/further_info" component={Form8}/>
                     <Route path="/app/renewal_form" component={RenewalForm}/>
                 </Switch>
+                <Chatbot/>
               </div>
             </div>
           </div>
