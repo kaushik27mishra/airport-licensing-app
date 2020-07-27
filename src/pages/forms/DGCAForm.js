@@ -46,6 +46,11 @@ export default class DGCAForm extends Component {
                 data:"Abdkjabd",
                 suggestion:"",
                 checked:false
+            },
+            elevationMeter: {
+                data:"100ft",
+                suggestion:"",
+                checked:false
             }
         }
     }
@@ -88,8 +93,29 @@ export default class DGCAForm extends Component {
         })
     }
 
+    handleElevationMeterCheckboxChange = (e,checked) => {
+        this.setState({
+            elevationMeter : {
+                ...this.state.elevationMeter,
+                suggestion:"",
+                checked: !!checked
+            }
+        })
+    }
+
+
+    handleElevationMeterValueChange = (e,checked) => {
+        this.setState({
+            elevationMeter : {
+                ...this.state.elevationMeter,
+                suggestion : e.target.value,
+            }
+        })
+    }
+
+
     render() {
-        const { fullName, Surname } = this.state;
+        const { fullName, Surname, elevationMeter } = this.state;
 
         return (
             <div className="ms-Grid-row" style={{paddingBottom:'100px'}}>
@@ -98,6 +124,12 @@ export default class DGCAForm extends Component {
                         <Card.Section>
                                 <Text variant={'xxLarge'}>DGCA Sample form</Text>
                                 <table style={{width:"100%"}}>
+                                    <thead>
+                                        <th style={{textAlign:'left'}}>Field</th>
+                                        <th style={{textAlign:'left'}}>Value Filled</th>
+                                        <th style={{textAlign:'left'}}>Error</th>
+                                        <th style={{textAlign:'left'}}>Remarks</th>
+                                    </thead>
                                     <tbody>
                                         <DGCAChecklist 
                                             field="Full Name" 
@@ -110,6 +142,12 @@ export default class DGCAForm extends Component {
                                             value={Surname} 
                                             handleChange={this.handleSurNameValueChange} 
                                             onChange={this.handleSurNameCheckboxChange}
+                                        />
+                                        <DGCAChecklist 
+                                            field="Elevation of the Aerodrome reference point (AMSL)" 
+                                            value={elevationMeter} 
+                                            handleChange={this.handleElevationMeterValueChange} 
+                                            onChange={this.handleElevationMeterCheckboxChange}
                                         />
                                     </tbody>
                                 </table>

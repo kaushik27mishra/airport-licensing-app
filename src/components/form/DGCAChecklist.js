@@ -10,13 +10,13 @@ function DGCAChecklist(props) {
     return (
         <>
             <tr>
-                <td>
+                <td style={{maxWidth:"150px"}}>
                     <Text variant={'large'}>{props.field}</Text>
                 </td>
                 <td>
                     <Text variant={'large'}><em>{props.value.data}</em></Text>
                 </td>
-                <td>
+                <td style={{textAlign:'center'}}>
                     <Checkbox checked={props.value.checked} onChange={props.onChange} />
                 </td>
                 <td>
