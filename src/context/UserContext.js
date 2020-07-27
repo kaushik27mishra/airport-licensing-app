@@ -47,10 +47,4 @@ function useUserDispatch() {
   return context;
 }
 
-export { UserProvider, useUserState, useUserDispatch, signOut };
-
-function signOut(dispatch, history) {
-  localStorage.removeItem("id_token");
-  dispatch({ type: "SIGN_OUT_SUCCESS" });
-  history.push("/login");
-}
+export { UserProvider, useUserState, useUserDispatch };

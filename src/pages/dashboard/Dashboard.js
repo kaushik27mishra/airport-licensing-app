@@ -63,6 +63,32 @@ function Dashboard() {
                     </Card>
                 </div>
             </div>
+            <div style={{paddingTop:'100px',paddingBottom:'100px'}} className="ms-Grid-row">
+                <div className={`s-Grid-col ms-sm9 ms-xl9 ${classNames.pivot}`}>
+                    <Card styles={styles.cardStyles}>
+                        <Card.Section>
+                            <Card.Item>
+                                <Pivot styles={styles.pivotStyles}>
+                                    <PivotItem
+                                        headerText="All Applications"
+                                        headerButtonProps={{
+                                          'data-order': 1,
+                                        }}
+                                    >
+                                        <Table/>
+                                    </PivotItem>
+                                    <PivotItem headerText="Completed Applications">
+                                        <Table/>
+                                    </PivotItem>
+                                    <PivotItem headerText="Ongoing Applications">
+                                        <Table/>
+                                    </PivotItem>
+                                </Pivot>
+                            </Card.Item>
+                        </Card.Section>
+                    </Card>
+                </div>
+            </div>
         </>
     )
 }
