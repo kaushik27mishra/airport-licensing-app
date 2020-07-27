@@ -56,8 +56,14 @@ export default class Form7 extends Component {
     }
 
     _onChange = (ev, option) => {
-        console.dir(option);
         this.setState({manualEnclosed:option.key})
+        this.setState({check:option.key})
+    }
+
+    handleChange=(e) => {
+        this.setState({
+            [e.target.name]:e.target.value
+        })
     }
 
     handleFileChange=(e) => {

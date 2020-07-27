@@ -53,9 +53,30 @@ export default class Form9 extends Component {
         };
         
     }
+  
     _onChangeCheckbox = (ev,option) => {
         var ans=this.state.isChecked
         this.setState({isChecked:!ans})
+    }
+    _onChange = (ev, option) => {
+        this.setState({check:option.key})
+    }
+
+    onFormatDate = (date) => {
+        return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
+    }
+    
+    onDateChange = (date,name) => {
+        this.setState({
+            [name] : this.onFormatDate(date)
+        })
+    }
+
+    onParseDateFromString = (val) => {
+        if(typeof(val)=='string') {
+            var parts = val.split('-');
+            return new Date(parts[0], parts[1]-1, parts[2]);
+        }
     }
 
     handleChange=(e) => {

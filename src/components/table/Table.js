@@ -11,6 +11,8 @@ const operations = [
         area: '5,106 acres',
         datefrom: '20-05-2020',
         dateto: '20-05-2020',
+        inspector: "",
+        isModalOpen: false,
     },
     {
         airport: 'Indira Gandhi International Airport',
