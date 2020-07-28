@@ -41,7 +41,11 @@ export default class DGCAForm extends Component {
                 data:"Abdkjabd",
                 suggestion:"",
                 checked:false
-            }
+            },
+            owner: false,
+            startPeriod: "19-10-2020",
+            endPeriod: "19-10-2120",
+            terminationPeriod: "20-10-2120"
         }
     }
 
@@ -68,14 +72,18 @@ export default class DGCAForm extends Component {
 
 
     render() {
-        const { rightsIfNotOver } = this.state;
+        const { rightsIfNotOver,
+        owner,
+        startPeriod,
+        endPeriod,
+        terminationPeriod } = this.state;
 
         return (
             <div className="ms-Grid-row" style={{paddingBottom:'100px'}}>
                 <div className={`s-Grid-col ms-sm9 ms-xl9 ${classNames.pivot}`}>
                     <Card styles={styles.cardStyles}>
                         <Card.Section>
-                                <Text variant={'xxLarge'}>Review: Form3</Text>
+                                <Text variant={'xxLarge'}>Control of the Aerodrome</Text>
                                 <table style={{width:"100%"}}>
                                     <thead>
                                         <th style={{textAlign:'left'}}>Field</th>
@@ -84,12 +92,52 @@ export default class DGCAForm extends Component {
                                         <th style={{textAlign:'left'}}>Remarks</th>
                                     </thead>
                                     <tbody>
+                                        <tr>
+                                            <td style={{maxWidth:"150px"}}>
+                                                <Text variant={'large'}>Are you the owner of the aerodrome site?</Text>
+                                            </td>
+                                            <td>
+                                                <Text variant={'large'}>
+                                                    <em>{owner}</em>
+                                                </Text>
+                                            </td>
+                                        </tr>
                                         <DGCAChecklist 
                                             field="Details of the rights you hold over the land" 
                                             value={rightsIfNotOver} 
                                             handleChange={this.handleRightsIfNotOverValueChange} 
                                             onChange={this.handleRightsIfNotOverCheckboxChange}
                                         />
+                                        <tr>
+                                            <td style={{maxWidth:"150px"}}>
+                                                <Text variant={'large'}>The period from which you hold these rights</Text>
+                                            </td>
+                                            <td>
+                                                <Text variant={'large'}>
+                                                    <em>{startPeriod}</em>
+                                                </Text>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style={{maxWidth:"150px"}}>
+                                                <Text variant={'large'}>The period to which you hold these rights</Text>
+                                            </td>
+                                            <td>
+                                                <Text variant={'large'}>
+                                                    <em>{endPeriod}</em>
+                                                </Text>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style={{maxWidth:"150px"}}>
+                                                <Text variant={'large'}>Termination of these rights</Text>
+                                            </td>
+                                            <td>
+                                                <Text variant={'large'}>
+                                                    <em>{terminationPeriod}</em>
+                                                </Text>
+                                            </td>
+                                        </tr>
                                     </tbody>
                                 </table>
                                 <Stack horizontal tokens={stackTokens}>

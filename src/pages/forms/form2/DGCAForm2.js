@@ -81,7 +81,12 @@ export default class DGCAForm extends Component {
                 data:"cnsAtm",
                 suggestion:"",
                 checked:false
-            }
+            },
+            usage: "Public",
+            ownAircraft: true,
+            priorPermission: true,
+            allWeatherRequired: true
+
         }
     }
 
@@ -257,16 +262,28 @@ export default class DGCAForm extends Component {
     }
 
     render() {
-        const { purpose, lightningPlan, cnsAtm, 
-            metFacilities, aviationActivities, heaviestType, 
-            heaviestWeight, heaviestLength, heaviestWidth } = this.state;
+        const { 
+            purpose,
+            lightningPlan,
+            cnsAtm, 
+            metFacilities,
+            aviationActivities,
+            heaviestType, 
+            heaviestWeight,
+            heaviestLength,
+            heaviestWidth,
+            usage,
+            ownAircraft,
+            priorPermission,
+            allWeatherRequired
+        } = this.state;
 
         return (
             <div className="ms-Grid-row" style={{paddingBottom:'100px'}}>
                 <div className={`s-Grid-col ms-sm9 ms-xl9 ${classNames.pivot}`}>
                     <Card styles={styles.cardStyles}>
                         <Card.Section>
-                                <Text variant={'xxLarge'}>Review: Form2</Text>
+                                <Text variant={'xxLarge'}>Aerodrome Activities</Text>
                                 <table style={{width:"100%"}}>
                                     <thead>
                                         <th style={{textAlign:'left'}}>Field</th>
@@ -275,6 +292,17 @@ export default class DGCAForm extends Component {
                                         <th style={{textAlign:'left'}}>Remarks</th>
                                     </thead>
                                     <tbody>
+                                        <tr>
+                                            <td style={{maxWidth:"150px"}}>
+                                                <Text variant={'large'}>Category of licence required as 
+                                                defined in Aircraft Rules 1937?</Text>
+                                            </td>
+                                            <td>
+                                                <Text variant={'large'}>
+                                                    <em>{usage}</em>
+                                                </Text>
+                                            </td>
+                                        </tr>
                                         <DGCAChecklist 
                                             field="Indicate
                                             the purpose for which the aerodrome
@@ -283,6 +311,40 @@ export default class DGCAForm extends Component {
                                             handleChange={this.handlePurposeValueChange} 
                                             onChange={this.handlePurposeCheckboxChange}
                                         />
+                                        <tr>
+                                            <td style={{maxWidth:"150px"}}>
+                                                <Text variant={'large'}>Whether your own aircraft only will 
+                                                use the aerodrome or do you propose to use the aerodrome by 
+                                                own aircraft as well as other aircraft ?</Text>
+                                            </td>
+                                            <td>
+                                                <Text variant={'large'}>
+                                                    <em>{ownAircraft===true?'Yes':'No'}</em>
+                                                </Text>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style={{maxWidth:"150px"}}>
+                                                <Text variant={'large'}>If use by others aircraft, state 
+                                                whether prior permission or notice is required.</Text>
+                                            </td>
+                                            <td>
+                                                <Text variant={'large'}>
+                                                    <em>{priorPermission===true?'Yes':'No'}</em>
+                                                </Text>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style={{maxWidth:"150px"}}>
+                                                <Text variant={'large'}>Is a license for NIGHT USE/ ALL 
+                                                WEATHER required?</Text>
+                                            </td>
+                                            <td>
+                                                <Text variant={'large'}>
+                                                    <em>{allWeatherRequired===true?'Yes':'No'}</em>
+                                                </Text>
+                                            </td>
+                                        </tr>
                                         <DGCAChecklist 
                                             field="Please provide details of proposed lighting
                                             along with the lighting plan." 
