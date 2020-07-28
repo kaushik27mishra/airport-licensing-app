@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 
 //ui
-import { Text, PrimaryButton, Stack, DefaultButton } from 'office-ui-fabric-react';
+import { Text, PrimaryButton, Stack, DefaultButton, Checkbox } from 'office-ui-fabric-react';
+import { TextField} from 'office-ui-fabric-react/lib/TextField';
 import { Card } from '@uifabric/react-cards';
 import { mergeStyleSets } from 'office-ui-fabric-react/lib/Styling';
-import DGCAChecklist from '../../../components/form/DGCAChecklist';
 
 //style
 const styles = {
@@ -255,23 +255,30 @@ export default class DGCAForm extends Component {
                                                 </Text>
                                             </td>
                                         </tr>
-                                        <DGCAChecklist 
-                                            field="Resume" 
-                                            value={personInchargeResume} 
-                                            handleChange={this.handlePersonInchargeResumeValueChange} 
-                                            onChange={this.handlePersonInchargeResumeCheckboxChange}
-                                        />{/*to check download button*/}
                                         <tr>
-                                            <td></td>
+                                            <td style={{maxWidth:"150px"}}>
+                                                <Text variant={'large'}>Resume</Text>
+                                            </td>
                                             <td>
                                                 <div class="button-wrap">
-                                                    <form method="get" action={aerodromeSafetyResume}>
+                                                    <form method="get" action={personInchargeResume}>
                                                         <button type="submit">Download Resume</button>
                                                     </form>
                                                 </div>
                                             </td>
+                                            <td style={{textAlign:'center'}}>
+                                                <Checkbox checked={personInchargeResume.checked} 
+                                                    onChange={this.handlePersonInchargeResumeCheckboxChange} />
+                                            </td>
+                                            <td>
+                                                <TextField 
+                                                    name="suggestion"
+                                                    onChange={this.handlePersonInchargeResumeValueChange}
+                                                    value={personInchargeResume.suggestion}
+                                                    disabled={!personInchargeResume.checked}
+                                                />
+                                            </td>
                                         </tr>
-
                                         <tr>
                                             <td>
                                                 <p style={{fontSize:'16px'}}>
@@ -311,14 +318,10 @@ export default class DGCAForm extends Component {
                                                 </Text>
                                             </td>
                                         </tr>
-                                        <DGCAChecklist 
-                                            field="Resume" 
-                                            value={aerodromeSafetyResume} 
-                                            handleChange={this.handleAerodromeSafetyResumeValueChange} 
-                                            onChange={this.handleAerodromeSafetyResumeCheckboxChange}
-                                        />{/*to check download button*/}
                                         <tr>
-                                            <td></td>
+                                            <td style={{maxWidth:"150px"}}>
+                                                <Text variant={'large'}>Resume</Text>
+                                            </td>
                                             <td>
                                                 <div class="button-wrap">
                                                     <form method="get" action={aerodromeSafetyResume}>
@@ -326,8 +329,19 @@ export default class DGCAForm extends Component {
                                                     </form>
                                                 </div>
                                             </td>
+                                            <td style={{textAlign:'center'}}>
+                                                <Checkbox checked={aerodromeSafetyResume.checked} 
+                                                    onChange={this.handleAerodromeSafetyResumeCheckboxChange} />
+                                            </td>
+                                            <td>
+                                                <TextField 
+                                                    name="suggestion"
+                                                    onChange={this.handleAerodromeSafetyResumeValueChange}
+                                                    value={aerodromeSafetyResume.suggestion}
+                                                    disabled={!aerodromeSafetyResume.checked}
+                                                />
+                                            </td>
                                         </tr>
-
                                         <tr>
                                             <td>
                                                 <p style={{fontSize:'16px'}}>

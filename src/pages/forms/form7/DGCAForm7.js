@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 
 //ui
-import { Text, PrimaryButton, Stack, DefaultButton } from 'office-ui-fabric-react';
+import { Text, PrimaryButton, Stack, DefaultButton, Checkbox } from 'office-ui-fabric-react';
+import { TextField} from 'office-ui-fabric-react/lib/TextField';
 import { Card } from '@uifabric/react-cards';
 import { mergeStyleSets } from 'office-ui-fabric-react/lib/Styling';
-import DGCAChecklist from '../../../components/form/DGCAChecklist';
 
 //style
 const styles = {
@@ -110,21 +110,29 @@ export default class DGCAForm extends Component {
                                             <Text variant={'large'}><em>{amount}</em></Text>
                                         </td>
                                     </tr>
-                                    <DGCAChecklist 
-                                            field="Sheet showing the calculation of amount as per runway length" 
-                                            value={calculationSheet} // Fix spelling in db
-                                            handleChange={this.handleCalculationSheetValueChange} 
-                                            onChange={this.handleCalculationSheetCheckboxChange}
-                                        />
-                                        {/*to check download button*/}
-                                        <tr>
-                                            <td></td>
+                                    <tr>
+                                            <td style={{maxWidth:"150px"}}>
+                                                <Text variant={'large'}>Sheet showing the calculation of 
+                                                amount as per runway length</Text>
+                                            </td>
                                             <td>
                                                 <div class="button-wrap">
                                                     <form method="get" action={calculationSheet}>
-                                                        <button type="submit">Download Sheet</button>
+                                                        <button type="submit">Download Resume</button>
                                                     </form>
                                                 </div>
+                                            </td>
+                                            <td style={{textAlign:'center'}}>
+                                                <Checkbox checked={calculationSheet.checked} 
+                                                    onChange={this.handleCalculationSheetCheckboxChange} />
+                                            </td>
+                                            <td>
+                                                <TextField 
+                                                    name="suggestion"
+                                                    onChange={this.handleCalculationSheetValueChange}
+                                                    value={calculationSheet.suggestion}
+                                                    disabled={!calculationSheet.checked}
+                                                />
                                             </td>
                                         </tr>
                                     <tr>

@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 
 //ui
-import { Text, PrimaryButton, Stack, DefaultButton } from 'office-ui-fabric-react';
+import { Text, PrimaryButton, Stack, DefaultButton, Checkbox } from 'office-ui-fabric-react';
+import { TextField} from 'office-ui-fabric-react/lib/TextField';
 import { Card } from '@uifabric/react-cards';
 import { mergeStyleSets } from 'office-ui-fabric-react/lib/Styling';
-import DGCAChecklist from '../../../components/form/DGCAChecklist';
 
 //style
 const styles = {
@@ -68,7 +68,6 @@ export default class DGCAForm extends Component {
     }
 
 
-
     render() {
         const { indicateDGCA, enclosed, manual } = this.state;
 
@@ -96,20 +95,28 @@ export default class DGCAForm extends Component {
                                                 </Text>
                                             </td>
                                         </tr>
-                                        <DGCAChecklist 
-                                            field="Aerodrome Manual" 
-                                            value={manual} 
-                                            handleChange={this.handleManualValueChange} 
-                                            onChange={this.handleManualCheckboxChange}
-                                        />{/*to check download button*/}
                                         <tr>
-                                            <td></td>
+                                            <td style={{maxWidth:"150px"}}>
+                                                <Text variant={'large'}>Aerodrome Manual</Text>
+                                            </td>
                                             <td>
                                                 <div class="button-wrap">
                                                     <form method="get" action={manual}>
                                                         <button type="submit">Download Manual</button>
                                                     </form>
                                                 </div>
+                                            </td>
+                                            <td style={{textAlign:'center'}}>
+                                                <Checkbox checked={manual.checked} 
+                                                    onChange={this.handleManualCheckboxChange} />
+                                            </td>
+                                            <td>
+                                                <TextField 
+                                                    name="suggestion"
+                                                    onChange={this.handleManualValueChange}
+                                                    value={manual.suggestion}
+                                                    disabled={!manual.checked}
+                                                />
                                             </td>
                                         </tr>
                                         <tr>
