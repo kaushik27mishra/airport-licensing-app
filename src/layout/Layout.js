@@ -48,9 +48,7 @@ function Layout(props) {
                     <Route path="/app/form_list" component={FormCards}/>
                     <Route path="/app/dashboard" component={Dashboard} />
                     <Route path="/app/DGCASampleForm" component={DGCAForm} />
-                    <Route path="/app/DGCAForm1" component={DGCAForm1} />
-                    <Route path="/app/DGCAForm2" component={DGCAForm2} />
-                    <Route path="/app/DGCAForm3" component={DGCAForm3} />
+                    
                     <Route path="/app/sampleform" component={SampleForm} />
                     <Route path="/app/licensee_detail_form" component={Form1Extra}/>
                     <Route path="/app/aerodrome_detail_form" component={Form1}/>
@@ -62,6 +60,11 @@ function Layout(props) {
                     <Route path="/app/details_of_fees" component={Form7}/>
                     <Route path="/app/further_info" component={Form8}/>
                     <Route path="/app/renewal_form" component={RenewalForm}/>
+
+                    <Route path="/app/dgca/aerodrome_detail_form" component={DGCAForm1} />
+                    <Route path="/app/dgca/aerodrome_activities" component={DGCAForm2} />
+                    <Route path="/app/dgca/control_of_aerodrome" component={DGCAForm3} />
+                    
                 </Switch>
               </div>
             </div>
