@@ -34,10 +34,10 @@ const styles = {
     },
 }
 
-function Dashboard() {
+function Dashboard(props) {
+
     return (
         <>  
-            <div>{this.props.role}</div>
             <div className="ms-Grid-row">
                 <CardsSection/>
             </div>
@@ -96,5 +96,4 @@ function Dashboard() {
         </>
     )
 }
-
 export default roleHandler(Dashboard);

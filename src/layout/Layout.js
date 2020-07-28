@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import { Route, Switch, withRouter} from "react-router-dom";
 
 // components
@@ -33,32 +33,27 @@ import { gql, useQuery } from '@apollo/client';
 
 function Layout(props) {
   var userDispatch = useUserDispatch();
-  const [res,setRes] = useState(null);
-  const [isLoading,setLoading] = useState(true);
+
   const { client, loading, error, data } = useQuery(
     PROFILE_QUERY,
     { fetchPolicy: "network-only" }
   )
 
-  React.useEffect(() => {
-    if(error) {
-      signOut(userDispatch,props.history,client)
-    }
+  if(data) {
+    console.log(data.me.role);
+  }
 
-    if(loading) {
-      setLoading(true);
-    }
-    if (data) {
-      setLoading(false);
-      setRes(data)
-    }
-  }, [data])
+  if(loading) {
+    return <Loader/>
+  }
 
-  if(isLoading) return <Loader/>
+  if(error) {
+    signOut(userDispatch,props.history,client)
+  }
 
   return (
     <>
-      <UserRoleProvider value={data.me.role}>
+      <UserRoleProvider value={data.me.role}>     
           <div style={{padding:'0em',margin:'0'}} className="ms-Grid" dir="ltr">
             <div className="ms-Grid-row">
               <div className="ms-Grid-col ms-sm2 ms-xl2">
