@@ -1,14 +1,11 @@
-import React from "react";
-import {
-  Route,
-  Switch,
-  withRouter,
-} from "react-router-dom";
+import React, { useState, useEffect } from 'react'
+import { Route, Switch, withRouter} from "react-router-dom";
 
 // components
 import Navigation from "../components/navigation/Navigation";
 import Header from "../components/header/Header";
 import Chatbot from "../components/chatbot/Chatbot"
+import Loader from "../components/loader/Loader"
 
 // pages
 import Dashboard from "../pages/dashboard/Dashboard"
@@ -26,10 +23,42 @@ import RenewalForm from "../pages/forms/renewal/RenewalForm";
 import FormCards from "../pages/FormsCards";
 import DGCAForm from "../pages/forms/DGCAForm";
 
+//User Context
+import { useUserDispatch ,signOut } from "../context/UserContext";
+import { UserRoleProvider } from "../context/UserRoleContext"
+
+//apollo client
+import { gql, useQuery } from '@apollo/client';
+
+
 function Layout(props) {
+  var userDispatch = useUserDispatch();
+  const [res,setRes] = useState(null);
+  const [isLoading,setLoading] = useState(true);
+  const { client, loading, error, data } = useQuery(
+    PROFILE_QUERY,
+    { fetchPolicy: "network-only" }
+  )
+
+  React.useEffect(() => {
+    if(error) {
+      signOut(userDispatch,props.history,client)
+    }
+
+    if(loading) {
+      setLoading(true);
+    }
+    if (data) {
+      setLoading(false);
+      setRes(data)
+    }
+  }, [data])
+
+  if(isLoading) return <Loader/>
 
   return (
-        <>
+    <>
+      <UserRoleProvider value={data.me.role}>
           <div style={{padding:'0em',margin:'0'}} className="ms-Grid" dir="ltr">
             <div className="ms-Grid-row">
               <div className="ms-Grid-col ms-sm2 ms-xl2">
@@ -59,8 +88,21 @@ function Layout(props) {
               </div>
             </div>
           </div>
-        </>
-  );
+      </UserRoleProvider>     
+    </>
+  )
 }
 
 export default withRouter(Layout);
+
+const PROFILE_QUERY = gql`
+query { 
+    me {
+        id
+        role
+    }
+  }
+`;
+
+
+

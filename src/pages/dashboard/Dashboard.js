@@ -12,6 +12,9 @@ import { Pivot, PivotItem } from 'office-ui-fabric-react/lib/Pivot';
 import { mergeStyleSets } from 'office-ui-fabric-react/lib/Styling';
 import { Card } from '@uifabric/react-cards';
 
+// role
+import roleHandler  from "../../utils/roleHandler";
+
 const classNames = mergeStyleSets({
     pivot: {
         margin: 'auto',
@@ -33,7 +36,8 @@ const styles = {
 
 function Dashboard() {
     return (
-        <>
+        <>  
+            <div>{this.props.role}</div>
             <div className="ms-Grid-row">
                 <CardsSection/>
             </div>
@@ -93,4 +97,4 @@ function Dashboard() {
     )
 }
 
-export default Dashboard;
+export default roleHandler(Dashboard);
