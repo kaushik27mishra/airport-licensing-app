@@ -7,6 +7,7 @@ import { Card } from '@uifabric/react-cards';
 import { mergeStyleSets } from 'office-ui-fabric-react/lib/Styling';
 
 //style
+import '../style.css'
 const styles = {
     cardStyles: {
         root: {

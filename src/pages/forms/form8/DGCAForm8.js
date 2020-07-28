@@ -7,6 +7,7 @@ import { mergeStyleSets } from 'office-ui-fabric-react/lib/Styling';
 import DGCAChecklist from '../../../components/form/DGCAChecklist';
 
 //style
+import '../style.css'
 const styles = {
     cardStyles: {
         root: {
