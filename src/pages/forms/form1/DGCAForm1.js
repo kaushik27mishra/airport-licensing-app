@@ -7,6 +7,7 @@ import { mergeStyleSets } from 'office-ui-fabric-react/lib/Styling';
 import DGCAChecklist from '../../../components/form/DGCAChecklist';
 
 //style
+import '../style.css'
 const styles = {
     cardStyles: {
         root: {
@@ -61,6 +62,16 @@ export default class DGCAForm extends Component {
             state: "Uttar Pradesh",
             grid: "xxx",
             map: null, //to be added
+            runways: [
+                {
+                    orientation: 'One',
+                    length: '111'
+                },
+                {
+                    orientation: 'Two',
+                    length: '222'
+                }
+            ]
 
         }
     }
@@ -94,7 +105,8 @@ export default class DGCAForm extends Component {
             situation,
             state,
             grid,
-            map } = this.state;
+            map,
+            runways } = this.state;
 
         return (
             <div className="ms-Grid-row" style={{paddingBottom:'100px'}}>
@@ -257,17 +269,37 @@ export default class DGCAForm extends Component {
                                                 </div>
                                             </td>
                                         </tr>
-                                        <tr></tr>
-
-
-                                    
-                                    <DGCAChecklist 
-                                        field="Elevation of the Aerodrome reference
-                                        point (AMSL)" 
-                                        value={elevationMeter} 
-                                        handleChange={this.handleElevationMeterValueChange} 
-                                        onChange={this.handleElevationMeterCheckboxChange}
-                                    />
+                                        <DGCAChecklist 
+                                            field="Elevation of the Aerodrome reference
+                                            point (AMSL)" 
+                                            value={elevationMeter} 
+                                            handleChange={this.handleElevationMeterValueChange} 
+                                            onChange={this.handleElevationMeterCheckboxChange}
+                                        />
+                                        {runways.map((runway, idx) => (
+                                            <>
+                                                <tr>
+                                                    <td style={{maxWidth:"150px"}}>
+                                                        <Text variant={'large'}>Orientation of runway {idx+1}</Text>
+                                                    </td>
+                                                    <td>
+                                                        <Text variant={'large'}>
+                                                            <em>{runway.orientation}</em>
+                                                        </Text>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td style={{maxWidth:"150px"}}>
+                                                        <Text variant={'large'}>Length of runway {idx+1}</Text>
+                                                    </td>
+                                                    <td>
+                                                        <Text variant={'large'}>
+                                                            <em>{runway.length}</em>
+                                                        </Text>
+                                                    </td>
+                                                </tr>
+                                            </>
+                                        ))}
                                     </tbody>
                                 </table>
                                 <Stack horizontal tokens={stackTokens}>
