@@ -5,7 +5,6 @@ import { Route, Switch, withRouter} from "react-router-dom";
 import Navigation from "../components/navigation/Navigation";
 import Header from "../components/header/Header";
 import Chatbot from "../components/chatbot/Chatbot"
-import Loader from "../components/loader/Loader"
 
 // pages
 import Dashboard from "../pages/dashboard/Dashboard"
@@ -23,37 +22,10 @@ import RenewalForm from "../pages/forms/renewal/RenewalForm";
 import FormCards from "../pages/FormsCards";
 import DGCAForm from "../pages/forms/DGCAForm";
 
-//User Context
-import { useUserDispatch ,signOut } from "../context/UserContext";
-import { UserRoleProvider } from "../context/UserRoleContext"
-
-//apollo client
-import { gql, useQuery } from '@apollo/client';
-
-
 function Layout(props) {
-  var userDispatch = useUserDispatch();
-
-  const { client, loading, error, data } = useQuery(
-    PROFILE_QUERY,
-    { fetchPolicy: "network-only" }
-  )
-
-  if(data) {
-    console.log(data.me.role);
-  }
-
-  if(loading) {
-    return <Loader/>
-  }
-
-  if(error) {
-    signOut(userDispatch,props.history,client)
-  }
 
   return (
     <>
-      <UserRoleProvider value={data.me.role}>     
           <div style={{padding:'0em',margin:'0'}} className="ms-Grid" dir="ltr">
             <div className="ms-Grid-row">
               <div className="ms-Grid-col ms-sm2 ms-xl2">
@@ -83,21 +55,11 @@ function Layout(props) {
               </div>
             </div>
           </div>
-      </UserRoleProvider>     
     </>
   )
 }
 
 export default withRouter(Layout);
-
-const PROFILE_QUERY = gql`
-query { 
-    me {
-        id
-        role
-    }
-  }
-`;
 
 
 

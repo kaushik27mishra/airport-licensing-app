@@ -18,6 +18,7 @@ import { createUploadLink } from 'apollo-upload-client'
 import { setContext } from '@apollo/client/link/context';
 
 import * as serviceWorker from './serviceWorker';
+import { UserRoleProvider } from './context/UserRoleContext';
 
 const uploadLink = createUploadLink({
   uri: process.env.REACT_APP_BACKENDURL,
@@ -45,7 +46,9 @@ ReactDOM.render(
   <ApolloProvider client={client}>
     <Fabric>
       <UserProvider>
+        <UserRoleProvider>          
           <App />
+        </UserRoleProvider>
       </UserProvider>
     </Fabric>
   </ApolloProvider>

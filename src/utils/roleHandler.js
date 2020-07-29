@@ -1,12 +1,16 @@
 import React from 'react'
-import { UserRoleConsumer } from '../context/UserRoleContext'
+import { UserRole } from '../context/UserRoleContext'
 
-function roleHandler(Component) {
-    return (
-        <UserRoleConsumer>
-            {(contexts) => <Component role={contexts} />}
-        </UserRoleConsumer>
-    )
+export function roleHandler(Component) {
+    return function RoleComponent(props){
+        return(
+            <UserRole.Consumer>
+                {(contexts) => 
+                    {   
+                        return <Component {...props} {...contexts} />
+                    }
+                }
+            </UserRole.Consumer>
+        )
+    }
 }
-
-export default roleHandler;

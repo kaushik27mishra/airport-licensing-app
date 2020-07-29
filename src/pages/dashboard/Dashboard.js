@@ -13,7 +13,7 @@ import { mergeStyleSets } from 'office-ui-fabric-react/lib/Styling';
 import { Card } from '@uifabric/react-cards';
 
 // role
-import roleHandler  from "../../utils/roleHandler";
+import {roleHandler}  from "../../utils/roleHandler";
 
 const classNames = mergeStyleSets({
     pivot: {
@@ -35,7 +35,6 @@ const styles = {
 }
 
 function Dashboard(props) {
-
     return (
         <>  
             <div className="ms-Grid-row">
