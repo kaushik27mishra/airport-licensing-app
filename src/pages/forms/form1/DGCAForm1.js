@@ -71,7 +71,9 @@ export default class DGCAForm extends Component {
                     orientation: 'Two',
                     length: '222'
                 }
-            ]
+            ],
+            latitude: "20",
+            longitude: "20"
 
         }
     }
@@ -106,7 +108,9 @@ export default class DGCAForm extends Component {
             state,
             grid,
             map,
-            runways } = this.state;
+            runways,
+            longitude,
+            latitude } = this.state;
 
         return (
             <div className="ms-Grid-row" style={{paddingBottom:'100px'}}>
@@ -122,16 +126,16 @@ export default class DGCAForm extends Component {
                                         <th style={{textAlign:'left'}}>Remarks</th>
                                     </thead>
                                     <tbody>
-                                    <tr>
-                                        <td style={{maxWidth:"150px"}}>
-                                            <Text variant={'large'}>Place name by which the aerodrome is 
-                                            to be known in all future references</Text>
-                                        </td>
-                                        <td>
-                                            <Text variant={'large'}><em>{placeName}</em></Text>
-                                        </td>
-                                    </tr>
-                                    <tr>
+                                        <tr>
+                                            <td style={{maxWidth:"150px"}}>
+                                                <Text variant={'large'}>Place name by which the aerodrome is 
+                                                to be known in all future references</Text>
+                                            </td>
+                                            <td>
+                                                <Text variant={'large'}><em>{placeName}</em></Text>
+                                            </td>
+                                        </tr>
+                                        <tr>
                                             <td style={{maxWidth:"150px"}}>
                                                 <Text variant={'large'}>Name of owner of aerodrome</Text>
                                             </td>
@@ -276,6 +280,26 @@ export default class DGCAForm extends Component {
                                             handleChange={this.handleElevationMeterValueChange} 
                                             onChange={this.handleElevationMeterCheckboxChange}
                                         />
+                                        <tr>
+                                            <td style={{maxWidth:"150px"}}>
+                                                <Text variant={'large'}>Latitude of aerodrome</Text>
+                                            </td>
+                                            <td>
+                                                <Text variant={'large'}>
+                                                    <em>{latitude}</em>
+                                                </Text>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style={{maxWidth:"150px"}}>
+                                                <Text variant={'large'}>Longitude of aerodrome</Text>
+                                            </td>
+                                            <td>
+                                                <Text variant={'large'}>
+                                                    <em>{longitude}</em>
+                                                </Text>
+                                            </td>
+                                        </tr>
                                         {runways.map((runway, idx) => (
                                             <>
                                                 <tr>
