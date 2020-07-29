@@ -33,7 +33,7 @@ function Header(props) {
                     key: 'logout',
                     text: 'Logout',
                     iconProps: { iconName: 'BlockContact' },
-                    onClick: () => {signOut(userDispatch, props.history,props.client)},
+                    onClick: () => {signOut(userDispatch, props.history)},
                   },
                 ]
             }

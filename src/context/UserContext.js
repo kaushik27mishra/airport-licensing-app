@@ -1,4 +1,5 @@
 import React from "react";
+import { client } from '../index'
 
 var UserStateContext = React.createContext();
 var UserDispatchContext = React.createContext();
@@ -49,7 +50,7 @@ function useUserDispatch() {
 
 export { UserProvider, useUserState, useUserDispatch, signOut };
 
-function signOut(dispatch, history, client) {
+function signOut(dispatch, history) {
   client.resetStore()
   localStorage.removeItem("id_token");
   dispatch({ type: "SIGN_OUT_SUCCESS" });

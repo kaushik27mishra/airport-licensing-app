@@ -39,6 +39,8 @@ class UserRoleProvider extends Component {
                 })
             ).catch(error => {
                 console.log(error);
+                // localStorage.removeItem("id_token");
+
             })
         }
     }
