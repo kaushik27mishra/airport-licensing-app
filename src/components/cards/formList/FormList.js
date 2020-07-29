@@ -4,6 +4,9 @@ import React from 'react';
 import { Text, initializeIcons } from '@fluentui/react';
 import { Card } from '@uifabric/react-cards';
 
+//auth
+import { roleHandler } from '../../../utils/roleHandler'
+
 const container = {
   display: 'flex',
   justifyContent: 'center',
@@ -44,51 +47,6 @@ const styles = {
   }
 };
 
-const cards_one_two_three = [
-  {
-    title: 'Details of Licensee',
-    status: 'Submitted',
-  },
-  {
-    title: 'Details of Aerodrome',
-    status: 'Submitted',
-  },
-  {
-    title: 'Aerodrome Activities',
-    status: 'Processing',
-  }
-]
-
-const cards_four_five_six = [
-    {
-      title: 'Control of the Aerodrome',
-      status: 'Submitted',
-    },
-    {
-      title: 'Permissions and Approvals',
-      status: 'Submitted',
-    },
-    {
-      title: 'Aerodrome Management Personnel',
-      status: 'Processing',
-    }
-  ]
-
-  const cards_seven_eight_nine = [
-    {
-      title: 'Aerodrome Manual',
-      status: 'Submitted',
-    },
-    {
-      title: 'Details of Fees',
-      status: 'Submitted',
-    },
-    {
-      title: 'Any Other Information',
-      status: 'Processing',
-    }
-  ]
-
    const receiveIcon = (status) =>
   {
       switch(status){
@@ -102,14 +60,86 @@ const cards_four_five_six = [
       }
   }
 
+
+
 const CardsSection = (props) => {
+  const cards_one_two_three = [
+    {
+      title: 'Details of Licensee',
+      status: 'Submitted',
+      dgcaLink: '',
+      operatorLink: '',
+    },
+    {
+      title: 'Details of Aerodrome',
+      status: 'Submitted',
+      dgcaLink: `/form/aerodrome_detail_form`,
+      operatorLink: '/aerodrome_detail_form',
+    },
+    {
+      title: 'Aerodrome Activities',
+      status: 'Processing',
+      dgcaLink: `/form/aerodrome_detail_form`,
+      operatorLink: '/aerodrome_detail_form',
+    }
+  ]
+  
+  const cards_four_five_six = [
+      {
+        title: 'Control of the Aerodrome',
+        status: 'Submitted',
+        dgcaLink: `/form/aerodrome_detail_form`,
+        operatorLink: '/aerodrome_detail_form',
+      },
+      {
+        title: 'Permissions and Approvals',
+        status: 'Submitted',
+        dgcaLink: `/form/aerodrome_detail_form`,
+        operatorLink: '/aerodrome_detail_form',
+      },
+      {
+        title: 'Aerodrome Management Personnel',
+        status: 'Processing',
+        dgcaLink: `/form/aerodrome_detail_form`,
+        operatorLink: '/aerodrome_detail_form',
+      }
+    ]
+  
+    const cards_seven_eight_nine = [
+      {
+        title: 'Aerodrome Manual',
+        status: 'Submitted',
+        dgcaLink: `/form/aerodrome_detail_form`,
+        operatorLink: '/aerodrome_detail_form',
+      },
+      {
+        title: 'Details of Fees',
+        status: 'Submitted',
+        dgcaLink: `/form/aerodrome_detail_form`,
+        operatorLink: '/aerodrome_detail_form',
+      },
+      {
+        title: 'Any Other Information',
+        status: 'Processing',
+        dgcaLink: `/form/aerodrome_detail_form`,
+        operatorLink: '/aerodrome_detail_form',
+      }
+    ]
+
   initializeIcons();
   return (
       <>
         <div style={container}>
         {cards_one_two_three.map((cards_one_two_three) => (
             <div className="s-Grid-col ms-sm3 ms-xl3">
-            <Card styles={styles.cardStyles}>
+            <Card styles={styles.cardStyles} onClick={() => {
+                if(props.userRole.role==="DGCA") {
+                  props.history.push(`/app/dgca/license/${1}${cards_one_two_three.dgcaLink}`)
+                }
+                else if(props.userRole.role==="Operator") {
+                  props.history.push(`/app/operator${cards_one_two_three.operatorLink}`)
+                }
+              }}>
                 <Card.Section>
                 <Card.Item>
                     <i style={icon} className={`ms-Icon ms-Icon--${receiveIcon(cards_one_two_three.status)}`} aria-hidden="true"></i>
@@ -233,4 +263,4 @@ const CardsSection = (props) => {
   )
 }
 
-export default CardsSection;
+export default roleHandler(CardsSection);

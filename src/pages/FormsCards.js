@@ -42,7 +42,7 @@ class FormCards extends Component {
                                 </Text> 
                             }
 
-                            <FormList user_type="operator" submission={this.state.submission}/>
+                            <FormList user_type="operator" history={this.props.history} submission={this.state.submission}/>
                         </>
                 }
             </>
