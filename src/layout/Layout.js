@@ -8,6 +8,7 @@ import {
 // components
 import Navigation from "../components/navigation/Navigation";
 import Header from "../components/header/Header";
+import Chatbot from "../components/chatbot/Chatbot"
 
 // pages
 import Dashboard from "../pages/dashboard/Dashboard"
@@ -28,6 +29,9 @@ import DGCAForm5 from "../pages/forms/form5/DGCAForm5";
 import DGCAForm6 from "../pages/forms/form6/DGCAForm6";
 import DGCAForm7 from "../pages/forms/form7/DGCAForm7";
 import DGCAForm8 from "../pages/forms/form8/DGCAForm8";
+import DGCAForm1 from "../pages/forms/form1/DGCAForm1";
+import DGCAForm2 from "../pages/forms/form2/DGCAForm2";
+import DGCAForm3 from "../pages/forms/form3/DGCAForm3";
 
 function Layout(props) {
 
@@ -46,6 +50,7 @@ function Layout(props) {
                     <Route path="/app/form_list" component={FormCards}/>
                     <Route path="/app/dashboard" component={Dashboard} />
                     <Route path="/app/DGCASampleForm" component={DGCAForm} />
+                    
                     <Route path="/app/sampleform" component={SampleForm} />
                     <Route path="/app/licensee_detail_form" component={Form1Extra}/>
                     <Route path="/app/aerodrome_detail_form" component={Form1}/>
@@ -57,13 +62,15 @@ function Layout(props) {
                     <Route path="/app/details_of_fees" component={Form7}/>
                     <Route path="/app/further_info" component={Form8}/>
                     <Route path="/app/renewal_form" component={RenewalForm}/>
-
                     <Route path="/app/dgca/aerodrome_management_personnel" component={DGCAForm5}/>
                     <Route path="/app/dgca/aerodrome_manual" component={DGCAForm6}/>
                     <Route path="/app/dgca/details_of_fees" component={DGCAForm7}/>
                     <Route path="/app/dgca/further_info" component={DGCAForm8}/>
-                    
+                    <Route path="/app/dgca/aerodrome_detail_form" component={DGCAForm1} />
+                    <Route path="/app/dgca/aerodrome_activities" component={DGCAForm2} />
+                    <Route path="/app/dgca/control_of_aerodrome" component={DGCAForm3} />      
                 </Switch>
+                <Chatbot/>
               </div>
             </div>
           </div>
