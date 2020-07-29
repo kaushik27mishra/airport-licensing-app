@@ -45,7 +45,7 @@ class Dashboard extends Component {
     render (){
         
         switch(this.props.userRole.role){
-            case "dgca" : return(
+            case "DGCA" : return(
                 <>  
             
                 <div className="ms-Grid-row">
@@ -105,10 +105,10 @@ class Dashboard extends Component {
                 </div>
             </>
             )
-            case 'operator' : return (
+            case "Operator" : return (
                 <FormCards/>
             )
-            case 'ro' : return (
+            case "RegionalOfficeHead" : return (
                 <>
                     <div className="ms-Grid-row">
                         <CardsSection/>
@@ -142,7 +142,7 @@ class Dashboard extends Component {
                 </>
             )
             default: return(
-                <h1>{this.props.userRole.role}</h1>
+                <h1>You are the {this.props.userRole.role}</h1>
             )
         }
             
