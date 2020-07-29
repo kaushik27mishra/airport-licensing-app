@@ -1,10 +1,7 @@
 import React from 'react'
 
-//apollo
-import { gql, useQuery } from '@apollo/client';
-
 //auth
-import { useUserDispatch } from "../../context/UserContext";
+import { useUserDispatch, signOut } from "../../context/UserContext";
 
 //ui
 import { CommandBar } from 'office-ui-fabric-react/lib/CommandBar';
@@ -20,12 +17,6 @@ const menuStyles = {
 };
 
 function Header(props) {
-
-    const { client, error, data } = useQuery(
-        PROFILE_QUERY,
-        { fetchPolicy: "network-only" }
-    );
-    
     
     var userDispatch = useUserDispatch();
     const _farItems = [
@@ -42,49 +33,24 @@ function Header(props) {
                     key: 'logout',
                     text: 'Logout',
                     iconProps: { iconName: 'BlockContact' },
-                    onClick: () => {logout(userDispatch, props.history)},
+                    onClick: () => {signOut(userDispatch, props.history)},
                   },
                 ]
             }
         }
     ]
 
-    const logout = (dispatch,history) => {
-        localStorage.removeItem("id_token");
-        client.resetStore()
-        dispatch({ type: "SIGN_OUT_SUCCESS" });
-        history.push("/login");
-    }
-
-    // if(error) {
-    //     props.history.push('/login')
-    //     localStorage.removeItem("id_token");
-    //     client.resetStore()
-    //     userDispatch({ type: "SIGN_OUT_SUCCESS" });
-    // }
-
-    // if(data) {
-    //     console.log(data.me);
-    // }
-
     return (
-        <div>
+        <>
             <CommandBar
                 farItems={_farItems}
                 ariaLabel="Use left and right arrow keys to navigate between commands"
             />
-        </div>
+        </>
     )
 }
 
 export default Header
 
-const PROFILE_QUERY = gql`
-query { 
-    me {
-        id
-        role
-    }
-  }
-`;
+
 

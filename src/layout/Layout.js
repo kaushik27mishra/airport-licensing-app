@@ -1,9 +1,5 @@
-import React from "react";
-import {
-  Route,
-  Switch,
-  withRouter,
-} from "react-router-dom";
+import React from 'react'
+import { Route, Switch, withRouter} from "react-router-dom";
 
 // components
 import Navigation from "../components/navigation/Navigation";
@@ -36,7 +32,7 @@ import DGCAForm3 from "../pages/forms/form3/DGCAForm3";
 function Layout(props) {
 
   return (
-        <>
+    <>
           <div style={{padding:'0em',margin:'0'}} className="ms-Grid" dir="ltr">
             <div className="ms-Grid-row">
               <div className="ms-Grid-col ms-sm2 ms-xl2">
@@ -74,8 +70,11 @@ function Layout(props) {
               </div>
             </div>
           </div>
-        </>
-  );
+    </>
+  )
 }
 
 export default withRouter(Layout);
+
+
+
