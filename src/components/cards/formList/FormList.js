@@ -139,7 +139,6 @@ const CardsSection = (props) => {
                         }
                 </>
                 }
-                
                 </Card.Section>
             </Card>
             <br/>
