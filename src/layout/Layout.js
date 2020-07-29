@@ -8,7 +8,7 @@ import Chatbot from "../components/chatbot/Chatbot"
 
 // pages
 import Dashboard from "../pages/dashboard/Dashboard"
-import SampleForm from "../pages/forms/SampleForm";
+// import SampleForm from "../pages/forms/SampleForm";
 import Form1Extra from "../pages/forms/form1Extra/Form1Extra"
 import Form1 from "../pages/forms/form1/Form1"
 import Form2 from "../pages/forms/form2/Form2"
@@ -20,7 +20,7 @@ import Form7 from "../pages/forms/form7/Form7";
 import Form8 from "../pages/forms/form8/Form8";
 import RenewalForm from "../pages/forms/renewal/RenewalForm";
 import FormCards from "../pages/FormsCards";
-import DGCAForm from "../pages/forms/DGCAForm";
+// import DGCAForm from "../pages/forms/DGCAForm";
 import DGCAForm5 from "../pages/forms/form5/DGCAForm5";
 import DGCAForm6 from "../pages/forms/form6/DGCAForm6";
 import DGCAForm7 from "../pages/forms/form7/DGCAForm7";
@@ -28,8 +28,55 @@ import DGCAForm8 from "../pages/forms/form8/DGCAForm8";
 import DGCAForm1 from "../pages/forms/form1/DGCAForm1";
 import DGCAForm2 from "../pages/forms/form2/DGCAForm2";
 import DGCAForm3 from "../pages/forms/form3/DGCAForm3";
+import { roleHandler } from '../utils/roleHandler';
 
 function Layout(props) {
+
+  var role=props.userRole.role;
+
+  function DGCARoute({ component, ...rest }) {
+    return (
+      <Route
+        {...rest}
+        render={props =>
+          role==="DGCA" ? (
+            React.createElement(component, props)
+          ) : (
+            <Redirect
+              to={{
+                pathname: "/app/dashboard",
+                state: {
+                  from: props.location,
+                },
+              }}
+            />
+          )
+        }
+      />
+    );
+  }
+
+  function OperatorRoute({ component, ...rest }) {
+    return (
+      <Route
+        {...rest}
+        render={props =>
+          role==="Operator" ? (
+            React.createElement(component, props)
+          ) : (
+            <Redirect
+              to={{
+                pathname: "/app/dashboard",
+                state: {
+                  from: props.location,
+                },
+              }}
+            />
+          )
+        }
+      />
+    );
+  }
 
   return (
     <>
@@ -43,28 +90,10 @@ function Layout(props) {
                   <Header history={props.history}/>
                 </div>
                 <Switch>
-                    <Route path="/app/form_list" component={FormCards}/>
-                    <Route path="/app/dashboard" component={Dashboard} />
-                    <Route path="/app/DGCASampleForm" component={DGCAForm} />
-                    
-                    <Route path="/app/sampleform" component={SampleForm} />
-                    <Route path="/app/licensee_detail_form" component={Form1Extra}/>
-                    <Route path="/app/aerodrome_detail_form" component={Form1}/>
-                    <Route path="/app/aerodrome_activities" component={Form2}/>
-                    <Route path="/app/control_of_aerodrome" component={Form3}/>
-                    <Route path="/app/permissions_and_approvals" component={Form4}/>
-                    <Route path="/app/aerodrome_management_personnel" component={Form5}/>
-                    <Route path="/app/aerodrome_manual" component={Form6}/>
-                    <Route path="/app/details_of_fees" component={Form7}/>
-                    <Route path="/app/further_info" component={Form8}/>
-                    <Route path="/app/renewal_form" component={RenewalForm}/>
-                    <Route path="/app/dgca/aerodrome_management_personnel" component={DGCAForm5}/>
-                    <Route path="/app/dgca/aerodrome_manual" component={DGCAForm6}/>
-                    <Route path="/app/dgca/details_of_fees" component={DGCAForm7}/>
-                    <Route path="/app/dgca/further_info" component={DGCAForm8}/>
-                    <Route path="/app/dgca/aerodrome_detail_form" component={DGCAForm1} />
-                    <Route path="/app/dgca/aerodrome_activities" component={DGCAForm2} />
-                    <Route path="/app/dgca/control_of_aerodrome" component={DGCAForm3} />      
+                  <Route path="/app/profile" component={Form1Extra}/>
+                  <Route path="/app/dashboard" component={Dashboard} />
+                  <OperatorRoute path="/app/opertator" component={LayoutOperator}/>
+                  <DGCARoute path="/app/dgca" component={LayoutDGCA}/>
                 </Switch>
                 <Chatbot/>
               </div>
@@ -74,7 +103,37 @@ function Layout(props) {
   )
 }
 
-export default withRouter(Layout);
+export default withRouter(roleHandler(Layout));
 
 
+function LayoutDGCA() {
+  return (
+    <Switch>
+      <Route path="/app/dgca/license/:id/form" component={FormCards}/>
+      <Route path="/app/dgca/license/:id/form/aerodrome_detail_form" component={DGCAForm1} />
+      <Route path="/app/dgca/license/:id/form/aerodrome_activities" component={DGCAForm2} />
+      <Route path="/app/dgca/license/:id/form/control_of_aerodrome" component={DGCAForm3} />
+      <Route path="/app/dgca/license/:id/form/aerodrome_management_personnel" component={DGCAForm5}/>
+      <Route path="/app/dgca/license/:id/form/aerodrome_manual" component={DGCAForm6}/>
+      <Route path="/app/dgca/license/:id/form/details_of_fees" component={DGCAForm7}/>
+      <Route path="/app/dgca/license/:id/form/further_info" component={DGCAForm8}/>
+    </Switch>
+  )
+}
 
+function LayoutOperator() {
+  return (
+    <Switch>
+      <Route path="/app/operator/form" component={FormCards}/>
+      <Route path="/app/operator/:id/aerodrome_detail_form" component={Form1}/>
+      <Route path="/app/operator/:id/aerodrome_activities" component={Form2}/>
+      <Route path="/app/operator/:id/control_of_aerodrome" component={Form3}/>
+      <Route path="/app/operator/:id/permissions_and_approvals" component={Form4}/>
+      <Route path="/app/operator/:id/aerodrome_management_personnel" component={Form5}/>
+      <Route path="/app/operator/:id/aerodrome_manual" component={Form6}/>
+      <Route path="/app/operator/:id/details_of_fees" component={Form7}/>
+      <Route path="/app/operator/:id/further_info" component={Form8}/>
+      <Route path="/app/operator/:id/renewal_form" component={RenewalForm}/>
+    </Switch>
+  )
+}  
