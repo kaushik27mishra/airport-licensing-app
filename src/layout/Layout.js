@@ -32,8 +32,8 @@ import { roleHandler } from '../utils/roleHandler';
 
 function Layout(props) {
 
-  // var role=props.userRole.role;
-  var role="Operator";
+  var role=props.userRole.role;
+  // var role="DGCA";
 
   function DGCARoute({ component, ...rest }) {
     return (
