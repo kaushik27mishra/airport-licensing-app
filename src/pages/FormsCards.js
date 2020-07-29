@@ -3,23 +3,24 @@ import React, {Component} from 'react';
 // components
 import FormList from '../components/cards/formList/FormList'
 
+import {roleHandler} from '../utils/roleHandler'
+
 //ui
 import { Text } from 'office-ui-fabric-react';
 
-const user_type = "dgca"
-
 class FormCards extends Component {
-
+    
     constructor(props) {
         super(props)
-
+        
         this.state = {
             submission: null,
         }
- 
+        
     }
-
+    
     render(){
+        const user_type = this.props.userRole.role
         return (
             <>
                 {
@@ -49,4 +50,4 @@ class FormCards extends Component {
         )
     } 
 }
-export default FormCards;
+export default roleHandler(FormCards);
