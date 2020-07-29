@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Component } from 'react'
 
 // components
 import CardsSection from '../../components/cards/Cards'
@@ -14,6 +14,9 @@ import { Card } from '@uifabric/react-cards';
 
 // role
 import {roleHandler}  from "../../utils/roleHandler";
+
+//page
+import FormCards from '../FormsCards';
 
 const classNames = mergeStyleSets({
     pivot: {
@@ -34,65 +37,117 @@ const styles = {
     },
 }
 
-function Dashboard(props) {
-    return (
-        <>  
-            <div className="ms-Grid-row">
-                <CardsSection/>
-            </div>
-            <div className="ms-Grid-row">
-                <div className={`s-Grid-col ms-sm9 ms-xl9 ${classNames.pivot}`}>
-                    <Card styles={styles.cardStyles}>
-                        <Card.Section>
-                            <Card.Item>
-                                <Pivot styles={styles.pivotStyles}>
-                                    <PivotItem
-                                        headerText="All Applications"
-                                        headerButtonProps={{
-                                          'data-order': 1,
-                                        }}
-                                    >
-                                        <Table/>
-                                    </PivotItem>
-                                    <PivotItem headerText="Completed Applications">
-                                        <Table/>
-                                    </PivotItem>
-                                    <PivotItem headerText="Ongoing Applications">
-                                        <Table/>
-                                    </PivotItem>
-                                </Pivot>
-                            </Card.Item>
-                        </Card.Section>
-                    </Card>
+class Dashboard extends Component {
+    constructor(props) {
+        super(props)
+        
+    }
+    render (){
+        
+        switch(this.props.userRole.role){
+            case "dgca" : return(
+                <>  
+            
+                <div className="ms-Grid-row">
+                    <CardsSection/>
                 </div>
-            </div>
-            <div style={{paddingTop:'100px',paddingBottom:'100px'}} className="ms-Grid-row">
-                <div className={`s-Grid-col ms-sm9 ms-xl9 ${classNames.pivot}`}>
-                    <Card styles={styles.cardStyles}>
-                        <Card.Section>
-                            <Card.Item>
-                                <Pivot styles={styles.pivotStyles}>
-                                    <PivotItem
-                                        headerText="All Applications"
-                                        headerButtonProps={{
-                                          'data-order': 1,
-                                        }}
-                                    >
-                                        <Table/>
-                                    </PivotItem>
-                                    <PivotItem headerText="Completed Applications">
-                                        <Table/>
-                                    </PivotItem>
-                                    <PivotItem headerText="Ongoing Applications">
-                                        <Table/>
-                                    </PivotItem>
-                                </Pivot>
-                            </Card.Item>
-                        </Card.Section>
-                    </Card>
+                <div className="ms-Grid-row">
+                    <div className={`s-Grid-col ms-sm9 ms-xl9 ${classNames.pivot}`}>
+                        <Card styles={styles.cardStyles}>
+                            <Card.Section>
+                                <Card.Item>
+                                    <Pivot styles={styles.pivotStyles}>
+                                        <PivotItem
+                                            headerText="All Applications"
+                                            headerButtonProps={{
+                                              'data-order': 1,
+                                            }}
+                                        >
+                                            <Table/>
+                                        </PivotItem>
+                                        <PivotItem headerText="Completed Applications">
+                                            <Table/>
+                                        </PivotItem>
+                                        <PivotItem headerText="Ongoing Applications">
+                                            <Table/>
+                                        </PivotItem>
+                                    </Pivot>
+                                </Card.Item>
+                            </Card.Section>
+                        </Card>
+                    </div>
                 </div>
-            </div>
-        </>
-    )
+                <div style={{paddingTop:'100px',paddingBottom:'100px'}} className="ms-Grid-row">
+                    <div className={`s-Grid-col ms-sm9 ms-xl9 ${classNames.pivot}`}>
+                        <Card styles={styles.cardStyles}>
+                            <Card.Section>
+                                <Card.Item>
+                                    <Pivot styles={styles.pivotStyles}>
+                                        <PivotItem
+                                            headerText="All Applications"
+                                            headerButtonProps={{
+                                              'data-order': 1,
+                                            }}
+                                        >
+                                            <Table/>
+                                        </PivotItem>
+                                        <PivotItem headerText="Completed Applications">
+                                            <Table/>
+                                        </PivotItem>
+                                        <PivotItem headerText="Ongoing Applications">
+                                            <Table/>
+                                        </PivotItem>
+                                    </Pivot>
+                                </Card.Item>
+                            </Card.Section>
+                        </Card>
+                    </div>
+                </div>
+            </>
+            )
+            case 'operator' : return (
+                <FormCards/>
+            )
+            case 'ro' : return (
+                <>
+                    <div className="ms-Grid-row">
+                        <CardsSection/>
+                    </div>
+                    <div className="ms-Grid-row">
+                        <div className={`s-Grid-col ms-sm9 ms-xl9 ${classNames.pivot}`}>
+                            <Card styles={styles.cardStyles}>
+                                <Card.Section>
+                                    <Card.Item>
+                                        <Pivot styles={styles.pivotStyles}>
+                                            <PivotItem
+                                                headerText="All Applications"
+                                                headerButtonProps={{
+                                                'data-order': 1,
+                                                }}
+                                            >
+                                                <Table/>
+                                            </PivotItem>
+                                            <PivotItem headerText="Completed Applications">
+                                                <Table/>
+                                            </PivotItem>
+                                            <PivotItem headerText="Ongoing Applications">
+                                                <Table/>
+                                            </PivotItem>
+                                        </Pivot>
+                                    </Card.Item>
+                                </Card.Section>
+                            </Card>
+                        </div>
+                    </div>
+                </>
+            )
+            default: return(
+                <h1>{this.props.userRole.role}</h1>
+            )
+        }
+            
+       
+    }
+
 }
 export default roleHandler(Dashboard);
