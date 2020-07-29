@@ -80,6 +80,12 @@ class Form2 extends Component {
             elevationMeter: "",
             elevationMeter_defect: false,
             elevationMeter_error: "",
+            longitude: "",
+            longitude_defect: false,
+            longitude_error: "",
+            latitude: "",
+            latitude_defect: false,
+            latitude_error: "",
         }
     }
 
@@ -150,7 +156,13 @@ class Form2 extends Component {
             elevationMeter,
             elevationMeter_defect,
             elevationFeet_error,
-            elevationMeter_error
+            elevationMeter_error,
+            latitude,
+            latitude_defect,
+            latitude_error,
+            longitude,
+            longitude_defect,
+            longitude_error
         } = this.state;
 
         return (
@@ -215,6 +227,20 @@ class Form2 extends Component {
                                     </label>
                                     {grid!=null ? `${grid.name}` : ''}
                                 </div>
+                                <TextField
+                                    name="latitude"
+                                    onChange={this.handleChange}
+                                    value={latitude}
+                                    errorMessage={latitude_error}
+                                    disabled={latitude_defect}
+                                    label="Latitude of the aerodrom"/>
+                                <TextField
+                                    name="longitude"
+                                    onChange={this.handleChange}
+                                    value={longitude}
+                                    errorMessage={longitude_error}
+                                    disabled={longitude_defect}
+                                    label="Longitude of the aerodrome"/>
                                 <TextField
                                     name="elevationFeet"
                                     onChange={this.handleChange}
