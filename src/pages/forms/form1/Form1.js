@@ -91,7 +91,7 @@ class Form2 extends Component {
 
     handleChange=(e) => {
         this.setState({
-            [e.target.name]:e.input.value
+            [e.target.name]:e.target.value
         })
     }
 
