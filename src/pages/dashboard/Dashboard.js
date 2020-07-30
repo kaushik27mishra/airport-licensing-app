@@ -17,6 +17,7 @@ import {roleHandler}  from "../../utils/roleHandler";
 
 //page
 import FormCards from '../FormsCards';
+import TableRO from '../../components/table/TableRO';
 
 const classNames = mergeStyleSets({
     pivot: {
@@ -123,13 +124,13 @@ class Dashboard extends Component {
                                                 'data-order': 1,
                                                 }}
                                             >
-                                                <Table/>
+                                                <TableRO/>
                                             </PivotItem>
                                             <PivotItem headerText="Completed Applications">
-                                                <Table/>
+                                                <TableRO/>
                                             </PivotItem>
                                             <PivotItem headerText="Ongoing Applications">
-                                                <Table/>
+                                                <TableRO/>
                                             </PivotItem>
                                         </Pivot>
                                     </Card.Item>
