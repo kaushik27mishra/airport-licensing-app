@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { gql } from '@apollo/client';
+import gql from 'graphql-tag';
 import { client } from '../index'
 
 export const UserRole = React.createContext(
@@ -17,7 +17,8 @@ class UserRoleProvider extends Component {
         super(props)
         
         this.state = {
-             role:"Admin"
+             role:"",
+             id:""
             }
         }
         

@@ -105,7 +105,10 @@ class Dashboard extends Component {
             </>
             )
             case "Operator" : return (
-                <FormCards history={this.props.history}/>
+                <>
+                    <h1>{this.props.userRole.id}</h1>
+                    <FormCards history={this.props.history}/>
+                </>
             )
             case "RegionalOfficeHead" : return (
                 <>

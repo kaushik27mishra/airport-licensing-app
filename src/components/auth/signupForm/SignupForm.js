@@ -1,5 +1,9 @@
 import React, { Component } from 'react'
 
+//components
+import Address from "../../form/Address"
+import SignaturePad from "../../form/SignaturePad" 
+
 //ui
 import { Dropdown } from 'office-ui-fabric-react/lib/Dropdown';
 import { TextField } from 'office-ui-fabric-react/lib/TextField';
@@ -7,12 +11,16 @@ import { Text, PrimaryButton, MessageBar, MessageBarType } from 'office-ui-fabri
 import { mergeStyleSets } from 'office-ui-fabric-react/lib/Styling';
 import { Card } from '@uifabric/react-cards';
 
-const StateOptions = [
-    { key: 'A', text: 'Option a', title: 'I am option a.' },
-    { key: 'B', text: 'Option b' },
-    { key: 'C', text: 'Option c' },
-    { key: 'D', text: 'Option d' },
-    { key: 'E', text: 'Option e' },
+//apollo client
+import gql from 'graphql-tag';
+import { Mutation } from '@apollo/react-components';
+
+const roles = [
+    { key: 'DGCA', text: 'DGCA' },
+    { key: 'Operator', text: 'Operator' },
+    { key: 'RegionalOfficeHead', text: 'RegionalOfficeHead' },
+    { key: 'AerodromeInspector', text: 'AerodromeInspector' },
+    { key: 'Owner', text: 'Owner' },
 ]
 
 const styles = {
@@ -39,7 +47,7 @@ const classNames = mergeStyleSets({
 
 const dropdownStyles = { dropdown: { width: 250 } };
 
-export class SignupForm extends Component {
+class SignupForm extends Component {
     constructor(props) {
         super(props)
     
@@ -61,6 +69,12 @@ export class SignupForm extends Component {
         }
     }
 
+    onChange = (ev,option) => {
+        this.setState({
+            role: option.key
+        })
+    }
+
     handleChange=(e) => {
         this.setState({
             [e.target.name]:e.target.value
@@ -76,7 +90,7 @@ export class SignupForm extends Component {
     handleAdressStateChange = (name,e,item) => {
         this.setState({
             [name] : {
-                ...this.state.licenseeAddress,
+                ...this.state.address,
                 state: item,
             }
         })
@@ -85,7 +99,7 @@ export class SignupForm extends Component {
     handleAdressChange = (name,e) => {
         this.setState({
             [name] : {
-                ...this.state.licenseeAddress,
+                ...this.state.address,
                 [e.target.name]: e.target.value,
             }
         })
@@ -100,6 +114,21 @@ export class SignupForm extends Component {
             })    
         }
     };
+
+    // decodeBase64Image = (dataString) =>  {
+    //   var matches = dataString.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/);
+    //   var response = {};
+
+    //   if (matches.length !== 3) 
+    //   {
+    //     return new Error('Invalid input string');
+    //   }
+
+    //   response.type = matches[1];
+    //   response.data = new Buffer(matches[2], 'base64');
+
+    //   return response;
+    // }
     
     render() {
 
@@ -110,113 +139,94 @@ export class SignupForm extends Component {
             role,
             address,
             govtId,
-            signImage,
+            signImage
         } = this.state;
-
-        const SIGNUP = gql`
-            mutation CreateUser(
-                $name: String,
-              $email: EmailAddress,
-              $phone: PhoneNumber,
-              $role: Roles,
-              $signImage: Upload,
-              $govtId: Upload
-              $address: AddressFields  
-            ){
-              createUser(input: {
-                name: $name,
-                email: $email,
-                phone: $phone,
-                role: $role,
-                signImage: $signImage,
-                govtId: $govtId,
-                address: $address
-              }){
-                id
-                name
-                email
-                phone
-                role
-                signImage
-                govtId
-                address {
-                  id
-                  line1
-                  line2
-                  city
-                  pinCode
-                  state {
-                    id
-                    state
-                    country
-                  }
-                }
-              }
-        }`;
-
-        const [ signUpFunation ,{loading, error, data }] = useLazyQuery(SIGNUP);
-
+        
         return (
-            <div className="ms-Grid-row" style={{paddingBottom:'300px'}}>
-                <div className={`s-Grid-col ms-sm6 ms-xl6 ${classNames.pivot}`}>
-                    <Card styles={styles.cardStyles}>
-                        <Card.Section>                
-                        {error ? <MessageBar messageBarType={MessageBarType.error} isMultiline={false} dismissButtonAriaLabel="Close" >There is an error processesing your request</MessageBar>:null}
-                        <Text variant={'xxLarge'}>Signup Request Form</Text>
-                        <TextField
-                            disabled={loading} 
-                            name="name" 
-                            value={name} 
-                            onChange={this.handleChange} 
-                            label="Full Name"
-                        />
-                        <TextField
-                            disabled={loading} 
-                            name="email" 
-                            value={email} 
-                            onChange={this.handleChange} 
-                            label="Email"
-                        />
-                        <TextField
-                            disabled={loading} 
-                            name="phone"
-                            value={phone} 
-                            onChange={this.handleChange} 
-                            label="Phone"
-                        />
-                        <Dropdown
-                            placeholder="Select"
-                            label="Enter State"
-                            onChange={onChange}
-                            options={StateOptions}
-                            styles={dropdownStyles}
-                        />
-                        <div className="button-wrap">
-                            <label className="new-button" htmlFor="upload1"> Upload Private Key File
-                                <input id="upload1" name="grid" type="file" onChange={this.handleFileChange}/>
-                            </label>
-                            {govtId!=null ? `${govtId.name}` : ''}
+            <Mutation mutation={SIGNUP}>
+                { (signup, {loading, error, data}) => (
+                    <div className="ms-Grid-row" style={{paddingBottom:'300px'}}>
+                        <div className={`s-Grid-col ms-sm6 ms-xl6 ${classNames.pivot}`}>
+                            <Card styles={styles.cardStyles}>
+                                <Card.Section>                
+                                {error ? <MessageBar messageBarType={MessageBarType.error} isMultiline={false} dismissButtonAriaLabel="Close" >There is an error processesing your request</MessageBar>:null}
+                                <Text variant={'xxLarge'}>Signup Request Form</Text>
+                                <TextField
+                                    disabled={loading} 
+                                    name="name" 
+                                    value={name} 
+                                    onChange={this.handleChange} 
+                                    label="Full Name"
+                                />
+                                <TextField
+                                    disabled={loading} 
+                                    name="email" 
+                                    value={email} 
+                                    onChange={this.handleChange} 
+                                    label="Email"
+                                />
+                                <TextField
+                                    disabled={loading} 
+                                    name="phone"
+                                    value={phone} 
+                                    onChange={this.handleChange} 
+                                    label="Phone"
+                                />
+                                <Dropdown
+                                    placeholder="Select"
+                                    label="Select Role"
+                                    onChange={this.onChange}
+                                    options={roles}
+                                    styles={dropdownStyles}
+                                />
+                                <div className="button-wrap">
+                                    <label className="new-button" htmlFor="upload1"> Upload Private Key File
+                                        <input id="upload1" name="govtId" type="file" onChange={this.handleFileChange}/>
+                                    </label>
+                                    {govtId!=null ? `${govtId.name}` : ''}
+                                </div>
+                                <Address
+                                    text="Address" 
+                                    handleChange={(e) => this.handleAdressChange('address',e)} 
+                                    handleAdressStateChange={(e,item) => this.handleAdressStateChange('address',e,item)} 
+                                    address={address}/>
+                                <SignaturePad setImageURL={this.setImageURL}/>
+                                <PrimaryButton 
+                                    disabled={loading} 
+                                    text="Submit" 
+                                    onClick={() => {
+                                        // var image = this.decodeBase64Image(signImage);
+                                        signup({variables: {name: name, email: email, phone: phone, role: role }})
+                                    }}
+                                />
+                                </Card.Section>
+                            </Card>
                         </div>
-                        <Address
-                            text="Address" 
-                            handleChange={(e) => this.handleAdressChange('address',e)} 
-                            handleAdressStateChange={(e,item) => this.handleAdressStateChange('address',e,item)} 
-                            address={address}/>
-                        <SignaturePad setImageURL={this.setImageURL}/>
-                        <PrimaryButton 
-                            disabled={loading} 
-                            text="Submit" 
-                            onClick={() =>  {
-                                signUpFunation({variables: {email: loginValue, password: passwordValue, privatekeyFile: privateKey, signCertFile: certKey}})
-                                }
-                            }
-                        />
-                        </Card.Section>
-                    </Card>
-                </div>
-            </div>
+                    </div>
+                )}
+            </Mutation>
         )
     }
 }
-
 export default SignupForm
+
+const SIGNUP = gql`
+mutation CreateUser(
+    $name: String,
+    $email: EmailAddress,
+    $phone: PhoneNumber,
+    $role: Roles,
+){
+  createUser(input: {
+    name: $name,
+    email: $email,
+    phone: $phone,
+    role: $role,
+  }){
+    id
+    name
+    email
+    phone
+    role
+  }
+}`;
