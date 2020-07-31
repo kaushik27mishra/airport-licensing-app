@@ -142,7 +142,7 @@ const CardsSection = (props) => {
                     <Text styles={styles.header}>{cards_one_two_three.title}</Text>
                 </Card.Item>
                 {
-                    props.user_type==="dgca" ?
+                    props.userRole.role==="DGCA" ?
                     <>
                         <Card.Item>
                             <Text styles={styles.status}>Form status - {cards_one_two_three.status}</Text>
@@ -189,7 +189,7 @@ const CardsSection = (props) => {
                     <Text styles={styles.header}>{cards_four_five_six.title}</Text>
                 </Card.Item>
                 {
-                    props.user_type==="dgca" ?
+                    props.userRole.role==="DGCA" ?
                     <>
                         <Card.Item>
                             <Text styles={styles.status}>Form status - {cards_four_five_six.status}</Text>
@@ -238,7 +238,7 @@ const CardsSection = (props) => {
                     <Text styles={styles.header}>{cards_seven_eight.title}</Text>
                 </Card.Item>
                 {
-                    props.user_type==="dgca" ?
+                    props.userRole.role==="DGCA" ?
                     <>
                         <Card.Item>
                             <Text styles={styles.status}>Form status - {cards_seven_eight.status}</Text>
