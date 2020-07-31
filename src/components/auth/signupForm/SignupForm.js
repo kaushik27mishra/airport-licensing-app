@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 
 //components
 import Address from "../../form/Address"
-import SignaturePad from "../../form/SignaturePad" 
 
 //ui
 import { Dropdown } from 'office-ui-fabric-react/lib/Dropdown';
@@ -16,10 +15,7 @@ import gql from 'graphql-tag';
 import { Mutation } from '@apollo/react-components';
 
 const roles = [
-    { key: 'DGCA', text: 'DGCA' },
     { key: 'Operator', text: 'Operator' },
-    { key: 'RegionalOfficeHead', text: 'RegionalOfficeHead' },
-    { key: 'AerodromeInspector', text: 'AerodromeInspector' },
     { key: 'Owner', text: 'Owner' },
 ]
 
@@ -61,11 +57,10 @@ class SignupForm extends Component {
                 line2:'',
                 state:  null,
                 city:'',
-                pincode:''
+                pinCode:''
             },
             govtId: null,
             signImage:null,
-
         }
     }
 
@@ -91,7 +86,7 @@ class SignupForm extends Component {
         this.setState({
             [name] : {
                 ...this.state.address,
-                state: item,
+                state: { state: item.key },
             }
         })
     }
@@ -104,16 +99,6 @@ class SignupForm extends Component {
             }
         })
     }
-
-    setImageURL = (imageURL) =>{
-        const whiteURL = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAC0lEQVQYV2NgAAIAAAUAAarVyFEAAAAASUVORK5CYII=";
-        if(imageURL!==whiteURL && imageURL!==this.state.signImage)
-        {   
-            this.setState({
-                signImage:imageURL
-            })    
-        }
-    };
 
     // decodeBase64Image = (dataString) =>  {
     //   var matches = dataString.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/);
@@ -141,11 +126,14 @@ class SignupForm extends Component {
             govtId,
             signImage
         } = this.state;
-        
+        address.pinCode = parseInt(address.pinCode);
         return (
             <Mutation mutation={SIGNUP}>
-                { (signup, {loading, error, data}) => (
-                    <div className="ms-Grid-row" style={{paddingBottom:'300px'}}>
+                { (signup, {loading, error, data}) => {
+                    if(error) console.log(error);
+                    if(data)console.log(data.createUser)
+                    return (
+                        <div className="ms-Grid-row" style={{paddingBottom:'300px'}}>
                         <div className={`s-Grid-col ms-sm6 ms-xl6 ${classNames.pivot}`}>
                             <Card styles={styles.cardStyles}>
                                 <Card.Section>                
@@ -180,30 +168,36 @@ class SignupForm extends Component {
                                     styles={dropdownStyles}
                                 />
                                 <div className="button-wrap">
-                                    <label className="new-button" htmlFor="upload1"> Upload Private Key File
+                                    <label className="new-button" htmlFor="upload1"> Upload Goverment Issued ID
                                         <input id="upload1" name="govtId" type="file" onChange={this.handleFileChange}/>
                                     </label>
                                     {govtId!=null ? `${govtId.name}` : ''}
+                                </div>
+                                <div className="button-wrap">
+                                    <label className="new-button" htmlFor="upload2"> Upload Your Sign Image
+                                        <input id="upload2" name="signImage" type="file" onChange={this.handleFileChange}/>
+                                    </label>
+                                    {signImage!=null ? `${signImage.name}` : ''}
                                 </div>
                                 <Address
                                     text="Address" 
                                     handleChange={(e) => this.handleAdressChange('address',e)} 
                                     handleAdressStateChange={(e,item) => this.handleAdressStateChange('address',e,item)} 
                                     address={address}/>
-                                <SignaturePad setImageURL={this.setImageURL}/>
                                 <PrimaryButton 
                                     disabled={loading} 
                                     text="Submit" 
                                     onClick={() => {
                                         // var image = this.decodeBase64Image(signImage);
-                                        signup({variables: {name: name, email: email, phone: phone, role: role }})
+                                        signup({variables: {name, email, phone, role, address, govtId, signImage}})
                                     }}
                                 />
                                 </Card.Section>
                             </Card>
                         </div>
                     </div>
-                )}
+                    );
+                }}
             </Mutation>
         )
     }
@@ -212,21 +206,25 @@ export default SignupForm
 
 const SIGNUP = gql`
 mutation CreateUser(
-    $name: String,
-    $email: EmailAddress,
-    $phone: PhoneNumber,
-    $role: Roles,
-){
-  createUser(input: {
-    name: $name,
-    email: $email,
-    phone: $phone,
-    role: $role,
-  }){
+  $name: String
+  $email: EmailAddress
+  $phone: PhoneNumber
+  $role: Roles
+  $signImage: Upload
+  $govtId: Upload
+  $address: AddressFields
+) {
+  createUser(
+    input: {
+      name: $name
+      email: $email
+      phone: $phone
+      role: $role
+      signImage: $signImage
+      govtId: $govtId
+      address: $address
+    }
+  ) {
     id
-    name
-    email
-    phone
-    role
   }
 }`;
