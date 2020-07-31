@@ -18,6 +18,7 @@ import {roleHandler}  from "../../utils/roleHandler";
 //page
 import FormCards from '../FormsCards';
 import TableRO from '../../components/table/TableRO';
+import TableOperator from '../../components/table/TableOperator';
 
 const classNames = mergeStyleSets({
     pivot: {
@@ -107,7 +108,20 @@ class Dashboard extends Component {
             case "Operator" : return (
                 <>
                     <h1>{this.props.userRole.id}</h1>
-                    <FormCards history={this.props.history}/>
+                    <div className="ms-Grid-row">
+                        <CardsSection/>
+                    </div>
+                    <div className="ms-Grid-row">
+                        <div className={`s-Grid-col ms-sm9 ms-xl9 ${classNames.pivot}`}>
+                            <Card styles={styles.cardStyles}>
+                                <Card.Section>
+                                    <Card.Item>
+                                        <TableOperator history={this.props.history} id={this.props.userRole.id}/>
+                                    </Card.Item>
+                                </Card.Section>
+                            </Card>
+                        </div>
+                    </div>
                 </>
             )
             case "RegionalOfficeHead" : return (
