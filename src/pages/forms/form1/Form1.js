@@ -13,7 +13,7 @@ import './style.css'
 
 //apollo client
 import gql from 'graphql-tag';
-import { Mutation } from '@apollo/react-components';
+import { Mutation, Query } from '@apollo/react-components';
 
 const styles = {
     cardStyles: {
@@ -48,6 +48,15 @@ const removeIcon = { iconName: 'Remove' };
 
 const stackTokens = { childrenGap: 20 };
 
+const GET_OWNERS = gql`
+query Users($role: Roles){
+  users(role: $role){
+    id
+    email
+    name
+  }
+}
+`;
 
 class Form2 extends Component {
     constructor(props) {
@@ -63,6 +72,9 @@ class Form2 extends Component {
             situation: "",
             situation_defect: false,
             situation_error: "",
+            city: "",
+            city_defect: false,
+            city_error: "",
             statedistrict: "",
             statedistrict_defect: false,
             statedistrict_error: "",
@@ -139,6 +151,9 @@ class Form2 extends Component {
             statedistrict,
             statedistrict_defect,
             statedistrict_error,
+            city,
+            city_defect,
+            city_error,
             grid,
             owner,
             grid_defect,
@@ -160,7 +175,10 @@ class Form2 extends Component {
 
         return (
             <Mutation mutation={FORM1} >
-            { (form1function, {data}) => (
+            { (form1function, {loading, data, error}) => {
+                if(error) console.log(error);
+                if(data)console.log(data.enterAerodrome);
+                return(
                 <div className="ms-Grid-row" style={{paddingBottom:'100px'}}>
                     <div className={`s-Grid-col ms-sm9 ms-xl9 ${classNames.pivot}`}>
                         <Card styles={styles.cardStyles}>
@@ -176,11 +194,20 @@ class Form2 extends Component {
                                         disabled={placeName_defect}
                                         label="Place name by which the aerodrome
                                             is to be known in all future references"/>
-                                    <TextField
-                                        name="owner"
-                                        onChange={this.handleChange}
-                                        value={owner}
-                                        label="Select name of aerodrome owner"/>
+                                    <Query query={GET_OWNERS} variables={{ role: "Owner"}}>
+                                        {({ loading, error, data }) => {
+                                        if (loading) return 'Loading...';
+                                        if (error) return `Error! ${error.message}`;
+                                        return (
+                                            <Dropdown
+                                                placeholder="Select a Owner"
+                                                label="Select a Owner"
+                                                options={data.users.map(v => ({key: v.id, text: v.name}))}
+                                                onChange={(e,i) => this.setState({owner: i.key})}
+                                            />
+                                            );
+                                        }}
+                                    </Query>
                                     {/*Fax number to be added to Person, and this dropdown needs to be connected to Person*/}
                                     <TextField
                                         name="situation"
@@ -193,12 +220,19 @@ class Form2 extends Component {
                                             station and town/village"
                                         multiline rows={3}/>
                                     <TextField
+                                        name="city"
+                                        onChange={this.handleChange}
+                                        value={city}
+                                        errorMessage={city_error}
+                                        disabled={city_defect}
+                                        label="City/District which situated"/> {/*To be added in db*/}
+                                    <TextField
                                         name="statedistrict"
                                         onChange={this.handleChange}
                                         value={statedistrict}
                                         errorMessage={statedistrict_error}
                                         disabled={statedistrict_defect}
-                                        label="State/District which situated"/> {/*To be added in db*/}
+                                        label="State"/> {/*To be added in db*/}
                                     <Text variant={'medium'}>
                                         Attach a survey map, scale1:10,000 showing by means of broken line the exact boundaries of the aerodrome.
                                     </Text>
@@ -263,10 +297,12 @@ class Form2 extends Component {
                                         <DefaultButton text="Back" allowDisabledFocus />
                                         <PrimaryButton 
                                         onClick={() => {
+                                            console.log(this.state)
                                             form1function({variables: {
                                                 placeName: placeName,
                                                 state: statedistrict,
-                                                city: situation,
+                                                city: city,
+                                                situation: situation,
                                                 grid: grid,
                                                 owner: owner,
                                                 lat: latitude,
@@ -280,7 +316,7 @@ class Form2 extends Component {
                         </Card>
                     </div>
                 </div>
-            )}
+            )}}
             </Mutation>
         )
     }
@@ -290,26 +326,28 @@ export default Form2;
 
 const FORM1 = gql`
 mutation EnterAerodrome(
-    $placeName: String
-    $state: String
-    $city: String
-    $grid: Upload
-    $owner: String
-    $lat: String
-    $long: String
-    $runways: [RunwayFields]
-  ) {
-    enterAerodrome(
-      input: {
-        placeName: $placeName
-        city: $city
-        state: $state
-        grid: $grid
-        owner: $owner
-        lat: $lat
-        long: $long
-        runways: $runways
-      }
-    )
-  }
+  $placeName: String
+  $state: String
+  $situation: String
+  $city: String
+  $grid: Upload
+  $owner: String
+  $lat: String
+  $long: String
+  $runways: [RunwayFields]
+) {
+  enterAerodrome(
+    input: {
+      placeName: $placeName
+      city: $city
+      situation: $situation
+      state: $state
+      grid: $grid
+      owner: $owner
+      lat: $lat
+      long: $long
+      runways: $runways
+    }
+  )
+}
 `;
