@@ -31,8 +31,8 @@ import FormList from '../components/cards/formList/FormList';
 
 function Layout(props) {
 
-  // var role=props.userRole.role;
-  var role="DGCA";
+  var role=props.userRole.role;
+  // var role="";
 
   function DGCARoute({ component, ...rest }) {
     return (
@@ -124,7 +124,7 @@ function LayoutDGCA() {
 function LayoutOperator() {
   return (
     <Switch>
-      <Route path={`/app/operator/license/license_create_form`} component={LicenseCreateForm}/>
+      <Route path={`/app/operator/license_create_form`} component={LicenseCreateForm}/>
       <Route path={`/app/operator/license/:id/aerodrome_detail_form`} component={Form1}/>
       <Route path={`/app/operator/license/:id/form_list`} component={FormList}/>
       <Route path={`/app/operator/license/:id/renewal_form`} component={RenewalForm}/>

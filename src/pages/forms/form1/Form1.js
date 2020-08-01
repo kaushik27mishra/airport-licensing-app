@@ -65,6 +65,8 @@ class Form2 extends Component {
         super(props)
 
         this.state = {
+            upload_check:false,
+            data: false,
             placeName: "",
             placeName_defect: false,
             placeName_error: "",
@@ -129,17 +131,36 @@ class Form2 extends Component {
             }`,
             variables: { id: id }
         }).then( res => {
-            const { license } = res.data;
-            this.setState({
-                placeName: license.aerodrome.placeName,
-                situation: license.aerodrome.situation,
-                city: license.aerodrome.city,
-                statedistrict: license.aerodrome.state,
-                elevationMeter: license.aerodrome.elevationMeter,
-                runways: license.aerodrome.runways,
-                latitude: license.aerodrome.lat,
-                longitude: license.aerodrome.long
-            })
+            const { aerodrome } = res.data.license;
+            if(aerodrome!==null) {
+                this.setState({
+                    data: true,
+                    placeName: aerodrome.placeName,
+                    situation: aerodrome.situation,
+                    city: aerodrome.city,
+                    statedistrict: aerodrome.state,
+                    elevationMeter: aerodrome.elevationMeter,
+                    runways: aerodrome.runways,
+                    latitude: aerodrome.lat,
+                    longitude: aerodrome.long,
+                    placeName_defect: true,
+                    owner_defect: true,
+                    situation_defect: true,
+                    city_defect: true,
+                    statedistrict_defect: true,
+                    grid_defect: true,
+                    elevationFeet_defect: true,
+                    elevationMeter_defect: true,
+                    longitude_defect: true,
+                    latitude_defect: true,        
+                })
+            }
+            else {
+                this.setState({
+                    data: false
+                })
+            }
+
         })
 
     }
@@ -190,6 +211,8 @@ class Form2 extends Component {
     render() { 
         
         const {
+            upload_check,
+            data,
             placeName,
             placeName_defect,
             placeName_error,
@@ -221,9 +244,23 @@ class Form2 extends Component {
             longitude_error
         } = this.state;
 
+        var MUTATION;
+
+        if(data) {
+            MUTATION = FORM1;
+        }
+        else {
+            if(upload_check) {
+                MUTATION = FORM1_WITH_UPLOAD;
+            }
+            else {
+                MUTATION = FORM1_WITHOUT_UPLOAD;
+            }
+        }
+
 
         return (                
-                <Mutation mutation={FORM1} >
+                <Mutation mutation={MUTATION} >
                     {(form1function, {loading, data, error}) => {
                         if(error) console.log(error);
                         if(data) console.log(data.enterAerodrome);
@@ -336,7 +373,6 @@ class Form2 extends Component {
                                                  <ActionButton  
                                                     iconProps={removeIcon}
                                                     allowDisabledFocus
-                                                    // style={{color:'#922427'}}
                                                     onClick={this.handleRemoveRunway(idx)}>
                                                     Remove a runway
                                                  </ActionButton>
@@ -346,19 +382,53 @@ class Form2 extends Component {
                                                 <DefaultButton text="Back" allowDisabledFocus />
                                                 <PrimaryButton 
                                                     onClick={() => {
-                                                        console.log(this.state)
-                                                        form1function({variables: {
-                                                            placeName: placeName,
-                                                            state: statedistrict,
-                                                            elevationMeter: elevationMeter,
-                                                            city: city,
-                                                            situation: situation,
-                                                            grid: grid,
-                                                            owner: owner,
-                                                            lat: latitude,
-                                                            long: longitude,
-                                                            runways: runways
-                                                        }})
+                                                        if(data) {
+                                                            if(upload_check) {
+                                                                form1function({variables: {
+                                                                    id: this.props.match.params.id,
+                                                                    placeName: placeName,
+                                                                    state: statedistrict,
+                                                                    elevationMeter: elevationMeter,
+                                                                    city: city,
+                                                                    situation: situation,
+                                                                    grid: grid,
+                                                                    owner: owner,
+                                                                    lat: latitude,
+                                                                    long: longitude,
+                                                                    runways: runways
+                                                                }})
+                                                            }
+                                                            else {
+                                                                form1function({variables: {
+                                                                    id: this.props.match.params.id,
+                                                                    placeName: placeName,
+                                                                    state: statedistrict,
+                                                                    elevationMeter: elevationMeter,
+                                                                    city: city,
+                                                                    situation: situation,
+                                                                    grid: grid,
+                                                                    owner: owner,
+                                                                    lat: latitude,
+                                                                    long: longitude,
+                                                                    runways: runways
+                                                                }})
+                                                            }
+                                                        }
+                                                        else {
+                                                            form1function({variables: {
+                                                                placeName: placeName,
+                                                                state: statedistrict,
+                                                                elevationMeter: elevationMeter,
+                                                                city: city,
+                                                                situation: situation,
+                                                                grid: grid,
+                                                                owner: owner,
+                                                                lat: latitude,
+                                                                long: longitude,
+                                                                runways: runways
+                                                            }})
+                                                        }
+                                                        
                                                     }
                                                 } text="Next" allowDisabledFocus />
                                             </Stack>
@@ -402,3 +472,59 @@ mutation EnterAerodrome(
   )
 }
 `;
+
+const FORM1_WITHOUT_UPLOAD = gql`
+mutation UpdateAerodromeWithoutUpload(
+    $id: String!
+    $placeName: String
+    $state: String
+    $situation: String
+    $city: String
+    $owner: String
+    $lat: String
+    $long: String
+    $runways: [RunwayFields]
+  ) {
+    updateAerodromeWithoutUpload(
+      id: $id
+      input: {
+        placeName: $placeName
+        city: $city
+        situation: $situation
+        state: $state
+        owner: $owner
+        lat: $lat
+        long: $long
+        runways: $runways
+      }
+    )
+}`;
+
+const FORM1_WITH_UPLOAD = gql`
+mutation UpdateAerodromeUpload(
+    $id: String!
+    $placeName: String
+    $state: String
+    $situation: String
+    $city: String
+    $grid: Upload
+    $owner: String
+    $lat: String
+    $long: String
+    $runways: [RunwayFields]
+  ) {
+    updateAerodromeUpload(
+      id: $id,
+      input: {
+        placeName: $placeName
+        city: $city
+        situation: $situation
+        state: $state
+        grid: $grid
+        owner: $owner
+        lat: $lat
+        long: $long
+        runways: $runways
+      }
+    )
+  }`;

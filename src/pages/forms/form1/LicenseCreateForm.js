@@ -58,7 +58,7 @@ query Users($role: Roles){
 }
 `;
 
-class LicenceCreateForm extends Component {
+class LicenseCreateForm extends Component {
     constructor(props) {
         super(props)
 
@@ -140,6 +140,7 @@ class LicenceCreateForm extends Component {
     };
 
     render() {
+        console.log("render");
 
         const {
             placeName,
@@ -177,8 +178,10 @@ class LicenceCreateForm extends Component {
         return (
             <Mutation mutation={FORM1} >
             { (form1function, {loading, data, error}) => {
-                if(error) console.log(error);
-                if(data) console.log(data.enterAerodrome);
+                if(error) return 'error';
+                if(loading) return 'loading';
+                if(data) console.log(data);
+
                 return(
                 <div className="ms-Grid-row" style={{paddingBottom:'100px'}}>
                     <div className={`s-Grid-col ms-sm9 ms-xl9 ${classNames.pivot}`}>
@@ -324,7 +327,7 @@ class LicenceCreateForm extends Component {
     }
 }
 
-export default LicenceCreateForm;
+export default LicenseCreateForm;
 
 const FORM1 = gql`
 mutation EnterAerodrome(
