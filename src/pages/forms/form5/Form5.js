@@ -10,6 +10,11 @@ import { mergeStyleSets } from 'office-ui-fabric-react/lib/Styling';
 //components
 import Address from '../../../components/form/Address'
 
+
+import gql from 'graphql-tag';
+import { Mutation, Query } from '@apollo/react-components';
+import { client } from '../../..';
+
 //style
 const styles = {
     cardStyles: {

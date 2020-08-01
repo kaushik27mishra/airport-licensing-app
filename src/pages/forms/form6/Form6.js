@@ -7,6 +7,10 @@ import { TextField } from 'office-ui-fabric-react/lib/TextField';
 import { Card } from '@uifabric/react-cards';
 import { mergeStyleSets } from 'office-ui-fabric-react/lib/Styling';
 
+
+import gql from 'graphql-tag';
+import { Mutation, Query } from '@apollo/react-components';
+import { client } from '../../..';
 //style
 const styles = {
     cardStyles: {

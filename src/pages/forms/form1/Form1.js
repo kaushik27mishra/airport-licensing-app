@@ -179,7 +179,8 @@ class Form2 extends Component {
 
     handleFileChange=(e) => {
         this.setState({
-            [e.target.name]:e.target.files[0]
+            [e.target.name]:e.target.files[0],
+            upload_check: true
         })
     }
 
