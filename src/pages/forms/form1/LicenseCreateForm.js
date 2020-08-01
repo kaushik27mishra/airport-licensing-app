@@ -14,6 +14,7 @@ import './style.css'
 //apollo client
 import gql from 'graphql-tag';
 import { Mutation, Query } from '@apollo/react-components';
+import { client } from '../../../index'
 
 const styles = {
     cardStyles: {
@@ -58,7 +59,7 @@ query Users($role: Roles){
 }
 `;
 
-class Form2 extends Component {
+class LicenceCreateForm extends Component {
     constructor(props) {
         super(props)
 
@@ -322,7 +323,7 @@ class Form2 extends Component {
     }
 }
 
-export default Form2;
+export default LicenceCreateForm;
 
 const FORM1 = gql`
 mutation EnterAerodrome(

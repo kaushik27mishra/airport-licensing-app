@@ -8,8 +8,8 @@ import Chatbot from "../components/chatbot/Chatbot"
 
 // pages
 import Dashboard from "../pages/dashboard/Dashboard"
-// import SampleForm from "../pages/forms/SampleForm";
 import Form1Extra from "../pages/forms/form1Extra/Form1Extra"
+import LicenseCreateForm from "../pages/forms/form1/LicenseCreateForm"
 import Form1 from "../pages/forms/form1/Form1"
 import Form2 from "../pages/forms/form2/Form2"
 import Form3 from "../pages/forms/form3/Form3";
@@ -20,7 +20,6 @@ import Form7 from "../pages/forms/form7/Form7";
 import Form8 from "../pages/forms/form8/Form8";
 import RenewalForm from "../pages/forms/renewal/RenewalForm";
 import FormCards from "../pages/FormsCards";
-// import DGCAForm from "../pages/forms/DGCAForm";
 import DGCAForm5 from "../pages/forms/form5/DGCAForm5";
 import DGCAForm6 from "../pages/forms/form6/DGCAForm6";
 import DGCAForm7 from "../pages/forms/form7/DGCAForm7";
@@ -29,6 +28,7 @@ import DGCAForm1 from "../pages/forms/form1/DGCAForm1";
 import DGCAForm2 from "../pages/forms/form2/DGCAForm2";
 import DGCAForm3 from "../pages/forms/form3/DGCAForm3";
 import { roleHandler } from '../utils/roleHandler';
+import FormList from '../components/cards/formList/FormList';
 
 function Layout(props) {
 
@@ -125,15 +125,17 @@ function LayoutDGCA() {
 function LayoutOperator() {
   return (
     <Switch>
-      <Route path={`/app/operator/renewal_form`} component={RenewalForm}/>
-      <Route path={`/app/operator/aerodrome_activities`} component={Form2}/>
-      <Route path={`/app/operator/aerodrome_detail_form`} component={Form1}/>
-      <Route path={`/app/operator/control_of_aerodrome`} component={Form3}/>
-      <Route path={`/app/operator/permissions_and_approvals`} component={Form4}/>
-      <Route path={`/app/operator/aerodrome_management_personnel`} component={Form5}/>
-      <Route path={`/app/operator/aerodrome_manual`} component={Form6}/>
-      <Route path={`/app/operator/details_of_fees`} component={Form7}/>
-      <Route path={`/app/operator/further_info`} component={Form8}/>
+      <Route path={`/app/operator/license/license_create_form`} component={LicenseCreateForm}/>
+      <Route path={`/app/operator/license/:id/aerodrome_detail_form`} component={Form1}/>
+      <Route path={`/app/operator/license/:id/form_list`} component={FormList}/>
+      <Route path={`/app/operator/license/:id/renewal_form`} component={RenewalForm}/>
+      <Route path={`/app/operator/license/:id/aerodrome_activities`} component={Form2}/>
+      <Route path={`/app/operator/license/:id/control_of_aerodrome`} component={Form3}/>
+      <Route path={`/app/operator/license/:id/permissions_and_approvals`} component={Form4}/>
+      <Route path={`/app/operator/license/:id/aerodrome_management_personnel`} component={Form5}/>
+      <Route path={`/app/operator/license/:id/aerodrome_manual`} component={Form6}/>
+      <Route path={`/app/operator/license/:id/details_of_fees`} component={Form7}/>
+      <Route path={`/app/operator/license/:id/further_info`} component={Form8}/>
     </Switch>
   )
 }  
