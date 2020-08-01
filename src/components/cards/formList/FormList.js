@@ -134,7 +134,7 @@ const CardsSection = (props) => {
             <div className="s-Grid-col ms-sm3 ms-xl3">
             <Card styles={styles.cardStyles} onClick={() => {
                 if(props.userRole.role==="DGCA") {
-                  props.history.push(`/app/dgca/license/${1}${cards_one_two_three.dgcaLink}`)
+                  props.history.push(`/app/dgca/license/${id}${cards_one_two_three.dgcaLink}`)
                 }
                 else if(props.userRole.role==="Operator") {
                   props.history.push(`/app/operator/license/${id}${cards_one_two_three.operatorLink}`)
@@ -181,7 +181,7 @@ const CardsSection = (props) => {
             <Card styles={styles.cardStyles}
               onClick={() => {
                 if(props.userRole.role==="DGCA") {
-                  props.history.push(`/app/dgca/license/${1}${cards_four_five_six.dgcaLink}`)
+                  props.history.push(`/app/dgca/license/${id}${cards_four_five_six.dgcaLink}`)
                 }
                 else if(props.userRole.role==="Operator") {
                   props.history.push(`/app/operator/license/${id}${cards_four_five_six.operatorLink}`)
@@ -230,7 +230,7 @@ const CardsSection = (props) => {
             <Card styles={styles.cardStyles}
               onClick={() => {
                 if(props.userRole.role==="DGCA") {
-                  props.history.push(`/app/dgca/license/${1}${cards_seven_eight.dgcaLink}`)
+                  props.history.push(`/app/dgca/license/${id}${cards_seven_eight.dgcaLink}`)
                 }
                 else if(props.userRole.role==="Operator") {
                   props.history.push(`/app/operator/license/${id}${cards_seven_eight.operatorLink}`)
