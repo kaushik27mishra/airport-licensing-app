@@ -16,7 +16,6 @@ import { Card } from '@uifabric/react-cards';
 import {roleHandler}  from "../../utils/roleHandler";
 
 //page
-import FormCards from '../FormsCards';
 import TableRO from '../../components/table/TableRO';
 import TableOperator from '../../components/table/TableOperator';
 
@@ -42,10 +41,27 @@ const styles = {
 class Dashboard extends Component {
     constructor(props) {
         super(props)
-        
+        this.state ={
+            role: ""
+        }
     }
+
+    componentDidMount() {
+        this.setState({
+            role: this.props.userRole.role
+        })
+    }
+
+    componentDidUpdate(prevProps) {
+        if(this.props.userRole.role!==prevProps.userRole.role) {
+            this.setState({
+                role: this.props.userRole.role
+            })
+        }
+    }
+
     render (){
-        switch(this.props.userRole.role){
+        switch(this.state.role){
             case "DGCA" : return(
                 <>  
                 <div className="ms-Grid-row">
