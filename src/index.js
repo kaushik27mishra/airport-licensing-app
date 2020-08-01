@@ -13,9 +13,9 @@ import { Fabric } from '@fluentui/react'
 import { initializeIcons } from '@uifabric/icons';
 
 //apollo
-import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
+import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/react-hooks'
 import { createUploadLink } from 'apollo-upload-client'
-import { setContext } from '@apollo/client/link/context';
+import { setContext } from "apollo-link-context";
 
 import * as serviceWorker from './serviceWorker';
 import { UserRoleProvider } from './context/UserRoleContext';

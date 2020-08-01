@@ -16,8 +16,8 @@ import { Card } from '@uifabric/react-cards';
 import {roleHandler}  from "../../utils/roleHandler";
 
 //page
-import FormCards from '../FormsCards';
 import TableRO from '../../components/table/TableRO';
+import TableOperator from '../../components/table/TableOperator';
 
 const classNames = mergeStyleSets({
     pivot: {
@@ -41,10 +41,27 @@ const styles = {
 class Dashboard extends Component {
     constructor(props) {
         super(props)
-        
+        this.state ={
+            role: ""
+        }
     }
+
+    componentDidMount() {
+        this.setState({
+            role: this.props.userRole.role
+        })
+    }
+
+    componentDidUpdate(prevProps) {
+        if(this.props.userRole.role!==prevProps.userRole.role) {
+            this.setState({
+                role: this.props.userRole.role
+            })
+        }
+    }
+
     render (){
-        switch(this.props.userRole.role){
+        switch(this.state.role){
             case "DGCA" : return(
                 <>  
                 <div className="ms-Grid-row">
@@ -105,7 +122,23 @@ class Dashboard extends Component {
             </>
             )
             case "Operator" : return (
-                <FormCards history={this.props.history}/>
+                <>
+                    <h1>{this.props.userRole.id}</h1>
+                    <div className="ms-Grid-row">
+                        <CardsSection/>
+                    </div>
+                    <div className="ms-Grid-row">
+                        <div className={`s-Grid-col ms-sm9 ms-xl9 ${classNames.pivot}`}>
+                            <Card styles={styles.cardStyles}>
+                                <Card.Section>
+                                    <Card.Item>
+                                        <TableOperator history={this.props.history} id={this.props.userRole.id}/>
+                                    </Card.Item>
+                                </Card.Section>
+                            </Card>
+                        </div>
+                    </div>
+                </>
             )
             case "RegionalOfficeHead" : return (
                 <>

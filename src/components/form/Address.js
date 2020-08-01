@@ -4,20 +4,28 @@ import React from 'react';
 import { Text, Stack } from 'office-ui-fabric-react';
 import { TextField} from 'office-ui-fabric-react/lib/TextField';
 import { Dropdown } from 'office-ui-fabric-react/lib/Dropdown';
+//apollo client
+import gql from 'graphql-tag';
+import { useQuery } from '@apollo/react-hooks';
 
 const stackTokens = { childrenGap: 20 };
 const dropdownStyles = { dropdown: { width: 250 } };
 const TextStyles = { root: { width: 300 } };
 
-const StateOptions = [
-    { key: 'A', text: 'Option a', title: 'I am option a.' },
-    { key: 'B', text: 'Option b' },
-    { key: 'C', text: 'Option c' },
-    { key: 'D', text: 'Option d' },
-    { key: 'E', text: 'Option e' },
-]
+const STATES = gql`
+query States{
+  states{
+    state
+  }
+}
+`;
 
 function Address(props) {
+    const {loading, error, data } = useQuery(STATES);
+    if(loading) return 'loading...'
+    if(error) {
+        console.log(error);
+    }
     const onChange = (event,item) => {
         props.handleAdressStateChange(event,item)
     };
@@ -39,11 +47,12 @@ function Address(props) {
                 label="Line 2"
             />
             <Stack horizontal tokens={stackTokens} verticalAlign="end">
+                
                 <Dropdown
                     placeholder="Select"
                     label="Enter State"
                     onChange={onChange}
-                    options={StateOptions}
+                    options={(data) ? data.states.map(v => ({key: v.state, text: v.state})): []}
                     styles={dropdownStyles}
                 />
                 <TextField
@@ -54,11 +63,12 @@ function Address(props) {
                     value={props.address.city}
                 />
                 <TextField 
-                    name='pincode'
+                    name='pinCode'
                     label="Pincode" 
+                    type="number"
                     styles={TextStyles}
                     onChange={props.handleChange}
-                    value={props.address.pincode}
+                    value={props.address.pinCode}
                 />
             </Stack>
         </div>

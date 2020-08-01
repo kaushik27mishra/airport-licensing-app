@@ -7,6 +7,8 @@ import { Card } from '@uifabric/react-cards';
 //auth
 import { roleHandler } from '../../../utils/roleHandler'
 
+import { useParams } from 'react-router-dom'
+
 const container = {
   display: 'flex',
   justifyContent: 'center',
@@ -123,6 +125,8 @@ const CardsSection = (props) => {
     ]
 
   initializeIcons();
+
+  const { id } = useParams();
   return (
       <>
         <div style={container}>
@@ -133,7 +137,7 @@ const CardsSection = (props) => {
                   props.history.push(`/app/dgca/license/${1}${cards_one_two_three.dgcaLink}`)
                 }
                 else if(props.userRole.role==="Operator") {
-                  props.history.push(`/app/operator${cards_one_two_three.operatorLink}`)
+                  props.history.push(`/app/operator/license/${id}${cards_one_two_three.operatorLink}`)
                 }
               }}>
                 <Card.Section>
@@ -180,7 +184,7 @@ const CardsSection = (props) => {
                   props.history.push(`/app/dgca/license/${1}${cards_four_five_six.dgcaLink}`)
                 }
                 else if(props.userRole.role==="Operator") {
-                  props.history.push(`/app/operator${cards_four_five_six.operatorLink}`)
+                  props.history.push(`/app/operator/license/${id}${cards_four_five_six.operatorLink}`)
                 }
               }}>
                 <Card.Section>
@@ -229,7 +233,7 @@ const CardsSection = (props) => {
                   props.history.push(`/app/dgca/license/${1}${cards_seven_eight.dgcaLink}`)
                 }
                 else if(props.userRole.role==="Operator") {
-                  props.history.push(`/app/operator${cards_seven_eight.operatorLink}`)
+                  props.history.push(`/app/operator/license/${id}${cards_seven_eight.operatorLink}`)
                 }
               }}>
                 <Card.Section>
