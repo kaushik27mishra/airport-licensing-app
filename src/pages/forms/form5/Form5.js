@@ -56,6 +56,8 @@ export default class Form5 extends Component {
         super(props)
     
         this.state = {
+             data: null,
+             upload_check: null,
              check:"No",
              managingDirectorName: "",
              managingDirectorName_error: "",
@@ -173,6 +175,180 @@ export default class Form5 extends Component {
         }
     }
 
+    componentDidMount() {
+        const id = this.props.match.params.id;
+        client.query({
+            query: gql`
+            query License($id: String!) {
+                license(id: $id) {
+                  form5 {
+                    safetyPerson {
+                      name
+                      designation
+                      phone
+                      address {
+                        line1
+                        line2
+                        country
+                        pinCode
+                        city
+                        state
+                      }
+                      signImage
+                    }
+                    personIncharge {
+                      name
+                      designation
+                      phone
+                      address {
+                        line1
+                        line2
+                        country
+                        pinCode
+                        city
+                        state
+                      }
+                      signImage
+                    }
+                    aerodromeSafety {
+                      name
+                      designation
+                      phone
+                      address {
+                        line1
+                        line2
+                        country
+                        pinCode
+                        city
+                        state
+                      }
+                      signImage
+                    }
+                    cnsAtm {
+                      name
+                      designation
+                      phone
+                      address {
+                        line1
+                        line2
+                        country
+                        pinCode
+                        city
+                        state
+                      }
+                      signImage
+                    }
+                    metServices {
+                      name
+                      designation
+                      phone
+                      address {
+                        line1
+                        line2
+                        country
+                        pinCode
+                        city
+                        state
+                      }
+                      signImage
+                    }
+                    metServicesProvider {
+                      name
+                      designation
+                      phone
+                      address {
+                        line1
+                        line2
+                        country
+                        pinCode
+                        city
+                        state
+                      }
+                      signImage
+                    }
+                    airTrafficMgmt {
+                      name
+                      designation
+                      phone
+                      address {
+                        line1
+                        line2
+                        country
+                        pinCode
+                        city
+                        state
+                      }
+                      signImage
+                    }
+                    provisionCNS {
+                      name
+                      designation
+                      phone
+                      address {
+                        line1
+                        line2
+                        country
+                        pinCode
+                        city
+                        state
+                      }
+                      signImage
+                    }
+                    provisionRFF {
+                      name
+                      designation
+                      phone
+                      address {
+                        line1
+                        line2
+                        country
+                        pinCode
+                        city
+                        state
+                      }
+                      signImage
+                    }
+                    personInchargeResume {
+                      data
+                      checked
+                      suggestion
+                    }
+                    aerodromeSafetyResume {
+                      data
+                      checked
+                      suggestion
+                    }
+                    day_to_day_operation_of_aerodrome {
+                      data
+                      checked
+                      suggestion
+                    }
+                    person_responsible_for_Aerodrome_Safety {
+                      data
+                      checked
+                      suggestion
+                    }
+                  }
+                }
+              }
+              `,
+            variables: { id: id }
+        }).then( res => {
+            const { form4 } = res.data.license;
+            if(form4!==null) {
+                this.setState({
+                   // yahan pe karna hai         
+                })
+            }
+            else {
+                this.setState({
+                    data: false
+                })
+            }
+
+        })
+    }
+
     _onChange = (ev, option) => {
         console.dir(option);
         this.setState({check:option.key})
@@ -186,7 +362,8 @@ export default class Form5 extends Component {
 
     handleFileChange=(e) => {
         this.setState({
-            [e.target.name]:e.target.files[0]
+            [e.target.name]:e.target.files[0],
+            upload_check: true
         })
     }
 
@@ -211,6 +388,8 @@ export default class Form5 extends Component {
     render() {
 
         const {
+             data,
+             upload_check,
              managingDirectorName,
              managingDirectorName_error,
              managingDirectorName_defect,
@@ -312,6 +491,18 @@ export default class Form5 extends Component {
              dayToDayMETTelephone_error,
              dayToDayMETTelephone_defect
         } = this.state;
+
+        if(data) {
+            if(upload_check) {
+
+            }
+            else {
+
+            }
+        }
+        else {
+
+        }
         return (
             <div className="ms-Grid-row" style={{paddingBottom:'100px'}}>
                 <div className={`s-Grid-col ms-sm9 ms-xl9 ${classNames.pivot}`}>
