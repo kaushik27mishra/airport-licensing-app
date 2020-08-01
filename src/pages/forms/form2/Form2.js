@@ -7,6 +7,10 @@ import { Card } from '@uifabric/react-cards';
 import { mergeStyleSets } from 'office-ui-fabric-react/lib/Styling';
 import { ChoiceGroup } from 'office-ui-fabric-react/lib/ChoiceGroup';
 
+//apollo
+import gql from 'graphql-tag';
+import { Mutation } from '@apollo/react-components';
+import { client } from '../../..';
 
 //style
 const styles = {
@@ -41,13 +45,13 @@ const stackTokens = { childrenGap: 20 };
 
 //for Choice Pickers
 const options_use = [
-    { key: 'Pub', text: 'Public Use' },
-    { key: 'Pvt', text: 'Private Use' },
+    { key: 'Public', text: 'Public Use' },
+    { key: 'Private', text: 'Private Use' },
   ];
 
 const options = [
-    { key: 'Yes', text: 'Yes' },
-    { key: 'No', text: 'No' },
+    { key: true, text: 'Yes' },
+    { key: false, text: 'No' },
 ];
 
 export default class Form2 extends Component {
@@ -55,10 +59,10 @@ export default class Form2 extends Component {
         super(props)
 
         this.state = {
-             usage: 'Pub',
-             onlyYourAircraft : 'Yes',
-             priorPermissionForOtherAircraft : 'Yes',
-             allWeatherRequired : 'No',
+             usage: 'Public',
+             onlyYourAircraft : true,
+             priorPermissionForOtherAircraft : true,
+             allWeatherRequired : false,
              purposeOfPrivate : "",
              purposeOfPrivate_defect : false,
              purposeOfPrivate_error : "",
@@ -89,6 +93,74 @@ export default class Form2 extends Component {
 
         }
     }
+
+    componentDidMount() {
+        const id = this.props.match.params.id;
+        client.query({
+            query: gql`
+            query License($id: String!) {
+                license(id: $id) {
+                  form2 {
+                    usage
+                    purpose {
+                      data
+                      checked
+                      suggestion
+                    }
+                    ownAircraft
+                    priorPermission
+                    allWeatherRequired
+                    lightningPlan {
+                      data
+                      checked
+                      suggestion
+                    }
+                    cnsAtm {
+                      data
+                      checked
+                      suggestion
+                    }
+                    metFacilities {
+                      data
+                      checked
+                      suggestion
+                    }
+                    aviationActivities {
+                      data
+                      checked
+                      suggestion
+                    }
+                    heaviestType {
+                      data
+                      checked
+                      suggestion
+                    }
+                    heaviestLength {
+                      data
+                      checked
+                      suggestion
+                    }
+                    heaviestWidth {
+                      data
+                      checked
+                      suggestion
+                    }
+                  }
+                }
+              }
+              `,
+            variables: { id: id }
+        }).then( res => {
+            const { form2 } = res.data.license;
+            if(form2!==null) {
+                this.setState({
+                    
+                })
+            }
+        })
+
+    }
+
     _onChange = (ev, option) => {
         this.setState({[ev.target.name]:option.key})
     }
@@ -272,6 +344,7 @@ export default class Form2 extends Component {
                     </Card>
                 </div>
             </div>
+            // </Mutation>
         )
     }
 }

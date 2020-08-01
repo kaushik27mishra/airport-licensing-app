@@ -19,7 +19,6 @@ import Form6 from "../pages/forms/form6/Form6";
 import Form7 from "../pages/forms/form7/Form7";
 import Form8 from "../pages/forms/form8/Form8";
 import RenewalForm from "../pages/forms/renewal/RenewalForm";
-import FormCards from "../pages/FormsCards";
 import DGCAForm5 from "../pages/forms/form5/DGCAForm5";
 import DGCAForm6 from "../pages/forms/form6/DGCAForm6";
 import DGCAForm7 from "../pages/forms/form7/DGCAForm7";
@@ -32,8 +31,8 @@ import FormList from '../components/cards/formList/FormList';
 
 function Layout(props) {
 
-  var role=props.userRole.role;
-  // var role="DGCA";
+  // var role=props.userRole.role;
+  var role="DGCA";
 
   function DGCARoute({ component, ...rest }) {
     return (
@@ -117,7 +116,7 @@ function LayoutDGCA() {
       <Route path={`/app/dgca/license/:id/form/aerodrome_manual`} component={DGCAForm6}/>
       <Route path={`/app/dgca/license/:id/form/details_of_fees`} component={DGCAForm7}/>
       <Route path={`/app/dgca/license/:id/form/further_info`} component={DGCAForm8}/>
-      <Route path={`/app/dgca/license/:id/form`} component={FormCards}/>
+      <Route path={`/app/dgca/license/:id/form`} component={FormList}/>
     </Switch>
   )
 }

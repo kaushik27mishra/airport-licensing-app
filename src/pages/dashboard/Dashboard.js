@@ -61,7 +61,7 @@ class Dashboard extends Component {
     }
 
     render (){
-        switch(this.state.role){
+        switch(this.props.userRole.role){
             case "DGCA" : return(
                 <>  
                 <div className="ms-Grid-row">
@@ -79,13 +79,13 @@ class Dashboard extends Component {
                                               'data-order': 1,
                                             }}
                                         >
-                                            <Table/>
+                                            <Table history={this.props.history} />
                                         </PivotItem>
                                         <PivotItem headerText="Completed Applications">
-                                            <Table/>
+                                            <Table history={this.props.history} />
                                         </PivotItem>
                                         <PivotItem headerText="Ongoing Applications">
-                                            <Table/>
+                                            <Table history={this.props.history} />
                                         </PivotItem>
                                     </Pivot>
                                 </Card.Item>
@@ -105,13 +105,13 @@ class Dashboard extends Component {
                                               'data-order': 1,
                                             }}
                                         >
-                                            <Table/>
+                                            <Table history={this.props.history} />
                                         </PivotItem>
                                         <PivotItem headerText="Completed Applications">
-                                            <Table/>
+                                            <Table history={this.props.history} />
                                         </PivotItem>
                                         <PivotItem headerText="Ongoing Applications">
-                                            <Table/>
+                                            <Table history={this.props.history} />
                                         </PivotItem>
                                     </Pivot>
                                 </Card.Item>
@@ -123,7 +123,6 @@ class Dashboard extends Component {
             )
             case "Operator" : return (
                 <>
-                    <h1>{this.props.userRole.id}</h1>
                     <div className="ms-Grid-row">
                         <CardsSection/>
                     </div>

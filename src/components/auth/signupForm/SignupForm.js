@@ -17,6 +17,7 @@ import { Mutation } from '@apollo/react-components';
 const roles = [
     { key: 'Operator', text: 'Operator' },
     { key: 'Owner', text: 'Owner' },
+    { key: 'DGCA', text: 'DGCA' },
 ]
 
 const styles = {
