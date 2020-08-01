@@ -28,7 +28,7 @@ function TableOperator(props) {
                     if(error) 
                       console.log(error);
                     console.log(data);
-                    if(data.licenses.length!==0) {
+                    if(data!==null) {
                         return (
                             <DetailsList
                                 items={data.licenses.map(i => ({ id: i.id ,airport: i.aerodrome.placeName, city: i.aerodrome.city, state: i.aerodrome.state, owner: i.aerodrome.owner.name, status: i.status}))}
