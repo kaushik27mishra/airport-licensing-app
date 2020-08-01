@@ -15,6 +15,7 @@ import { client } from '../../..';
 const styles = {
     cardStyles: {
         root: {
+          data: false,
           background: 'white',
           paddingTop: 30,
           paddingLeft: 50,
@@ -121,6 +122,7 @@ export default class Form6 extends Component {
     render() {
 
         const {
+            data,
             dateToBeSubmitted,
             dateToBeSubmitted_error,
             dateToBeSubmitted_defect,
@@ -211,7 +213,7 @@ export default class Form6 extends Component {
     }
 }
 
-const FORM6 = qql`
+const FORM6 = gql`
 mutation EnterForm6(
     $id: String!
     $manual: Upload
@@ -229,7 +231,7 @@ mutation EnterForm6(
   }
 `;
 
-const FORM6_UPLOAD = qql`
+const FORM6_UPLOAD = gql`
 mutation UpdateForm6(
     $id: String!
     $manual: String

@@ -396,11 +396,11 @@ export default class Form2 extends Component {
                                             form2function({ variables: {
                                                 // saare variables including check and error
                                                 id: this.props.match.params.id, 
-                                                usage: usage,
+                                                // usage: usage,
                                                 purposeOfPrivate: purposeOfPrivate,
-                                                onlyYourAircraft: onlyYourAircraft,
-                                                priorPermission: priorPermissionForOtherAircraft,
-                                                allWeatherRequired: allWeatherRequired,
+                                                // onlyYourAircraft: onlyYourAircraft,
+                                                // priorPermission: priorPermissionForOtherAircraft,
+                                                // allWeatherRequired: allWeatherRequired,
                                                 lightningPlan: detailsOfProposedLighting,
                                                 cnsAtm: detailsCNS_ATN,
                                                 metFacilities: detailsMET_Facilities,

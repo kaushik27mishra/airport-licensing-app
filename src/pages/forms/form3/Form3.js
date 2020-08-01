@@ -6,7 +6,6 @@ import { TextField} from 'office-ui-fabric-react/lib/TextField';
 import { Card } from '@uifabric/react-cards';
 import { ChoiceGroup } from 'office-ui-fabric-react/lib/ChoiceGroup';
 import { DatePicker, DayOfWeek, mergeStyleSets } from 'office-ui-fabric-react';
-import { gql } from '@apollo/react-hooks';
 
 import gql from 'graphql-tag';
 import { Mutation, Query } from '@apollo/react-components';
