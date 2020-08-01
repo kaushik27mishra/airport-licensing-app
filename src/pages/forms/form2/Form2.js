@@ -182,8 +182,8 @@ export default class Form2 extends Component {
                   heaviestAircraftLength_defect: form2.heaviestLength.checked,
                   heaviestAircraftLength_error: form2.heaviestLength.error,
                   heaviestWidth: form2.heaviestAircraftWidth.data,
-                  heaviestAircraftLength_defect: !!form2.heaviestWidth.checked,
-                  heaviestAircraftLength_error: form2.heaviestLength.suggestion,
+                  heaviestWidth_defect: !!form2.heaviestWidth.checked,
+                  heaviestWidth_error: form2.heaviestLength.suggestion,
                   heaviestAircraftWeight: form2.heaviestWidth.data,
                   heaviestAircraftWidth_defect: form2.heaviestWidth.checked,
                   heaviestAircraftWidth_error:  form2.heaviestWidth.suggestion

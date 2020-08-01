@@ -9,7 +9,7 @@ import { mergeStyleSets } from 'office-ui-fabric-react/lib/Styling';
 
 
 import gql from 'graphql-tag';
-import { Mutation, Query } from '@apollo/react-components';
+import { Mutation } from '@apollo/react-components';
 import { client } from '../../..';
 //style
 const styles = {
@@ -81,8 +81,8 @@ export default class Form6 extends Component {
               `,
             variables: { id: id }
         }).then( res => {
-            const { form2 } = res.data.license;
-            if(form2!==null) {
+            const { form6 } = res.data.license;
+            if(form6!==null) {
                 this.setState({
                   data: true,
                  // saare variables 

@@ -8,7 +8,7 @@ import { ChoiceGroup } from 'office-ui-fabric-react/lib/ChoiceGroup';
 import { DatePicker, DayOfWeek, mergeStyleSets } from 'office-ui-fabric-react';
 
 import gql from 'graphql-tag';
-import { Mutation, Query } from '@apollo/react-components';
+import { Mutation } from '@apollo/react-components';
 import { client } from '../../..';
 
 //style
