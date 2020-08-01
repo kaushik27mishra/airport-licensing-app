@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 // ui
 import { Text, Stack } from 'office-ui-fabric-react';
@@ -22,6 +22,7 @@ query States{
 
 function Address(props) {
     const {loading, error, data } = useQuery(STATES);
+    if(loading) return 'loading...'
     if(error) {
         console.log(error);
     }

@@ -14,7 +14,6 @@ import './style.css'
 //apollo client
 import gql from 'graphql-tag';
 import { Mutation, Query } from '@apollo/react-components';
-import { client } from '../../../index'
 
 const styles = {
     cardStyles: {
@@ -156,9 +155,9 @@ class LicenceCreateForm extends Component {
             city_defect,
             city_error,
             grid,
-            owner,
             grid_defect,
             grid_error,
+            owner,
             runways,
             elevationFeet,
             elevationFeet_defect,
@@ -173,6 +172,7 @@ class LicenceCreateForm extends Component {
             longitude_defect,
             longitude_error
         } = this.state;
+
 
         return (
             <Mutation mutation={FORM1} >
@@ -243,6 +243,7 @@ class LicenceCreateForm extends Component {
                                         </label>
                                         {grid!=null ? `${grid.name}` : ''}
                                     </div>
+                                    {(grid_defect)? <Text style={{color:'medium'}}>{grid_error}</Text> : null}
                                     <TextField
                                         name="latitude"
                                         onChange={this.handleChange}

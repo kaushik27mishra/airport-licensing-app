@@ -22,7 +22,7 @@ function TableOperator(props) {
             {({ loading, error, data}) => {
                     if(loading) return`Loading`
                     if(error) return `error`
-                    if(data.licenses.length!=0) {
+                    if(data.licenses.length!==0) {
                         
                         return (
                             <DetailsList
