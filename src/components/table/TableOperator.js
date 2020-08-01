@@ -25,10 +25,9 @@ function TableOperator(props) {
         <Query query={LIST_OF_LICENSE} variables={{ operator: props.id }}>
             {({ loading, error, data}) => {
                     if(loading) return`Loading`
-                    if(error) 
-                      console.log(error);
+                    if(error) return 'error'
                     console.log(data);
-                    if(data!==null) {
+                    if(data.licenses.length!==0) {
                         return (
                             <DetailsList
                                 items={data.licenses.map(i => ({ id: i.id ,airport: i.aerodrome.placeName, city: i.aerodrome.city, state: i.aerodrome.state, owner: i.aerodrome.owner.name, status: i.status}))}
