@@ -406,7 +406,6 @@ class Form2 extends Component {
                                                                     elevationMeter: elevationMeter,
                                                                     city: city,
                                                                     situation: situation,
-                                                                    grid: grid,
                                                                     owner: owner,
                                                                     lat: latitude,
                                                                     long: longitude,
@@ -428,7 +427,7 @@ class Form2 extends Component {
                                                                 runways: runways
                                                             }})
                                                         }
-                                                        
+                                                        this.props.history.push(`/app/operator/license/${this.props.match.params.id}/aerodrome_activities`)
                                                     }
                                                 } text="Next" allowDisabledFocus />
                                             </Stack>
