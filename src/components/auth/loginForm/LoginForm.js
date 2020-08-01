@@ -1,7 +1,8 @@
 import React,{ useState } from 'react'
 
 //graphql
-import { gql, useLazyQuery } from '@apollo/client';
+import gql from 'graphql-tag';
+import { useLazyQuery } from '@apollo/react-hooks';
 
 //context
 import { useUserDispatch } from "../../../context/UserContext";

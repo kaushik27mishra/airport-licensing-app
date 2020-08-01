@@ -20,12 +20,10 @@ import { useUserState } from "./context/UserContext";
 export default function App(props) {
   // global
   var { isAuthenticated } = useUserState();
-
   return (
     <HashRouter>
       <Switch>
         <Route exact path="/" component={Home} />
-        <Route exact path="/accountRequest" component={AccountRequest} />
         <Route exact path="/faq" component={Faq} />
         <Route
           exact
@@ -34,6 +32,7 @@ export default function App(props) {
         />
         <PrivateRoute path="/app" component={Layout} />
         <PublicRoute path="/login" component={Login} />
+        <PrivateRoute path="/signup" component={AccountRequest} />
         <Route component={Error} />
       </Switch>
     </HashRouter>

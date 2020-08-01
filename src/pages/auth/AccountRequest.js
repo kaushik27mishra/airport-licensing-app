@@ -1,9 +1,11 @@
 import React from 'react'
 
+import SignupForm from '../../components/auth/signupForm/SignupForm'
+
 function AccountRequest() {
     return (
-        <div>
-            AccountRequest
+        <div id="login">
+            <SignupForm/>
         </div>
     )
 }
