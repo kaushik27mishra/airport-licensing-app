@@ -1,6 +1,8 @@
 import React from 'react'
+
+import { DetailsList } from '@fluentui/react';
+
 import { Query, gql } from '@apollo/react-components'
-import { DetailsList } from '@fluentui/react'
 
 const columns = [
     { key: 'column1', iconName: 'Airplane' ,name: 'Name', fieldName: 'airport', minWidth: 100, maxWidth: 250, isResizable: true },

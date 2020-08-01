@@ -29,7 +29,7 @@ class FormCards extends Component {
                             <Text variant={'xxLarge'}> {/*Trying to give left padding, didn't work*/}
                                 Forms submitted for licensing
                             </Text> 
-                            <FormList user_type="dgca" submission='null'/>
+                            <FormList history={this.props.history} user_type="DGCA" submission='null'/>
                         </> :
                             this.props.userRole.role==="Operator"?
                             <>
