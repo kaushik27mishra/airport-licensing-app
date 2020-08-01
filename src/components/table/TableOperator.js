@@ -2,6 +2,8 @@ import React from 'react'
 
 import { DetailsList } from '@fluentui/react';
 
+import { Link } from 'react-router-dom'
+
 import { Query, gql } from '@apollo/react-components'
 
 const columns = [
@@ -18,14 +20,14 @@ function TableOperator(props) {
     const onItemInvoked = (item) => {
       props.history.push(`/app/operator/license/${item.id}/form_list`)
     }
-    
+
     return (
         <Query query={LIST_OF_LICENSE} variables={{ operator: props.id }}>
             {({ loading, error, data}) => {
                     if(loading) return`Loading`
                     if(error) return `error`
+                    console.log(data);
                     if(data.licenses.length!==0) {
-                        
                         return (
                             <DetailsList
                                 items={data.licenses.map(i => ({ id: i.id ,airport: i.aerodrome.placeName, city: i.aerodrome.city, state: i.aerodrome.state, owner: i.aerodrome.owner.name, status: i.status}))}
@@ -35,11 +37,11 @@ function TableOperator(props) {
                             />
                         )
                     }
-                    else {
-                        return(
-                            props.history.push('/app/operator/license/license_create_form')
-                        )
-                    }
+                    return (
+                      <Link to="/app/operator/license_create_form" >
+                        Click here to apply for a license
+                      </Link>
+                    )
                 }
             }
         </Query>

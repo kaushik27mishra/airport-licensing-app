@@ -34,9 +34,9 @@ const links = [
         }
       },
       {
-        name: 'Settings',
+        name: 'Apply For license',
         key: 'key2',
-        url: '#/app/settings',
+        url: '#/app/operator/license_create_form',
         iconProps: {
           iconName: 'PlayerSettings',
           styles: {
