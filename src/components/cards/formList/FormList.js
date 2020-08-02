@@ -293,20 +293,22 @@ const CardsSection = (props) => {
             </div>
         ))}
         </div>
-
-        <Stack style={{marginLeft:'800px'}} horizontal tokens={stackTokens}>
-          {props.userRole.role==="DGCA"?
-                <>
+        <div className="ms-Grid-row">
+            <div className="s-Grid-col ms-sm3 ms-xl3">
+            {props.userRole.role==="DGCA"?
+              <td style={{textAlign:"center",paddingLeft:'550px'}}>
                   <Dropdown
                     placeholder="Do you approve this application?"
                     label="Select an option"
                     options={statusOptions}
                     onChange={(e,i) => this.setState({owner: i.key})}
-                  />
-                </>:null}         
-          <PrimaryButton text="Submit" allowDisabledFocus/>
-        </Stack>
-              <br/>
+                    />
+                    <br/>
+                  <PrimaryButton  text="Submit" allowDisabledFocus/>
+              </td>
+            :null}         
+          </div>
+        </div>
       </>
     
   )
