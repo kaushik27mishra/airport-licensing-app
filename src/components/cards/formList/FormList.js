@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 //ui
 import { Text, initializeIcons } from '@fluentui/react';
 import { Card } from '@uifabric/react-cards';
+import { Dropdown } from 'office-ui-fabric-react/lib/Dropdown';
 
 //auth
 import { roleHandler } from '../../../utils/roleHandler'
@@ -65,6 +66,8 @@ const styles = {
 
 
 const CardsSection = (props) => {
+
+  const [status, setStatus] = useState("");
   const cards_one_two_three = [
     {
       title: 'Details of Aerodrome',
@@ -130,7 +133,17 @@ const CardsSection = (props) => {
       }
     ]
 
+    
   initializeIcons();
+
+  const statusOptions = [
+    { key: 'Approved', text: 'The license for this form shall be approved.',},
+    { key: 'Rejected', text: 'The license for this form shall be rejected.' },
+    { key: 'UnderInspection', text: 'This form is under inspection' },
+    { key: 'Correct_Data', text: 'This form presents correct data' },
+    { key: 'Waiting_for_misitries_approval', text: 'This form awaits approval' },
+    { key: 'Waiting_For_Data', text: 'More data is required in this form' },
+  ];
 
   const { id } = useParams();
   return (
@@ -226,6 +239,12 @@ const CardsSection = (props) => {
                 </Card.Section>
             </Card>
             <br/>
+            <Dropdown
+              placeholder="What is the status of this application?"
+              label="Select an option"
+              options={statusOptions}
+              onChange={(e,i) => this.setStatus({status: i.key})}
+          />
             </div>
         ))}
         <br/>  
@@ -274,6 +293,15 @@ const CardsSection = (props) => {
                 
                 </Card.Section>
             </Card>
+            {props.userRole.role=="DGCA"?
+              <>
+                <Dropdown
+                  placeholder="do you approve this application?"
+                  label="Select an option"
+                  options={statusOptions}
+                  onChange={(e,i) => this.setState({owner: i.key})}
+                />
+              </>:null}
             <br/>
             </div>
         ))}
