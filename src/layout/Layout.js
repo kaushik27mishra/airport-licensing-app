@@ -110,6 +110,7 @@ export default withRouter(roleHandler(Layout));
 function LayoutDGCA() {
   return (
     <Switch>
+      <Route path={'/app/dgca/license/:id/history'} component={HistoryPage}/>   
       <Route path={`/app/dgca/license/:id/form/aerodrome_detail_form`} component={DGCAForm1} />
       <Route path={`/app/dgca/license/:id/form/aerodrome_activities`} component={DGCAForm2} />
       <Route path={`/app/dgca/license/:id/form/control_of_aerodrome`} component={DGCAForm3} />
@@ -118,7 +119,6 @@ function LayoutDGCA() {
       <Route path={`/app/dgca/license/:id/form/details_of_fees`} component={DGCAForm7}/>
       <Route path={`/app/dgca/license/:id/form/further_info`} component={DGCAForm8}/>
       <Route path={`/app/dgca/license/:id/form`} component={FormList}/>
-      <Route path={'app/dcga/license/:id/history'} component={HistoryPage}/>
     </Switch>
   )
 }
