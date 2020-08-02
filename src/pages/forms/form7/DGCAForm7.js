@@ -249,7 +249,7 @@ export default class DGCAForm extends Component {
                                                     calculationSheet_error: calculationSheet.suggestion,
                                                     nameofDraweeBank: nameofDraweeBank,
                                                     dateOfChallan: dateOfChallan,
-                                                    status: status ////Check this once please
+                                                    //status: status ////Check this once please
                                                 }
                                             })
                                            

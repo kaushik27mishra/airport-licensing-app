@@ -172,7 +172,7 @@ export default class DGCAForm extends Component {
                                                     otherInfo: otherInfo.data,
                                                     otherInfo_error: otherInfo.suggestion,
                                                     otherInfo_defect: otherInfo.checked,
-                                                    status: status
+                                                    //status: status   ///Check this once
                                                 }
                                             })
                                         }}  

@@ -126,7 +126,7 @@ export default class DGCAForm extends Component {
                     },
                     placeName: aerodrome.placeName ,
                     owner:{
-                        name: aerodrome.owner.id ,//not know which field will be entered ,
+                        name: aerodrome.owner.name ,//not know which field will be entered ,
                         address:{
                             line1: 'l1',
                             line2: 'l2',
@@ -201,6 +201,8 @@ export default class DGCAForm extends Component {
             runways,
             longitude,
             latitude,
+            status,
+            city
          } = this.state;
 
         return (
@@ -450,7 +452,7 @@ export default class DGCAForm extends Component {
                                                 lat: latitude,
                                                 long: longitude,
                                                 runways: runways,
-                                                status: true //Please check this one
+                                                status: status //Please check this one
                                             }})
                                         }} 
                                         text="Next" 

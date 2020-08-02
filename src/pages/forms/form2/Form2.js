@@ -210,6 +210,10 @@ export default class Form2 extends Component {
     render() {
         const {
         data,
+        usage,
+        onlyYourAircraft,
+        priorPermissionForOtherAircraft,
+        allWeatherRequired,
         purposeOfPrivate,
         purposeOfPrivate_defect,
         purposeOfPrivate_error,
@@ -442,9 +446,8 @@ export default class Form2 extends Component {
                                                 heaviestWeight: heaviestAircraftWeight,
                                                 heaviestLength: heaviestAircraftLength,
                                                 heaviestWidth: heaviestAircraftWidth,
-                                        }})}
-                                        text="Next" 
-                                        allowDisabledFocus />
+                                        }})}} }
+                                        text="Next" allowDisabledFocus />
                                     </Stack>              
                             </Card.Section>
                         </Card>
