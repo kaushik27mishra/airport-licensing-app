@@ -119,11 +119,11 @@ export default class DGCAForm extends Component {
             if(aerodrome!==null) {
                 this.setState({
                     //saaare variables
-                    elevationMeter: {
-                        data: aerodrome.elevationMeter.data ,
-                        suggestion: aerodrome.elevationMeter.suggestion ,
-                        checked: aerodrome.elevationMeter.suggestion
-                    },
+                    // elevationMeter: {
+                    //     data: aerodrome.elevationMeter.data ,
+                    //     suggestion: aerodrome.elevationMeter.suggestion ,
+                    //     checked: aerodrome.elevationMeter.suggestion
+                    // },
                     placeName: aerodrome.placeName ,
                     owner:{
                         name: aerodrome.owner.id ,//not know which field will be entered ,
