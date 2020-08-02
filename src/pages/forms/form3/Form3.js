@@ -134,7 +134,18 @@ export default class Form3 extends Component {
             if(form3!==null) {
                 this.setState({
                     data: true,
-                    // state yahan pe update karna padega
+                    rightsIfNotOver: form3.rightsIfNotOver.data,
+                    rightsIfNotOver_error: form3.rightsIfNotOver.suggestion,
+                    rightsIfNotOver_defect: form3.rightsIfNotOver.checked,
+                    startingPeriod: form3.startPeriod, // default value
+                    startingPeriod_error: "",
+                    startingPeriod_defect: true ,
+                    endingPeriod: form3.endPeriod,
+                    endingPeriod_error: "",
+                    endingPeriod_defect: true,
+                    termination: form3.terminationPeriod,
+                    termination_error: "",
+                    termination_defect: ture,
                 })
             }
             else {
@@ -287,12 +298,24 @@ export default class Form3 extends Component {
                                         onClick={() => {
                                             if(data) {
                                                 form3funstion({variables: {
-                                                    // saare variables including defect and error
+                                                    id: this.props.match.params.id,
+                                                    owner: owner,
+                                                    rightsIfNotOver: rightsIfNotOver ,
+                                                    startPeriod: startingPeriod ,
+                                                    terminationPeriod: termination,
+                                                    endPeriod: endingPeriod,    
                                                 }})
                                             }
                                             else {
                                                 form3funstion({variables: {
-                                                    // saare variables excluding defect and error
+                                                    id: this.props.match.params.id,
+                                                    owner: owner,
+                                                    rightsIfNotOver: rightsIfNotOver,
+                                                    rightsIfNotOver_defect: rightsIfNotOver_defect,
+                                                    rightsIfNotOver_error: rightsIfNotOver_error,
+                                                    startPeriod: startingPeriod,
+                                                    terminationPeriod: termination,
+                                                    endPeriod: endingPeriod,
                                                 }})
                                             }
                                         }} 

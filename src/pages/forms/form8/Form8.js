@@ -81,6 +81,11 @@ export default class Form8 extends Component {
                 this.setState({
                   data: true,
                  // saare variables 
+                 isChecked:true,
+                 anyOtherInformation: form8.otherInfo.data,
+                 anyOtherInformation_error: form8.otherInfo.suggestion,
+                 anyOtherInformation_defect: form8.otherInfo.checked,
+                 sign: true
                 })
             }
             else {
@@ -189,6 +194,8 @@ export default class Form8 extends Component {
                                                             form8Function({
                                                                 variables: {
                                                                     // saare variables
+                                                                    id: this.props.match.params.id,
+                                                                    otherInfo: anyOtherInformation
                                                                 }
                                                             })
                                                         }
@@ -196,6 +203,10 @@ export default class Form8 extends Component {
                                                             form8Function({
                                                                 variables: {
                                                                     // saare variables except check and defect
+                                                                    id: this.props.match.params.id,
+                                                                    otherInfo: anyOtherInformation,
+                                                                    otherInfo_error: anyOtherInformation_error,
+                                                                    otherInfo_defect: anyOtherInformation_defect
                                                                 }
                                                             })
                                                         }
