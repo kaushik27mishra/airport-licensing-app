@@ -7,6 +7,11 @@ import { DatePicker, DayOfWeek, mergeStyleSets } from 'office-ui-fabric-react';
 import { Icon } from '@fluentui/react/lib/Icon';
 
 
+
+import gql from 'graphql-tag';
+import { Mutation, Query } from '@apollo/react-components';
+import { client } from '../../..';
+
 //style
 const styles = {
     cardStyles: {
@@ -105,6 +110,38 @@ export default class Form4 extends Component {
 
         
         }
+    }
+
+    componentDidMount() {
+        const id = this.props.match.params.id;
+        client.query({
+            query: gql`
+            query License($id: String!){
+                license(id: $id) {
+                  form4 {
+                    homeBool
+                    defenceBool
+                    homeTime
+                    defenceTime
+                  }           
+              }
+            }`,
+            variables: { id: id }
+        }).then( res => {
+            const { form4 } = res.data.license;
+            if(form4!==null) {
+                this.setState({
+                            
+                })
+            }
+            else {
+                this.setState({
+                    data: false
+                })
+            }
+
+        })
+
     }
 
     onFormatDate = (date) => {

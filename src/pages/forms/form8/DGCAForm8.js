@@ -7,6 +7,10 @@ import { mergeStyleSets } from 'office-ui-fabric-react/lib/Styling';
 import DGCAChecklist from '../../../components/form/DGCAChecklist';
 import { Dropdown } from 'office-ui-fabric-react/lib/Dropdown';
 
+import gql from 'graphql-tag';
+import { Mutation } from '@apollo/react-components';
+import { client } from '../../..';
+
 //style
 import '../style.css'
 const styles = {
@@ -48,6 +52,41 @@ export default class DGCAForm extends Component {
         }
     }
 
+
+    componentDidMount() {
+        const id = this.props.match.params.id;
+        client.query({
+            query: gql`
+            query License($id: String!) {
+                license(id: $id) {
+                  form8 {
+                    otherInfo {
+                      data
+                      suggestion
+                      checked
+                    }
+                  } 
+                }
+              }
+              `,
+            variables: { id: id }
+        }).then( res => {
+            const { form8 } = res.data.license;
+            if(form8!==null) {
+                this.setState({
+                  data: true,
+                 // saare variables 
+                })
+            }
+            else {
+                this.setState({
+                    data: false
+                })
+            }
+        })
+
+    }
+
     handleOtherInfoValueChange = (e) => {
         this.setState({
             otherInfo : {
@@ -78,7 +117,12 @@ export default class DGCAForm extends Component {
         const { otherInfo, } = this.state;
 
         return (
-            <div className="ms-Grid-row" style={{paddingBottom:'100px'}}>
+            <Mutation mutation={FORM8}>
+            {( form8Function ,{loading,data_res,error}) => {
+                    if(loading) return 'loading'
+                    if(error) console.log(error);
+                    return (
+                        <div className="ms-Grid-row" style={{paddingBottom:'100px'}}>
                 <div className={`s-Grid-col ms-sm9 ms-xl9 ${classNames.pivot}`}>
                     <Card styles={styles.cardStyles}>
                         <Card.Section>
@@ -113,12 +157,48 @@ export default class DGCAForm extends Component {
                                 </table>
                                 <Stack horizontal tokens={stackTokens}>
                                     <DefaultButton text="Back" allowDisabledFocus/>
-                                    <PrimaryButton text="Next" allowDisabledFocus/>
+                                    <PrimaryButton 
+                                        text="Submit"
+                                        onClick={() => {
+                                            form8Function({
+                                                variables: {
+                                                    // saare variables
+                                                }
+                                            })
+                                        }}  
+                                        allowDisabledFocus 
+                                        disabled={!this.state.isChecked} />
                                 </Stack>
                         </Card.Section>
                     </Card>
                 </div>
             </div>
+                    )
+                }
+            }
+            </Mutation>
         )
     }
 }
+
+const FORM8=gql`
+mutation UpdateForm8(
+    $id: String!
+    $otherInfo: String
+    $otherInfo_error: String
+    $otherInfo_defect: Boolean
+    $status: FormStatus
+  ) {
+    updateForm8(
+      id: $id
+      input: {
+        otherInfo: {
+          data: $otherInfo
+          checked: $otherInfo_defect
+          suggestion: $otherInfo_error
+        }
+        status: $status
+      }
+    )
+  }
+`;  

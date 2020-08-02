@@ -7,6 +7,10 @@ import { mergeStyleSets } from 'office-ui-fabric-react/lib/Styling';
 import DGCAChecklist from '../../../components/form/DGCAChecklist';
 import { Dropdown } from 'office-ui-fabric-react/lib/Dropdown';
 
+import gql from 'graphql-tag';
+import { Mutation } from '@apollo/react-components';
+import { client } from '../../..';
+
 //style
 import '../style.css'
 const styles = {
@@ -79,6 +83,49 @@ export default class DGCAForm extends Component {
 
         }
     }
+
+    componentDidMount() {
+        const id = this.props.match.params.id;
+        client.query({
+            query: gql`
+            query License($id: String!){
+                license(id: $id) {
+                  aerodrome {
+                    placeName
+                    state
+                    city
+                    situation
+                    grid
+                    elevationMeter {
+                      data
+                      checked
+                      suggestion
+                    }
+                    runways {
+                      orentatation
+                      length
+                    }
+                    owner {
+                      id
+                    }
+                    lat
+                    long
+                  }
+                }
+            }`,
+            variables: { id: id }
+        }).then( res => {
+            const { aerodrome } = res.data.license;
+            if(aerodrome!==null) {
+                this.setState({
+                    //saaare variables
+                })
+            }
+
+        })
+
+    }
+
     handleElevationMeterValueChange = (e) => {
         this.setState({
             elevationMeter : {
@@ -121,7 +168,12 @@ export default class DGCAForm extends Component {
          } = this.state;
 
         return (
-            <div className="ms-Grid-row" style={{paddingBottom:'100px'}}>
+            <Mutation mutation={FORM1}>
+            {(form1function,{loading, error, data}) => {
+                if(error) console.log(error);
+                if(data) console.log(data.enterAerodrome);
+                return (
+                    <div className="ms-Grid-row" style={{paddingBottom:'100px'}}>
                 <div className={`s-Grid-col ms-sm9 ms-xl9 ${classNames.pivot}`}>
                     <Card styles={styles.cardStyles}>
                         <Card.Section>
@@ -348,12 +400,54 @@ export default class DGCAForm extends Component {
                                 </table>
                                 <Stack horizontal tokens={stackTokens}>
                                     <DefaultButton text="Back" allowDisabledFocus/>
-                                    <PrimaryButton text="Next" allowDisabledFocus/>
+                                    <PrimaryButton
+                                        onClick={() => {
+                                            form1function({variables: {
+                                                id: this.props.match.params.id,
+                                                // sarre variables
+                                            }})
+                                        }} 
+                                        text="Next" 
+                                        allowDisabledFocus/>
                                 </Stack>
                         </Card.Section>
                     </Card>
                 </div>
             </div>
+            )}}
+            </Mutation>
         )
     }
 }
+
+const FORM1=gql`
+mutation UpdateAerodromeWithoutUpload(
+    $id: String!
+    $placeName: String
+    $state: String
+    $situation: String
+    $city: String
+    $owner: String
+    $grid: String
+    $lat: String
+    $long: String
+    $runways: [RunwayFields]
+    $status: FormStatus
+  ) {
+    updateAerodromeWithoutUpload(
+      id: $id
+      input: {
+        placeName: $placeName
+        city: $city
+        situation: $situation
+        grid: $grid
+        state: $state
+        owner: $owner
+        lat: $lat
+        long: $long
+        runways: $runways
+        status: $status
+      }
+    )
+  }  
+`

@@ -155,16 +155,38 @@ export default class Form2 extends Component {
             const { form2 } = res.data.license;
             if(form2!==null) {
                 this.setState({
-                    data: true,
-                    usage: form2.usage,
-                    purposeOfPrivate: form2.purposeOfPrivate.data,
-                    purposeOfPrivate_defect: !!form2.purposeOfPrivate.checked,
-                    purposeOfPrivate_error: form2.purposeOfPrivate_error,
-                    onlyYourAircraft: form2.ownAircraft,
-                    priorPermissionForOtherAircraft: form2.priorPermission,
-                    allWeatherRequired: form2.allWeatherRequired,
-                    detailsOfProposedLighting: form2.lightningPlan,
-
+                  data: true,
+                  usage: form2.usage,
+                  purposeOfPrivate: form2.purposeOfPrivate.data,
+                  purposeOfPrivate_defect: !!form2.purposeOfPrivate.checked,
+                  purposeOfPrivate_error: form2.purposeOfPrivate_error,
+                  onlyYourAircraft: form2.ownAircraft,
+                  priorPermissionForOtherAircraft: form2.priorPermission,
+                  allWeatherRequired: form2.allWeatherRequired,
+                  detailsOfProposedLighting: form2.lightningPlan.data,
+                  detailsOfProposedLighting_defect: !!form2.lightningPlan.checked,
+                  detailsOfProposedLighting_error: form2.lightningPlan.suggestion,
+                  detailsCNS_ATN: form2.cnsAtm.data,
+                  detailsCNS_ATN_defect: !!form2.cnsAtm.checked,
+                  detailsCNS_ATN_error: form2.cnsAtm.suggestion,
+                  detailsMET_Facilities: form2.metFacilities.data,
+                  detailsMET_Facilities_defect: !!form2.metFacilities.checked,
+                  detailsMET_Facilities_error: form2.metFacilities.suggestion,
+                  otherAviationActivities: form2.aviationActivities.data,
+                  otherAviationActivities_defect: !!form2.aviationActivities.checked,
+                  otherAviationActivities_error: form2.aviationActivities.suggestion,
+                  heaviestAircraftType: form2.heaviestType.data,
+                  heaviestAircraftType_defect: form2.heaviestType.checked,
+                  heaviestAircraftType_error: form2.heaviestType.suggestion,
+                  heaviestAircraftLength: form2.heaviestLength.data,
+                  heaviestAircraftLength_defect: form2.heaviestLength.checked,
+                  heaviestAircraftLength_error: form2.heaviestLength.error,
+                  heaviestWidth: form2.heaviestAircraftWidth.data,
+                  heaviestWidth_defect: !!form2.heaviestWidth.checked,
+                  heaviestWidth_error: form2.heaviestLength.suggestion,
+                  heaviestAircraftWeight: form2.heaviestWidth.data,
+                  heaviestAircraftWidth_defect: form2.heaviestWidth.checked,
+                  heaviestAircraftWidth_error:  form2.heaviestWidth.suggestion
                 })
             }
             else {
@@ -218,7 +240,7 @@ export default class Form2 extends Component {
 
         var MUTATION;
         if(data) {
-            MUTATION=FORM2_UPLOAD;
+            MUTATION=FORM2_UPDATE;
         }
         else {
             MUTATION=FORM2;
@@ -226,7 +248,7 @@ export default class Form2 extends Component {
 
         return (
             <Mutation mutation={MUTATION}>
-                {(form2function, { loading, data, error }) => {
+                {(form2function, { loading, data_res, error }) => {
             
                 if(loading) return 'loading'
                 if(error) console.log(error);
@@ -370,7 +392,30 @@ export default class Form2 extends Component {
                                         <DefaultButton text="Back" allowDisabledFocus />
                                         <PrimaryButton 
                                         onClick={ () =>  {
-
+                                          if(data) {
+                                            form2function({ variables: {
+                                                // saare variables including check and error
+                                                id: this.props.match.params.id, 
+                                                // usage: usage,
+                                                purposeOfPrivate: purposeOfPrivate,
+                                                // onlyYourAircraft: onlyYourAircraft,
+                                                // priorPermission: priorPermissionForOtherAircraft,
+                                                // allWeatherRequired: allWeatherRequired,
+                                                lightningPlan: detailsOfProposedLighting,
+                                                cnsAtm: detailsCNS_ATN,
+                                                metFacilities: detailsMET_Facilities,
+                                                aviationActivities: otherAviationActivities,
+                                                // heaviestType: ,
+                                                // heaviestWeight: ,
+                                                // heaviestLength: ,
+                                                // heaviestWidth: ,
+                                              }
+                                            })
+                                          }
+                                          else {
+                                            // saare variables except defect and error
+                                          }
+                                          
                                         }
                                         }
                                         text="Next" 
@@ -442,22 +487,40 @@ mutation EnterForm2(
     )
 }
 `
-const FORM2_UPLOAD = gql`
+const FORM2_UPDATE = gql`
 mutation UpdateForm2(
     $id: String! 
     $usage: Usage
     $purposeOfPrivate: String
+    $purposeOfPrivate_defect: Boolean
+    $purposeOfPrivate_error: String
     $onlyYourAircraft: Boolean
     $priorPermission: Boolean
     $allWeatherRequired: Boolean
     $lightningPlan: String
+    $lightningPlan_defect: Boolean
+    $lightningPlan_error: String
     $cnsAtm: String
+    $cnsAtm_defect: Boolean
+    $cnsAtm_checked: Boolean
     $metFacilities: String
+    $metFacilities_defect: Boolean
+    $metFacilities_error: String
     $aviationActivities: String
+    $aviationActivities_defect: Boolean
+    $aviationActivities_error: String
     $heaviestType: String
+    $heaviestType_defect: Boolean
+    $heaviestType_error: String 
     $heaviestWeight: String
+    $heaviestWeight_defect: Defect
+    $heaviestWeight_error: String
     $heaviestLength: String
+    $heaviestLength_defect: Boolean
+    $heaviestLength_error: String
     $heaviestWidth: String
+    $heaviestWidth_defect: Boolean
+    $heaviestWidth_error: String
   ) {
     updateForm2(
       id: $id
@@ -465,33 +528,51 @@ mutation UpdateForm2(
         usage: $usage
         purpose: {
           data: $purposeOfPrivate
+          check: $purposeOfPrivate_defect
+          suggestion: purposeOfPrivate_error
         }
         ownAircraft: $onlyYourAircraft
         priorPermission: $priorPermission
         allWeatherRequired: $allWeatherRequired
         lightningPlan: {
           data: $lightningPlan
+          check: $lightningPlan_defect
+          suggestion: $lightningPlan_error
         }
         cnsAtm: {
           data: $cnsAtm
+          check: $cnsAtm_defect
+          suggestion: $cnsAtm_error
         }
         metFacilities: {
           data: $metFacilities
+          check: $metFacilities_defect
+          suggestion: $metFacilities_error
         }
         aviationActivities: {
           data: $aviationActivities
+          check: $aviationActivities_defect
+          suggestion: $aviationActivities_error
         }
         heaviestType: {
           data: $heaviestType
+          check: $heaviestType_defect
+          suggestion: $heaviestType_error
         }
         heaviestWeight: {
           data: $heaviestWeight
+          check: $heaviestWeight_defect
+          suggestion: $heaviestWeight_error
         }
         heaviestLength: {
           data: $heaviestLength
+          check: $heaviestLength_defect
+          suggestion: $heaviestLength_error
         }
         heaviestWidth: {
           data: $heaviestWidth
+          check: $heaviestWidth_defect
+          suggestion: $heaviestWidth_error
         }
       }
     )

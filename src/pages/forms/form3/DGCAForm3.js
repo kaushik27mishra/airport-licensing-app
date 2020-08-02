@@ -7,6 +7,10 @@ import { mergeStyleSets } from 'office-ui-fabric-react/lib/Styling';
 import DGCAChecklist from '../../../components/form/DGCAChecklist';
 import { Dropdown } from 'office-ui-fabric-react/lib/Dropdown';
 
+import gql from 'graphql-tag';
+import { Mutation } from '@apollo/react-components';
+import { client } from '../../..';
+
 //style
 import '../style.css'
 const styles = {
@@ -52,6 +56,44 @@ export default class DGCAForm extends Component {
         }
     }
 
+    componentDidMount() {
+        const id = this.props.match.params.id;
+        client.query({
+            query: gql`
+            query License($id: String!) {
+                license(id: $id) {
+                  form3 {
+                    owner
+                    rightsIfNotOver {
+                      data
+                      suggestion
+                      checked
+                    }
+                    startPeriod
+                    terminationPeriod
+                    endPeriod
+                  }
+                }
+              }`,
+            variables: { id: id }
+        }).then( res => {
+            const { form3 } = res.data.license;
+            if(form3!==null) {
+                this.setState({
+                    data: true,
+                    // state yahan pe update karna padega
+                })
+            }
+            else {
+                this.setState({
+                    data: false
+                })
+            }
+
+        })
+
+    }
+
     handleRightsIfNotOverValueChange = (e) => {
         this.setState({
             rightsIfNotOver : {
@@ -80,13 +122,24 @@ export default class DGCAForm extends Component {
       ];
 
     render() {
-        const { rightsIfNotOver,
+        const {
+            data, 
+            rightsIfNotOver,
         owner,
         startPeriod,
         endPeriod,
         terminationPeriod } = this.state;
 
+        if(!data) {
+            return <h1>Form yet to be filled</h1>;
+        }
+
         return (
+            <Mutation mutation={FORM3}>
+            { (form3funstion,{loading, data_res, error}) => {
+                if(loading) return 'loading'
+                if(error) console.log(error);
+                return (
             <div className="ms-Grid-row" style={{paddingBottom:'100px'}}>
                 <div className={`s-Grid-col ms-sm9 ms-xl9 ${classNames.pivot}`}>
                     <Card styles={styles.cardStyles}>
@@ -162,12 +215,55 @@ export default class DGCAForm extends Component {
                                 </table>
                                 <Stack horizontal tokens={stackTokens}>
                                     <DefaultButton text="Back" allowDisabledFocus/>
-                                    <PrimaryButton text="Next" allowDisabledFocus/>
+                                    <PrimaryButton
+                                        onClick={() => {
+                                            if(data) {
+                                                form3funstion({variables: {
+                                                    // saare variables including defect and error
+                                                }})
+                                            }
+                                        }}  
+                                        text="Next" 
+                                        allowDisabledFocus/>
                                 </Stack>
                         </Card.Section>
                     </Card>
                 </div>
             </div>
+            )
+        }}
+        </Mutation>
         )
     }
 }
+
+const FORM3 = gql`
+mutation UpdateForm3(
+    $id: String!
+    $owner: Boolean
+    $rightsIfNotOver: String
+    $rightsIfNotOver_defect: Boolean
+    $rightsIfNotOver_error: String
+    $startPeriod: String
+    $terminationPeriod: String
+    $endPeriod: String
+    $status: FormStatus
+  ) {
+    updateForm3(
+      id: $id
+      input: {
+        owner: $owner
+        rightsIfNotOver: {
+          data: $rightsIfNotOver
+          checked: $rightsIfNotOver_defect
+          suggestion: $rightsIfNotOver_error
+        }
+        startPeriod: $startPeriod
+        terminationPeriod: $terminationPeriod
+        endPeriod: $endPeriod
+        status: $status
+      }
+    )
+  }
+  
+`

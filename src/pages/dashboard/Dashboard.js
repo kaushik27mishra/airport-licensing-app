@@ -61,6 +61,7 @@ class Dashboard extends Component {
     }
 
     render (){
+        console.log(this.props.userRole.id);
         switch(this.props.userRole.role){
             case "DGCA" : return(
                 <>  

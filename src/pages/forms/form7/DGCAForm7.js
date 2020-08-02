@@ -9,6 +9,11 @@ import { Dropdown } from 'office-ui-fabric-react/lib/Dropdown';
 
 //style
 import '../style.css'
+
+import gql from 'graphql-tag';
+import { Mutation } from '@apollo/react-components';
+import { client } from '../../..';
+
 const styles = {
     cardStyles: {
         root: {
@@ -52,6 +57,43 @@ export default class DGCAForm extends Component {
         }
     }
 
+    componentDidMount() {
+        const id = this.props.match.params.id;
+        client.query({
+            query: gql`
+            query License($id: String!) {
+                license(id: $id) {
+                  form7 {
+                    challanNo
+                    amount
+                    calculationSheet {
+                      data
+                      checked
+                      suggestion
+                    }
+                    nameofDraweeBank
+                    dateOfChallan
+                  }
+                }
+              }`,
+            variables: { id: id }
+        }).then( res => {
+            const { form7 } = res.data.license;
+            if(form7!==null) {
+                this.setState({
+                  data: true,
+                 // saare variables 
+                })
+            }
+            else {
+                this.setState({
+                    data: false
+                })
+            }
+        })
+
+    }
+
     handleCalculationSheetValueChange = (e) => {
         this.setState({
             calculationSheet : {
@@ -80,6 +122,7 @@ export default class DGCAForm extends Component {
 
     render() {
         const {
+            data,
             challanNo,
             amount,
             calculationSheet,
@@ -88,8 +131,16 @@ export default class DGCAForm extends Component {
         
         } = this.state;
 
+        if(!data)
+            return <h1>Forms yet to be filled</h1>
+
         return (
-            <div className="ms-Grid-row" style={{paddingBottom:'100px'}}>
+            <Mutation mutation={FORM7}>
+            {(form7Function,{loading,data_res,error}) => {
+                    if(loading) return 'loading'
+                    if(error) console.log(error);
+            return (
+                    <div className="ms-Grid-row" style={{paddingBottom:'100px'}}>
                 <div className={`s-Grid-col ms-sm9 ms-xl9 ${classNames.pivot}`}>
                     <Card styles={styles.cardStyles}>
                         <Card.Section>
@@ -176,12 +227,56 @@ export default class DGCAForm extends Component {
                                 </table>
                                 <Stack horizontal tokens={stackTokens}>
                                     <DefaultButton text="Back" allowDisabledFocus/>
-                                    <PrimaryButton text="Next" allowDisabledFocus/>
+                                    <PrimaryButton 
+                                        text="Next"
+                                        onClick={() => {
+                                            form7Function({
+                                                variables: {
+                                                    // saare variables
+                                                }
+                                            })
+                                           
+                                        }} 
+                                    allowDisabledFocus />
                                 </Stack>
                         </Card.Section>
                     </Card>
                 </div>
             </div>
+                    )
+                }
+            }
+            </Mutation>
         )
     }
 }
+
+const FORM7 = gql`
+mutation UpdateForm7(
+    $id: String!
+    $challanNo: String
+    $amount: String
+    $calculationSheet: String
+    $calculationSheet_defect: Boolean
+    $calculationSheet_error: String
+    $nameofDraweeBank: String
+    $dateOfChallan: String
+    $status: FormStatus
+  ) {
+    updateForm7(
+      id: $id
+      input: {
+        challanNo: $challanNo
+        amount: $amount
+        calculationSheet: {
+          data: $calculationSheet
+          suggestion: $calculationSheet_error
+          checked: $calculationSheet_defect
+        }
+        nameofDraweeBank: $nameofDraweeBank
+        dateOfChallan: $dateOfChallan
+        status: $status
+      }
+    )
+  }
+`;  
