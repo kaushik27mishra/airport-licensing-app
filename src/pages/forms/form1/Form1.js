@@ -383,7 +383,7 @@ class Form2 extends Component {
                                             ))}
                                             <Stack horizontal tokens={stackTokens}>
                                                 <DefaultButton text="Back" allowDisabledFocus />
-                                                <PrimaryButton 
+                                                <PrimaryButton
                                                     onClick={() => {
                                                         if(data) {
                                                             form1function({variables: {
