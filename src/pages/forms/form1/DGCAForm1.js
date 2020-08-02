@@ -44,42 +44,38 @@ export default class DGCAForm extends Component {
 
         this.state = {
             elevationMeter: {
-                data:"100ft",
+                data:"",
                 suggestion:"",
                 checked:false
             },
-            placeName: "place",
+            placeName: "",
             owner:{
-                name:"CNS Provider",
+                id:"",
+                name:"",
                 address:{
-                    line1: 'l1',
-                    line2: 'l2',
-                    pinCode: 22,
-                    city: 'city',
-                    state: 'state',
-                    country: 'country'
+                    line1: '',
+                    line2: '',
+                    pinCode: 0,
+                    city: '',
+                    state: '',
+                    country: ''
                   },
-                phone: "+91 9999999",
-                fax: "0000", //to be added
-                email: "aai@aai.aai" // to be added
+                phone: "",
+                fax: "", //to be added
+                email: "" // to be added
             },
-            situation: "Situate",
-            state: "Uttar Pradesh",
-            grid: "xxx",
-            map: null, //to be added
+            situation: "",
+            state: "",
+            grid: "",
             runways: [
                 {
-                    orientation: 'One',
-                    length: '111'
-                },
-                {
-                    orientation: 'Two',
-                    length: '222'
+                    orentatation: '',
+                    length: ''
                 }
             ],
-            latitude: "20",
-            longitude: "20",
-            status: "Submitted"
+            latitude: "",
+            longitude: "",
+            status: ""
 
         }
     }
@@ -88,7 +84,7 @@ export default class DGCAForm extends Component {
         const id = this.props.match.params.id;
         client.query({
             query: gql`
-            query License($id: String!){
+            query License($id: String!) {
                 license(id: $id) {
                   aerodrome {
                     placeName
@@ -106,53 +102,54 @@ export default class DGCAForm extends Component {
                       length
                     }
                     owner {
+                      name
+                      email
+                      phone
                       id
+                      address {
+                        line1
+                        line2
+                        city
+                        state {
+                          state
+                          id
+                            country
+                        }
+                        pinCode
+                      }
                     }
                     lat
                     long
                   }
                 }
-            }`,
+              }
+              `,
             variables: { id: id }
         }).then( res => {
             const { aerodrome } = res.data.license;
             if(aerodrome!==null) {
                 this.setState({
-                    //saaare variables
-                    // elevationMeter: {
-                    //     data: aerodrome.elevationMeter.data ,
-                    //     suggestion: aerodrome.elevationMeter.suggestion ,
-                    //     checked: aerodrome.elevationMeter.suggestion
-                    // },
                     placeName: aerodrome.placeName ,
                     owner:{
-                        name: aerodrome.owner.id ,//not know which field will be entered ,
+                        id: aerodrome.owner.id,
+                        name: aerodrome.owner.name ,//not know which field will be entered ,
                         address:{
-                            line1: 'l1',
-                            line2: 'l2',
-                            pinCode: 22,
-                            city: 'city',
-                            state: 'state',
-                            country: 'country'
+                            line1: aerodrome.owner.address.line1,
+                            line2: aerodrome.owner.address.line2,
+                            pinCode: aerodrome.owner.address.pinCode,
+                            city: aerodrome.owner.address.city,
+                            state: aerodrome.owner.address.state.state,
+                            country: aerodrome.owner.address.state.country
                           },
-                        phone: "+91 9999999",
-                        fax: "0000", //to be added
-                        email: "aai@aai.aai" // to be added
+                        phone: aerodrome.owner.phone,
+                        fax: aerodrome.owner.phone, //to be added
+                        email: aerodrome.owner.email // to be added
                     },
                     situation: aerodrome.situation ,
                     state: aerodrome.state,
                     grid: aerodrome.grid,
                     map: true, //to be added
-                    runways: [
-                        {
-                            orientation: aerodrome.runways.orientation,
-                            length: aerodrome.runways.length
-                        },
-                        {
-                            orientation: aerodrome.runways.orientation,
-                            length: aerodrome.runways.length
-                        }
-                    ],
+                    runways: aerodrome.runways,
                     latitude: aerodrome.lat,
                     longitude: aerodrome.long
                 })
@@ -185,7 +182,7 @@ export default class DGCAForm extends Component {
         { key: 'Edited', text: 'Edited' },
         { key: 'NotAproved', text: 'Not Approved' },
         { key: 'Approved', text: 'Approved' },
-      ];
+    ];
    
 
 
@@ -201,6 +198,8 @@ export default class DGCAForm extends Component {
             runways,
             longitude,
             latitude,
+            status,
+            city
          } = this.state;
 
         return (
@@ -369,13 +368,6 @@ export default class DGCAForm extends Component {
                                                 </div>
                                             </td>
                                         </tr>
-                                        <DGCAChecklist 
-                                            field="Elevation of the Aerodrome reference
-                                            point (AMSL)" 
-                                            value={elevationMeter} 
-                                            handleChange={this.handleElevationMeterValueChange} 
-                                            onChange={this.handleElevationMeterCheckboxChange}
-                                        />
                                         <tr>
                                             <td style={{maxWidth:"150px"}}>
                                                 <Text variant={'large'}>Latitude of aerodrome</Text>
@@ -404,7 +396,7 @@ export default class DGCAForm extends Component {
                                                     </td>
                                                     <td>
                                                         <Text variant={'large'}>
-                                                            <em>{runway.orientation}</em>
+                                                            <em>{runway.orentatation}</em>
                                                         </Text>
                                                     </td>
                                                 </tr>
@@ -425,11 +417,11 @@ export default class DGCAForm extends Component {
                                                 <Text variant={'large'}>Approval Status</Text>
                                             </td>
                                             <td>
-                                            <Dropdown
+                                                <Dropdown
                                                     placeholder="Select Status"
                                                     options={this.statusOptions}
                                                     onChange={(e,i) => this.setState({status: i.key})}
-                                                    />
+                                                />
                                             </td>
                                         </tr>
                                     </tbody>
@@ -440,17 +432,16 @@ export default class DGCAForm extends Component {
                                         onClick={() => {
                                             form1function({variables: {
                                                 id: this.props.match.params.id,
-                                                // sarre variables
                                                 placeName: placeName,
                                                 state: state,
                                                 situation: situation,
-                                               // city: city,
-                                                owner: owner,///Please Check this once
+                                                city: city,
+                                                owner: owner.id,
                                                 grid: grid,
                                                 lat: latitude,
                                                 long: longitude,
-                                                runways: runways,
-                                                status: true //Please check this one
+                                                runways: runways.map((i) => ({length: i.length, orentatation: i.orentatation})),
+                                                status: status
                                             }})
                                         }} 
                                         text="Next" 
