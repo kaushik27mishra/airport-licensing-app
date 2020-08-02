@@ -426,7 +426,6 @@ export default class Form2 extends Component {
                                             })
                                           }
                                           else {
-                                            // saare variables except defect and error
                                             form2function({ variables: {
                                                 id: this.props.match.params.id,  
                                                 usage: usage,
@@ -442,7 +441,9 @@ export default class Form2 extends Component {
                                                 heaviestWeight: heaviestAircraftWeight,
                                                 heaviestLength: heaviestAircraftLength,
                                                 heaviestWidth: heaviestAircraftWidth,
-                                        }})}
+                                          }})
+                                      }
+                                      }}
                                         text="Next" 
                                         allowDisabledFocus />
                                     </Stack>              
