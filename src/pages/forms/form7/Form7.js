@@ -97,6 +97,7 @@ export default class Form7 extends Component {
              dateOfDraweeBank: "2020-07-13",
              dateOfDraweeBank_defect:null,
              dateOfDraweeBank_error:"",
+             
 
 
         }
@@ -293,8 +294,8 @@ export default class Form7 extends Component {
                                                                     challanNo: challanNo,
                                                                     amount: amount,
                                                                     calculationSheet: calculationSheet,
-                                                                    calculationSheet_defect: calculationSheet_defect,
-                                                                    calculationSheet_error: calculationSheet_error,
+                                                                    //calculationSheet_defect: calculationSheet_defect,
+                                                                    //calculationSheet_error: calculationSheet_error,
                                                                     nameofDraweeBank: nameOfDraweeBank,
                                                                     dateOfChallan: dateOfDraweeBank
                                                                 }

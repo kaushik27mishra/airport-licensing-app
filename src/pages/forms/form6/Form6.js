@@ -131,6 +131,7 @@ export default class Form6 extends Component {
             dateToBeSubmitted_error,
             dateToBeSubmitted_defect,
             aerodromeManual,
+            manualEnclosed
         } = this.state;
 
         var MUTATION;

@@ -145,7 +145,7 @@ export default class Form3 extends Component {
                     endingPeriod_defect: true,
                     termination: form3.terminationPeriod,
                     termination_error: "",
-                    termination_defect: ture,
+                    termination_defect: true,
                 })
             }
             else {
@@ -299,7 +299,7 @@ export default class Form3 extends Component {
                                             if(data) {
                                                 form3funstion({variables: {
                                                     id: this.props.match.params.id,
-                                                    owner: owner,
+                                                    //owner: owner,
                                                     rightsIfNotOver: rightsIfNotOver ,
                                                     startPeriod: startingPeriod ,
                                                     terminationPeriod: termination,
@@ -309,7 +309,7 @@ export default class Form3 extends Component {
                                             else {
                                                 form3funstion({variables: {
                                                     id: this.props.match.params.id,
-                                                    owner: owner,
+                                                   // owner: owner,
                                                     rightsIfNotOver: rightsIfNotOver,
                                                     rightsIfNotOver_defect: rightsIfNotOver_defect,
                                                     rightsIfNotOver_error: rightsIfNotOver_error,
