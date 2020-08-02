@@ -5,7 +5,6 @@ import { Route, Switch, withRouter, Redirect} from "react-router-dom";
 import Navigation from "../components/navigation/Navigation";
 import Header from "../components/header/Header";
 import Chatbot from "../components/chatbot/Chatbot"
-
 // pages
 import Dashboard from "../pages/dashboard/Dashboard"
 import Form1Extra from "../pages/forms/form1Extra/Form1Extra"

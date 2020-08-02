@@ -50,7 +50,7 @@ const links = [
       {
         name: 'Profile',
         key: 'key3',
-        url: '/',
+        url: '#/profile',
         iconProps: {
           iconName: 'AccountManagement',
           styles: {
