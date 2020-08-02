@@ -10,12 +10,17 @@ function DGCAChecklist(props) {
     return (
         <>
             <tr>
-                <td style={{maxWidth:"150px"}}>
+                {
+                   props.value!=null? 
+                   <>
+                   <td style={{maxWidth:"150px"}}>
                     <Text variant={'large'}>{props.field}</Text>
                 </td>
+                
                 <td>
                     <Text variant={'large'}><em>{props.value.data}</em></Text>
                 </td>
+                
                 <td style={{textAlign:'center'}}>
                     <Checkbox checked={props.value.checked} onChange={props.onChange} />
                 </td>
@@ -27,6 +32,10 @@ function DGCAChecklist(props) {
                         disabled={!props.value.checked}
                     />
                 </td>
+                </>
+                : null
+                }
+                
             </tr>
         </>
     )
