@@ -76,6 +76,11 @@ export default class DGCAForm extends Component {
                 this.setState({
                   data: true,
                  // saare variables 
+                 otherInfo:{
+                    data: form8.otherInfo.data,
+                    suggestion: form8.otherInfo.suggestion,
+                    checked:form8.otherInfo.checked
+                }
                 })
             }
             else {
@@ -163,6 +168,11 @@ export default class DGCAForm extends Component {
                                             form8Function({
                                                 variables: {
                                                     // saare variables
+                                                    id: this.props.match.params.id,
+                                                    otherInfo: otherInfo.data,
+                                                    otherInfo_error: otherInfo.suggestion,
+                                                    otherInfo_defect: otherInfo.checked,
+                                                    status: status
                                                 }
                                             })
                                         }}  

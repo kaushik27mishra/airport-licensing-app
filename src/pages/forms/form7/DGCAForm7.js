@@ -82,7 +82,15 @@ export default class DGCAForm extends Component {
             if(form7!==null) {
                 this.setState({
                   data: true,
-                 // saare variables 
+                  calculationSheet:{
+                    data: form7.calculationSheet.data,
+                    suggestion: form7.calculationSheet.suggestion,
+                    checked: form7.calculationSheet.checked
+                },
+                challanNo: form7.challanNo,
+                amount: form7.amount,
+                nameofDraweeBank: form7.nameofDraweeBank,
+                dateOfChallan: form7.dateOfChallan
                 })
             }
             else {
@@ -233,6 +241,15 @@ export default class DGCAForm extends Component {
                                             form7Function({
                                                 variables: {
                                                     // saare variables
+                                                    id: this.props.match.params.id,
+                                                    challanNo: challanNo,
+                                                    amount: amount,
+                                                    calculationSheet: calculationSheet.data,
+                                                    calculationSheet_defect: calculationSheet.checked,
+                                                    calculationSheet_error: calculationSheet.suggestion,
+                                                    nameofDraweeBank: nameofDraweeBank,
+                                                    dateOfChallan: dateOfChallan,
+                                                    status: status ////Check this once please
                                                 }
                                             })
                                            
