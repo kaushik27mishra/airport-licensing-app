@@ -83,6 +83,12 @@ export default class DGCAForm extends Component {
                 this.setState({
                   data: true,
                  // saare variables 
+                 calculationSheet: form7.calculationSheet,
+                challanNo:form7.challanNo,
+                amount:form7.amount,
+                nameofDraweeBank: form7.nameofDraweeBank,
+                dateOfChallan: form7.dateOfChallan
+                  
                 })
             }
             else {

@@ -48,8 +48,9 @@ export default class DGCAForm extends Component {
                 suggestion:"",
                 checked:false
             },
+            }
 
-        }
+        
     }
 
 
@@ -75,7 +76,13 @@ export default class DGCAForm extends Component {
             if(form8!==null) {
                 this.setState({
                   data: true,
-                 // saare variables 
+                 // saare variables
+                 //otherInfo: form8.otherInfo
+                otherInfo:{
+                    data: form8.otherInfo.data,
+                    suggestion: form8.otherInfo.suggestion,
+                    checked: form8.otherInfo.checked
+                }
                 })
             }
             else {
@@ -114,7 +121,7 @@ export default class DGCAForm extends Component {
       ];
 
     render() {
-        const { otherInfo, } = this.state;
+        const { otherInfo, otherInfo_checked, otherInfo_suggestion, status} = this.state;
 
         return (
             <Mutation mutation={FORM8}>
@@ -163,11 +170,17 @@ export default class DGCAForm extends Component {
                                             form8Function({
                                                 variables: {
                                                     // saare variables
+                                                    id: this.props.match.params.id,
+                                                    otherInfo: otherInfo.data,
+                                                    otherInfo_defect:otherInfo.checked,
+                                                    otherInfo_checked:otherInfo.suggestion,
+                                                    status:status
                                                 }
                                             })
                                         }}  
                                         allowDisabledFocus 
-                                        disabled={!this.state.isChecked} />
+                                        //disabled={!this.state.isChecked} 
+                                        />
                                 </Stack>
                         </Card.Section>
                     </Card>
