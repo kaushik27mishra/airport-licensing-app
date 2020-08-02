@@ -72,7 +72,6 @@ export default class DGCAForm extends Component {
                   }
                 }
               }
-              
               `,
             variables: { id: id }
         }).then( res => {
@@ -167,8 +166,8 @@ export default class DGCAForm extends Component {
                                             </td>
                                             <td>
                                                 <div class="button-wrap">
-                                                    <form method="get" action={manual}>
-                                                        <button type="submit">Download Manual</button>
+                                                    <form method="get">
+                                                        <a href={manual}>Download Manual</a>
                                                     </form>
                                                 </div>
                                             </td>

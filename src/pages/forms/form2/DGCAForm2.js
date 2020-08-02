@@ -189,11 +189,7 @@ export default class DGCAForm extends Component {
                         suggestion: form2.heaviestType.suggestion,
                         checked: form2.heaviestType.checked
                     },
-                    heaviestWeight:{
-                        data: form2.heaviestWeight.data,
-                        suggestion: form2.heaviestWeight.suggestion,
-                        checked: form2.heaviestWeight.checked
-                    },
+                    heaviestWeight:form2.heaviestWeight,
                     heaviestLength:{
                         data: form2.heaviestLength.data,
                         suggestion: form2.heaviestLength.suggestion,

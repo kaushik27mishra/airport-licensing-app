@@ -146,6 +146,11 @@ export default class Form2 extends Component {
                       checked
                       suggestion
                     }
+                    heaviestWeight {
+                      data
+                      checked
+                      suggestion
+                    }
                   }
                 }
               }
@@ -157,9 +162,9 @@ export default class Form2 extends Component {
                 this.setState({
                   data: true,
                   usage: form2.usage,
-                  purposeOfPrivate: form2.purposeOfPrivate.data,
-                  purposeOfPrivate_defect: !!form2.purposeOfPrivate.checked,
-                  purposeOfPrivate_error: form2.purposeOfPrivate_error,
+                  purposeOfPrivate: form2.purpose.data,
+                  purposeOfPrivate_defect: !!form2.purpose.checked,
+                  purposeOfPrivate_error: form2.purpose.error,
                   onlyYourAircraft: form2.ownAircraft,
                   priorPermissionForOtherAircraft: form2.priorPermission,
                   allWeatherRequired: form2.allWeatherRequired,
@@ -181,12 +186,12 @@ export default class Form2 extends Component {
                   heaviestAircraftLength: form2.heaviestLength.data,
                   heaviestAircraftLength_defect: form2.heaviestLength.checked,
                   heaviestAircraftLength_error: form2.heaviestLength.error,
-                  heaviestWidth: form2.heaviestAircraftWidth.data,
-                  heaviestWidth_defect: !!form2.heaviestWidth.checked,
-                  heaviestWidth_error: form2.heaviestLength.suggestion,
-                  heaviestAircraftWeight: form2.heaviestWidth.data,
-                  heaviestAircraftWidth_defect: form2.heaviestWidth.checked,
-                  heaviestAircraftWidth_error:  form2.heaviestWidth.suggestion
+                  heaviestAircraftWidth: form2.heaviestWidth.data,
+                  heaviestAircraftWidth_defect: !!form2.heaviestWidth.checked,
+                  heaviestAircraftWidth_error: form2.heaviestWidth.suggestion,
+                  heaviestAircraftWeight: form2.heaviestWeight.data,
+                  heaviestAircraftWidth_defect: form2.heaviestWeight.checked,
+                  heaviestAircraftWidth_error:  form2.heaviestWeight.suggestion
                 })
             }
             else {

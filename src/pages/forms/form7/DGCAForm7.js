@@ -127,7 +127,8 @@ export default class DGCAForm extends Component {
             amount,
             calculationSheet,
             nameofDraweeBank,
-            dateOfChallan
+            dateOfChallan,
+            status
         
         } = this.state;
 
@@ -233,6 +234,15 @@ export default class DGCAForm extends Component {
                                             form7Function({
                                                 variables: {
                                                     // saare variables
+                                                    id: this.props.match.params.id,
+                                                    challanNo: challanNo,
+                                                    amount: amount,
+                                                    calculationSheet: calculationSheet.data,
+                                                    calculationSheet_defect: calculationSheet.checked,
+                                                    calculationSheet_error: calculationSheet.suggestion,
+                                                    nameofDraweeBank: nameofDraweeBank,
+                                                    dateOfChallan: dateOfChallan,
+                                                    status: status
                                                 }
                                             })
                                            
