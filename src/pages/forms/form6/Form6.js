@@ -52,7 +52,7 @@ export default class Form6 extends Component {
         super(props)
     
         this.state = {
-             manualEnclosed:"Yes",
+             manualEnclosed:null,
              dateToBeSubmitted: "",
              dateToBeSubmitted_error:"",
              dateToBeSubmitted_defect: null,
@@ -77,7 +77,6 @@ export default class Form6 extends Component {
                   }
                 }
               }
-              
               `,
             variables: { id: id }
         }).then( res => {
@@ -155,7 +154,7 @@ export default class Form6 extends Component {
                                     <Card.Section>
                                             <Text variant={'xxLarge'} >Aerodrome Manual</Text>
                                             <ChoiceGroup 
-                                                defaultSelectedKey="Yes"
+                                                defaultSelectedKey={true}
                                                 options={options}
                                                 onChange={this._onChange}
                                                 label="Is manual enclosed?"
@@ -163,7 +162,7 @@ export default class Form6 extends Component {
                                             />
                                             <br/>
                                             {
-                                                this.state.manualEnclosed==="No" ? 
+                                                this.state.manualEnclosed===false ? 
                                                     <div>
                                                         <TextField
                                                             label="Please indicate when this is likely to be submitted to DGCA."
@@ -190,29 +189,25 @@ export default class Form6 extends Component {
                                                         if(data) {
                                                             form6funstion({
                                                                 variables: {
-                                                                    //all member including defect and error
                                                                     id: this.props.match.params.id,
                                                                     manual: aerodromeManual,
                                                                     enclosed: manualEnclosed,
-                                                                    //indicateDGCA: ///Dont Know,
+                                                                    indicateDGCA: dateToBeSubmitted,
                                                                 }
                                                             })
                                                         }
                                                         else {
                                                             form6funstion({
                                                                 variables: {
-                                                                    //all member excluding defect and error
                                                                     id: this.props.match.params.id,
                                                                     manual: aerodromeManual,
-                                                                    //manual_defect: manua
-                                                                    //manual_error: String
-                                                                    //enclosed: manualEnclosed
-                                                                    //indicateDGCA: String
+                                                                    enclosed: manualEnclosed,
+                                                                    indicateDGCA: dateToBeSubmitted,
                                                                 }
                                                             })
                                                         }
 
-                                                    }}
+                                                        }}
                                                     text="Next" 
                                                     allowDisabledFocus />
                                             </Stack>
