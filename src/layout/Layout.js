@@ -28,6 +28,7 @@ import DGCAForm2 from "../pages/forms/form2/DGCAForm2";
 import DGCAForm3 from "../pages/forms/form3/DGCAForm3";
 import { roleHandler } from '../utils/roleHandler';
 import FormList from '../components/cards/formList/FormList';
+import HistoryPage from '../pages/history/history';
 
 function Layout(props) {
 
@@ -117,6 +118,7 @@ function LayoutDGCA() {
       <Route path={`/app/dgca/license/:id/form/details_of_fees`} component={DGCAForm7}/>
       <Route path={`/app/dgca/license/:id/form/further_info`} component={DGCAForm8}/>
       <Route path={`/app/dgca/license/:id/form`} component={FormList}/>
+      <Route path={'app/dcga/license/:id/history'} component={HistoryPage}/>
     </Switch>
   )
 }
