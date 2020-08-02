@@ -237,7 +237,6 @@ export default class Form4 extends Component {
                                     </label>
                                     {OwnerFile!=null ? `${OwnerFile.name}` : ''}
                                 </div>
-
                                 <Text 
                                     variant='medium'>
                                         Mention Date of Approval of Owner of Land
