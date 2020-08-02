@@ -131,7 +131,7 @@ export default class Form6 extends Component {
             dateToBeSubmitted_error,
             dateToBeSubmitted_defect,
             aerodromeManual,
-            manualEnclosed
+            manualEnclosed,
         } = this.state;
 
         var MUTATION;
@@ -163,7 +163,7 @@ export default class Form6 extends Component {
                                             />
                                             <br/>
                                             {
-                                                this.state.manualEnclosed===false ? 
+                                                manualEnclosed===false ? 
                                                     <div>
                                                         <TextField
                                                             label="Please indicate when this is likely to be submitted to DGCA."

@@ -189,6 +189,7 @@ export default class Form3 extends Component {
     render() {
         const {
              data,
+             owner,
              rightsIfNotOver,
              rightsIfNotOver_error,
              rightsIfNotOver_defect,
@@ -232,7 +233,7 @@ export default class Form3 extends Component {
                                     label="Are you the owner of the aerodrome site" 
                                     required={true}/>
                                     {
-                                        this.state.owner===false ? 
+                                        owner===false ? 
                                         <>
                                             <TextField
                                                 name="rightsIfNotOver" 
