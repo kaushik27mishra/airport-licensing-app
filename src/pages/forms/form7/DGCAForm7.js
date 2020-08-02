@@ -82,13 +82,9 @@ export default class DGCAForm extends Component {
             if(form7!==null) {
                 this.setState({
                   data: true,
-                  calculationSheet:{
-                    data: form7.calculationSheet.data,
-                    suggestion: form7.calculationSheet.suggestion,
-                    checked: form7.calculationSheet.checked
-                },
-                challanNo: form7.challanNo,
-                amount: form7.amount,
+                 calculationSheet: form7.calculationSheet,
+                challanNo:form7.challanNo,
+                amount:form7.amount,
                 nameofDraweeBank: form7.nameofDraweeBank,
                 dateOfChallan: form7.dateOfChallan
                 })
@@ -135,7 +131,8 @@ export default class DGCAForm extends Component {
             amount,
             calculationSheet,
             nameofDraweeBank,
-            dateOfChallan
+            dateOfChallan,
+            status
         
         } = this.state;
 
@@ -249,7 +246,7 @@ export default class DGCAForm extends Component {
                                                     calculationSheet_error: calculationSheet.suggestion,
                                                     nameofDraweeBank: nameofDraweeBank,
                                                     dateOfChallan: dateOfChallan,
-                                                    //status: status ////Check this once please
+                                                    status: status
                                                 }
                                             })
                                            

@@ -137,7 +137,8 @@ export default class DGCAForm extends Component {
         owner,
         startPeriod,
         endPeriod,
-        terminationPeriod } = this.state;
+        terminationPeriod,
+    status } = this.state;
 
         if(!data) {
             return <h1>Form yet to be filled</h1>;
@@ -237,7 +238,7 @@ export default class DGCAForm extends Component {
                                                     startPeriod: startPeriod,
                                                     terminationPeriod: terminationPeriod,
                                                     endPeriod: endPeriod,
-                                                    status: true //Dont know what to add
+                                                    status: status//Dont know what to add
                                                 }})
                                             }
                                         }}  
