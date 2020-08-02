@@ -50,6 +50,7 @@ export default class DGCAForm extends Component {
             },
             placeName: "",
             owner:{
+                id:"",
                 name:"",
                 address:{
                     line1: '',
@@ -72,9 +73,9 @@ export default class DGCAForm extends Component {
                     length: ''
                 }
             ],
-            latitude: "20",
-            longitude: "20",
-            status: "Submitted"
+            latitude: "",
+            longitude: "",
+            status: ""
 
         }
     }
@@ -130,6 +131,7 @@ export default class DGCAForm extends Component {
                 this.setState({
                     placeName: aerodrome.placeName ,
                     owner:{
+                        id: aerodrome.owner.id,
                         name: aerodrome.owner.name ,//not know which field will be entered ,
                         address:{
                             line1: aerodrome.owner.address.line1,
@@ -434,7 +436,7 @@ export default class DGCAForm extends Component {
                                                 state: state,
                                                 situation: situation,
                                                 city: city,
-                                                owner: owner.name,
+                                                owner: owner.id,
                                                 grid: grid,
                                                 lat: latitude,
                                                 long: longitude,
