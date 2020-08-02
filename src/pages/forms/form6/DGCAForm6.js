@@ -220,7 +220,7 @@ export default class DGCAForm extends Component {
                                                     manual_error: manual.suggestion,
                                                     enclosed: enclosed,
                                                     indicateDGCA: indicateDGCA,
-                                                    status: status
+                                                    //status: status  //Check this
                                                 }
                                             })
                                             

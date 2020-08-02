@@ -82,7 +82,7 @@ export default class DGCAForm extends Component {
                     data: form8.otherInfo.data,
                     suggestion: form8.otherInfo.suggestion,
                     checked: form8.otherInfo.checked
-                }
+                   }
                 })
             }
             else {

@@ -302,7 +302,6 @@ class LicenseCreateForm extends Component {
                                         <DefaultButton text="Back" allowDisabledFocus />
                                         <PrimaryButton 
                                             onClick={() => {
-                                                console.log(this.state)
                                                 form1function({variables: {
                                                     placeName: placeName,
                                                     state: statedistrict,
