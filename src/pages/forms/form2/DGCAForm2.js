@@ -9,6 +9,10 @@ import DGCAChecklist from '../../../components/form/DGCAChecklist';
 //style
 import '../style.css'
 
+import gql from 'graphql-tag';
+import { Mutation } from '@apollo/react-components';
+import { client } from '../../..';
+
 const styles = {
     cardStyles: {
         root: {
@@ -90,6 +94,79 @@ export default class DGCAForm extends Component {
             allWeatherRequired: true
 
         }
+    }
+
+    componentDidMount() {
+        const id = this.props.match.params.id;
+        client.query({
+            query: gql`
+            query License($id: String!) {
+                license(id: $id) {
+                  form2 {
+                    usage
+                    purpose {
+                      data
+                      checked
+                      suggestion
+                    }
+                    ownAircraft
+                    priorPermission
+                    allWeatherRequired
+                    lightningPlan {
+                      data
+                      checked
+                      suggestion
+                    }
+                    cnsAtm {
+                      data
+                      checked
+                      suggestion
+                    }
+                    metFacilities {
+                      data
+                      checked
+                      suggestion
+                    }
+                    aviationActivities {
+                      data
+                      checked
+                      suggestion
+                    }
+                    heaviestType {
+                      data
+                      checked
+                      suggestion
+                    }
+                    heaviestLength {
+                      data
+                      checked
+                      suggestion
+                    }
+                    heaviestWidth {
+                      data
+                      checked
+                      suggestion
+                    }
+                  }
+                }
+              }
+              `,
+            variables: { id: id }
+        }).then( res => {
+            const { form2 } = res.data.license;
+            if(form2!==null) {
+                this.setState({
+                  data: true,
+
+                })
+            }
+            else {
+                this.setState({
+                    data: false
+                })
+            }
+        })
+
     }
 
     handlePurposeValueChange = (e) => {
@@ -264,7 +341,8 @@ export default class DGCAForm extends Component {
     }
 
     render() {
-        const { 
+        const {
+            data, 
             purpose,
             lightningPlan,
             cnsAtm, 
@@ -280,8 +358,17 @@ export default class DGCAForm extends Component {
             allWeatherRequired
         } = this.state;
 
+        if(!data)
+            return <h1>Form yet to be filled</h1>
+
         return (
-            <div className="ms-Grid-row" style={{paddingBottom:'100px'}}>
+            <Mutation mutation={FORM2}>
+                {(form2function, { loading, data_res, error }) => {
+            
+                if(loading) return 'loading'
+                if(error) console.log(error);
+                return (
+                    <div className="ms-Grid-row" style={{paddingBottom:'100px'}}>
                 <div className={`s-Grid-col ms-sm9 ms-xl9 ${classNames.pivot}`}>
                     <Card styles={styles.cardStyles}>
                         <Card.Section>
@@ -404,12 +491,119 @@ export default class DGCAForm extends Component {
                                 </table>
                                 <Stack horizontal tokens={stackTokens}>
                                     <DefaultButton text="Back" allowDisabledFocus/>
-                                    <PrimaryButton text="Next" allowDisabledFocus/>
+                                    <PrimaryButton 
+                                        onClick={ () =>  {
+                                                form2function({ variables: {
+                                                    // saare variables including check and error
+                                                    
+                                                  }
+                                                })
+                                          
+                                            }
+                                        }
+                                        text="Next" 
+                                        allowDisabledFocus />
                                 </Stack>
                         </Card.Section>
                     </Card>
                 </div>
             </div>
+
+                )}}
+            </Mutation>
         )
     }
 }
+
+const FORM2=gql`
+mutation UpdateForm2(
+    $id: String!
+    $usage: Usage
+    $purpose: String
+    $purpose_defect: Boolean
+    $purpose_error: String
+    $ownAircraft: Boolean
+    $priorPermission: Boolean
+    $allWeatherRequired: Boolean
+    $lightningPlan: String
+    $lightningPlan_defect: Boolean
+    $lightningPlan_error: String
+    $cnsAtm: String
+    $cnsAtm_defect: Boolean
+    $cnsAtm_error: String
+    $metmetFacilities: String
+    $metmetFacilities_defect: Boolean
+    $metmetFacilities_error: String
+    $aviationActivities: String
+    $aviationActivities_defect: Boolean
+    $aviationActivities_error: String
+    $heaviestType: String
+    $heaviestType_defect: Boolean
+    $heaviestType_error: String
+    $heaviestWidth: String
+    $heaviestWidth_defect: Boolean
+    $heaviestWidth_error: String
+    $heaviestWeight: String
+    $heaviestWeight_error: String
+    $heaviestWeight_defect: Boolean
+    $heaviestLength: String
+    $heaviestLength_defect: Boolean
+    $heaviestLength_error: String
+  ) {
+    updateForm2(
+      id: $id
+      input: {
+        usage: $usage
+        purpose: {
+          data: $purpose
+          checked: $purpose_defect
+          suggestion: $purpose_error
+        }
+        ownAircraft: $ownAircraft
+        priorPermission: $priorPermission
+        allWeatherRequired: $allWeatherRequired
+        lightningPlan: {
+          data: $lightningPlan
+          checked: $lightningPlan_defect
+          suggestion: $lightningPlan_error
+        }
+        cnsAtm: {
+          data: $cnsAtm
+          checked: $cnsAtm_defect
+          suggestion: $cnsAtm_error
+        }
+        metFacilities: {
+          data: $metmetFacilities
+          checked: $metmetFacilities_defect
+          suggestion: $metmetFacilities_error
+        }
+        aviationActivities: {
+          data: $aviationActivities
+          checked: $aviationActivities_defect
+          suggestion: $aviationActivities_error
+        }
+        heaviestType: {
+          data: $heaviestType
+          checked: $heaviestType_defect
+          suggestion: $heaviestType_error
+        }
+        heaviestWidth: {
+          data: $heaviestWidth
+          checked: $heaviestWidth_defect
+          suggestion: $heaviestWidth_error
+        }
+        heaviestWeight: {
+          data: $heaviestWeight
+          checked: $heaviestWeight_defect
+          suggestion: $heaviestWeight_error
+        }
+        heaviestLength: {
+          data: $heaviestLength
+          suggestion: $heaviestLength_error
+          checked: $heaviestLength_defect
+        }
+      }
+    )
+  }
+  
+`

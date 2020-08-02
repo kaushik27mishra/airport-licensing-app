@@ -8,6 +8,10 @@ import { mergeStyleSets } from 'office-ui-fabric-react/lib/Styling';
 
 //style
 import '../style.css'
+import gql from 'graphql-tag';
+import { Mutation } from '@apollo/react-components';
+import { client } from '../../..';
+
 const styles = {
     cardStyles: {
         root: {
@@ -49,6 +53,43 @@ export default class DGCAForm extends Component {
         }
     }
 
+    componentDidMount() {
+        const id = this.props.match.params.id;
+        client.query({
+            query: gql`
+            query License($id: String!) {
+                license(id: $id) {
+                  form6 {
+                    manual {
+                      data
+                      suggestion
+                      checked
+                    }
+                    enclosed
+                    indicateDGCA
+                  }
+                }
+              }
+              
+              `,
+            variables: { id: id }
+        }).then( res => {
+            const { form6 } = res.data.license;
+            if(form6!==null) {
+                this.setState({
+                  data: true,
+                 // saare variables 
+                })
+            }
+            else {
+                this.setState({
+                    data: false
+                })
+            }
+        })
+
+    }
+
     handleManualValueChange = (e) => {
         this.setState({
             manual: {
@@ -68,12 +109,22 @@ export default class DGCAForm extends Component {
         })
     }
 
+    
+
 
     render() {
-        const { indicateDGCA, enclosed, manual } = this.state;
+        const { data, indicateDGCA, enclosed, manual } = this.state;
 
+        if(!data)
+            return <h1>Form yet to be filled</h1>
+            
         return (
-            <div className="ms-Grid-row" style={{paddingBottom:'100px'}}>
+            <Mutation muatation={FORM6}>
+            {(form6funstion,{loading, data_res, error}) => {
+                if(loading) return 'loading'
+                if(error) console.log(error);
+                return (
+                    <div className="ms-Grid-row" style={{paddingBottom:'100px'}}>
                 <div className={`s-Grid-col ms-sm9 ms-xl9 ${classNames.pivot}`}>
                     <Card styles={styles.cardStyles}>
                         <Card.Section>
@@ -132,12 +183,54 @@ export default class DGCAForm extends Component {
                                 </table>
                                 <Stack horizontal tokens={stackTokens}>
                                     <DefaultButton text="Back" allowDisabledFocus/>
-                                    <PrimaryButton text="Next" allowDisabledFocus/>
+
+                                    <PrimaryButton 
+                                        onClick={()=> {
+                                            form6funstion({
+                                                variables: {
+                                                    //all member including defect and error
+                                                }
+                                            })
+                                            
+                                        }}
+                                        text="Next" 
+                                        allowDisabledFocus />
                                 </Stack>
                         </Card.Section>
                     </Card>
                 </div>
             </div>
+                    )
+                }
+            }
+            </Mutation>
         )
     }
 }
+
+const FORM6 = gql`
+mutation UpdateForm6(
+    $id: String!
+    $manual: String
+    $manual_defect: Boolean
+    $manual_error: String
+    $enclosed: Boolean
+    $indicateDGCA: String
+    $status: FormStatus
+  ) {
+    updateForm6(
+      id: $id
+      input: {
+        manual: {
+          data: $manual
+          checked: $manual_defect
+          suggestion: $manual_error
+        }
+        enclosed: $enclosed
+        indicateDGCA: $indicateDGCA
+        status: $status
+      }
+    )
+  }
+  
+`;

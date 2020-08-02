@@ -43,8 +43,8 @@ const classNames = mergeStyleSets({
 const stackTokens = { childrenGap: 20 };
 
 const options = [
-    { key: 'Yes', text: 'Yes' },
-    { key: 'No', text: 'No' },
+    { key: true, text: 'Yes' },
+    { key: false, text: 'No' },
 ];
 
 export default class Form6 extends Component {
