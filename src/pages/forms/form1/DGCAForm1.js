@@ -117,6 +117,42 @@ export default class DGCAForm extends Component {
             if(aerodrome!==null) {
                 this.setState({
                     //saaare variables
+                    elevationMeter: {
+                        data: aerodrome.elevationMeter.data ,
+                        suggestion: aerodrome.elevationMeter.suggestion ,
+                        checked: aerodrome.elevationMeter.suggestion
+                    },
+                    placeName: aerodrome.placeName ,
+                    owner:{
+                        name: aerodrome.owner.id ,//not know which field will be entered ,
+                        address:{
+                            line1: 'l1',
+                            line2: 'l2',
+                            pinCode: 22,
+                            city: 'city',
+                            state: 'state',
+                            country: 'country'
+                          },
+                        phone: "+91 9999999",
+                        fax: "0000", //to be added
+                        email: "aai@aai.aai" // to be added
+                    },
+                    situation: aerodrome.situation ,
+                    state: aerodrome.state,
+                    grid: aerodrome.grid,
+                    map: true, //to be added
+                    runways: [
+                        {
+                            orientation: aerodrome.runways.orientation,
+                            length: aerodrome.runways.length
+                        },
+                        {
+                            orientation: aerodrome.runways.orientation,
+                            length: aerodrome.runways.length
+                        }
+                    ],
+                    latitude: aerodrome.lat,
+                    longitude: aerodrome.long
                 })
             }
 
@@ -382,6 +418,16 @@ export default class DGCAForm extends Component {
                                             form1function({variables: {
                                                 id: this.props.match.params.id,
                                                 // sarre variables
+                                                placeName: placeName,
+                                                state: state,
+                                                situation: situation,
+                                                city: city,
+                                                owner: owner,///Please Check this once
+                                                grid: grid,
+                                                lat: latitude,
+                                                long: longitude,
+                                                runways: runways,
+                                                status: true //Please check this one
                                             }})
                                         }} 
                                         text="Next" 

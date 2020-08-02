@@ -156,9 +156,58 @@ export default class DGCAForm extends Component {
             const { form2 } = res.data.license;
             if(form2!==null) {
                 this.setState({
-                  data: true,
-
-                })
+                    data: true,
+                    purpose:{
+                        data: form2.purpose.data,
+                        suggestion: form2.purpose.suggestion,
+                        checked: form2.purpose.checked
+                    },
+                    lightningPlan:{
+                        data: form2.lightningPlan.data,
+                        suggestion: form2.lightningPlan.suggestion,
+                        checked: form2.lightningPlan.checked
+                    },
+                    cnsAtm: {
+                        data: form2.cnsAtm.data,
+                        suggestion: form2.cnsAtm.data,
+                        checked: form2.cnsAtm.suggestion
+                    },
+                    metFacilities:{
+                        data: form2.metFacilities.data,
+                        suggestion: form2.metFacilities.suggestion,
+                        checked: form2.metFacilities.checked
+                    },
+                    aviationActivities:{
+                        data: form2.aviationActivities.data,
+                        suggestion: form2.aviationActivities.suggestion,
+                        checked: form2.aviationActivities.checked
+                    },
+                    heaviestType: {
+                        data: form2.heaviestType.data,
+                        suggestion: form2.heaviestType.suggestion,
+                        checked: form2.heaviestType.checked
+                    },
+                    heaviestWeight:{
+                        data: form2.heaviestWeight.data,
+                        suggestion: form2.heaviestWeight.suggestion,
+                        checked: form2.heaviestWeight.checked
+                    },
+                    heaviestLength:{
+                        data: form2.heaviestLength.data,
+                        suggestion: form2.heaviestLength.suggestion,
+                        checked: form2.heaviestLength.checked
+                    },
+                    heaviestWidth: {
+                        data: form2.heaviestWidth.data,
+                        suggestion: form2.heaviestWidth.suggestion,
+                        checked: form2.heaviestWidth.checked
+                    },
+                    usage: form2.usage,
+                    ownAircraft: form2.ownAircraft,
+                    priorPermission: form2.priorPermission,
+                    allWeatherRequired: form2.allWeatherRequired
+                
+                    })
             }
             else {
                 this.setState({
@@ -495,7 +544,38 @@ export default class DGCAForm extends Component {
                                         onClick={ () =>  {
                                                 form2function({ variables: {
                                                     // saare variables including check and error
-                                                    
+                                                    id: this.props.match.params.id,
+                                                    usage: usage,
+                                                    purpose: purpose.data,
+                                                    purpose_defect: purpose.checked,
+                                                    purpose_error: purpose.suggestion,
+                                                    ownAircraft: ownAircraft,
+                                                    priorPermission: priorPermission,
+                                                    allWeatherRequired: allWeatherRequired,
+                                                    lightningPlan: lightningPlan.data,
+                                                    lightningPlan_defect: lightningPlan.checked,
+                                                    lightningPlan_error: lightningPlan.suggestion,
+                                                    cnsAtm: cnsAtm.data,
+                                                    cnsAtm_defect: cnsAtm.checked,
+                                                    cnsAtm_error: cnsAtm.suggestion,
+                                                    metmetFacilities: metFacilities.data,
+                                                    metmetFacilities_defect: metFacilities.checked,
+                                                    metmetFacilities_error: metFacilities.suggestion,
+                                                    aviationActivities: aviationActivities.data,
+                                                    aviationActivities_defect: aviationActivities.checked,
+                                                    aviationActivities_error: aviationActivities.suggestion,
+                                                    heaviestType: heaviestType.data,
+                                                    heaviestType_defect: heaviestType.checked,
+                                                    heaviestType_error: heaviestType.suggestion,
+                                                    heaviestWidth: heaviestWidth.data,
+                                                    heaviestWidth_defect: heaviestWidth.checked,
+                                                    heaviestWidth_error: heaviestWidth.suggestion,
+                                                    heaviestWeight: heaviestWeight.data,
+                                                    heaviestWeight_error: heaviestWeight.suggestion,
+                                                    heaviestWeight_defect: heaviestWeight.checked,
+                                                    heaviestLength: heaviestLength.data,
+                                                    heaviestLength_defect: heaviestLength.checked,
+                                                    heaviestLength_error: heaviestLength.suggestion
                                                   }
                                                 })
                                           
