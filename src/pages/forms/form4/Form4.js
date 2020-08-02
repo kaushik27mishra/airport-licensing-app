@@ -131,7 +131,10 @@ export default class Form4 extends Component {
             const { form4 } = res.data.license;
             if(form4!==null) {
                 this.setState({
-                            
+                    HomeAffairsStatus: form4.homeBool,
+                    DefenceStatus: form4.defenceBool,
+                    dateApprovalOfHomeAffairs: form4.homeTime,
+                    dateApprovalOfDefence: form4.defenceTime    
                 })
             }
             else {
@@ -176,16 +179,9 @@ export default class Form4 extends Component {
     render() {
         initializeIcons();
         const {
-            dateApprovalOfOwnerOfLand,
-            dateApprovalOfOwnerOfLand_defect,
-            dateApprovalOfOwnerOfLand_error,
-            dateApprovalOfLocalAuthority,
-            dateApprovalOfLocalAuthority_defect,
-            dateApprovalOfLocalAuthority_error,
+            
             DefenceStatus,
             HomeAffairsStatus,
-            OwnerFile,
-            LocalFile,
             dateApprovalOfHomeAffairs,
             dateApprovalOfDefence
 
@@ -230,7 +226,7 @@ export default class Form4 extends Component {
                                     ariaLabel="Date of Approval"
                                 />
 
-                                <Text variant={'medium'} >Attach attested copy of approval of Owner of Land</Text>
+                                {/*<Text variant={'medium'} >Attach attested copy of approval of Owner of Land</Text>
                                 <div class="button-wrap">
                                     <label class ="new-button" for="2"> Upload File
                                     <input id="2" name="OwnerFile" type="file" onChange={this.handleFileChange}/>
@@ -285,7 +281,7 @@ export default class Form4 extends Component {
                                     placeholder="Select a date."
                                     ariaLabel="Select a date"
                                 />
-                                {dateApprovalOfLocalAuthority_error===''? null : <Text style={{color:'#FF0000',marginTop:'0'}} variant='small'>{dateApprovalOfLocalAuthority_error}</Text>}
+                                {dateApprovalOfLocalAuthority_error===''? null : <Text style={{color:'#FF0000',marginTop:'0'}} variant='small'>{dateApprovalOfLocalAuthority_error}</Text>}*/}
                                 <Stack horizontal tokens={stackTokens}>
                                     <DefaultButton text="Back" allowDisabledFocus />
                                     <PrimaryButton text="Next" allowDisabledFocus />
