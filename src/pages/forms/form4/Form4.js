@@ -1,9 +1,11 @@
 import React, { Component } from 'react'
 
 //ui
-import { Text, PrimaryButton, Stack, DefaultButton } from 'office-ui-fabric-react';
+import { Text, PrimaryButton, Stack, DefaultButton, initializeIcons } from 'office-ui-fabric-react';
 import { Card } from '@uifabric/react-cards';
 import { DatePicker, DayOfWeek, mergeStyleSets } from 'office-ui-fabric-react';
+import { Icon } from '@fluentui/react/lib/Icon';
+
 
 //style
 const styles = {
@@ -73,6 +75,24 @@ const DayPickerStrings = {
 
 const stackTokens = { childrenGap: 20 };
 
+const receiveIcon = (status) =>
+  {
+      switch(status){
+        case true : return "Accept"
+        case false : return "ChromeClose"
+        default : return "Remove"
+
+      }
+  }
+
+  const icon = {
+    fontSize: 24,
+    padding: 15,
+    verticalAlign: 'middle',
+    paddingLeft: 0,
+    color: '#0078d4'
+  }
+
 export default class Form4 extends Component {
     constructor(props) {
         super(props)
@@ -84,10 +104,12 @@ export default class Form4 extends Component {
             dateApprovalOfLocalAuthority: "2020-07-13",
             dateApprovalOfLocalAuthority_defect:null,
             dateApprovalOfLocalAuthority_error:"",
-            DefenceFile: null,
-            HomeAffairsFile: null,
+            DefenceStatus: true,
+            HomeAffairsStatus: true,
             OwnerFile: null,
             LocalFile: null,
+            dateApprovalOfHomeAffairs:"2020-08-02",
+            dateApprovalOfDefence:"2020-08-02"
 
         
         }
@@ -123,7 +145,7 @@ export default class Form4 extends Component {
     }
     
     render() {
-
+        initializeIcons();
         const {
             dateApprovalOfOwnerOfLand,
             dateApprovalOfOwnerOfLand_defect,
@@ -131,10 +153,12 @@ export default class Form4 extends Component {
             dateApprovalOfLocalAuthority,
             dateApprovalOfLocalAuthority_defect,
             dateApprovalOfLocalAuthority_error,
-            DefenceFile,
-            HomeAffairsFile,
+            DefenceStatus,
+            HomeAffairsStatus,
             OwnerFile,
             LocalFile,
+            dateApprovalOfHomeAffairs,
+            dateApprovalOfDefence
 
         } = this.state;
         return (
@@ -143,23 +167,39 @@ export default class Form4 extends Component {
                     <Card styles={styles.cardStyles}>
                         <Card.Section>
                                 <Text variant={'xxLarge'}>Permissions and Approvals</Text>
-                                <Text variant={'medium'} >Attach an application and documents that 
-                                are required by the Ministry of Defence</Text>
-                                <div class="button-wrap">
-                                    <label class ="new-button" for="upload"> Upload File
-                                    <input id="upload" name="grid" type="file" onChange={this.handleFileChange}/>
-                                    </label>
-                                    {DefenceFile!=null ? `${DefenceFile.name}` : ''}
-                                </div>
+                                <Text variant={'medium'} >
+                                    Ministry of Defence Approval Status <Icon iconName={receiveIcon(DefenceStatus)} style={{fontSize:"17px"}} className="ms-IconExample"/>
+                                </Text>
+                                <Text 
+                                    variant='medium'>
+                                        Date of Approval of Ministry of Defence
+                                </Text>
+                                <DatePicker
+                                    firstDayOfWeek={DayOfWeek.Sunday}
+                                    value={this.onParseDateFromString(dateApprovalOfDefence)}
+                                    disabled={true}
+                                    className={controlClass.control}
+                                    strings={DayPickerStrings}
+                                    placeholder="Date of Approval"
+                                    ariaLabel="Date of Approval"
+                                />
 
-                                <Text variant={'medium'} >Attach an application and documents that 
-                                are required by the Ministry of Home Affairs</Text>
-                                <div class="button-wrap">
-                                    <label class ="new-button" for="upload"> Upload File
-                                    <input id="upload" name="grid" type="file" onChange={this.handleFileChange}/>
-                                    </label>
-                                    {HomeAffairsFile!=null ? `${HomeAffairsFile.name}` : ''}
-                                </div>
+                                <Text variant={'medium'} >
+                                    Ministry of Home Affairs Approval Status <Icon iconName={receiveIcon(HomeAffairsStatus)} style={{fontSize:"17px"}} className="ms-IconExample"/>
+                                </Text> 
+                                <Text 
+                                    variant='medium'>
+                                        Date of Approval of Ministry of Home Affairs
+                                </Text>
+                                <DatePicker
+                                    firstDayOfWeek={DayOfWeek.Sunday}
+                                    value={this.onParseDateFromString(dateApprovalOfHomeAffairs)}
+                                    disabled={true}
+                                    className={controlClass.control}
+                                    strings={DayPickerStrings}
+                                    placeholder="Date of Approval"
+                                    ariaLabel="Date of Approval"
+                                />
 
                                 <Text variant={'medium'} >Attach attested copy of approval of Owner of Land</Text>
                                 <div class="button-wrap">
