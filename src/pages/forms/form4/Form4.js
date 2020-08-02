@@ -232,8 +232,8 @@ export default class Form4 extends Component {
 
                                 <Text variant={'medium'} >Attach attested copy of approval of Owner of Land</Text>
                                 <div class="button-wrap">
-                                    <label class ="new-button" for="upload"> Upload File
-                                    <input id="upload" name="grid" type="file" onChange={this.handleFileChange}/>
+                                    <label class ="new-button" for="2"> Upload File
+                                    <input id="2" name="OwnerFile" type="file" onChange={this.handleFileChange}/>
                                     </label>
                                     {OwnerFile!=null ? `${OwnerFile.name}` : ''}
                                 </div>
@@ -262,8 +262,8 @@ export default class Form4 extends Component {
                                          Department
                                 </Text>
                                 <div class="button-wrap">
-                                    <label class ="new-button" for="upload"> Upload File
-                                    <input id="upload" name="grid" type="file" onChange={this.handleFileChange}/>
+                                    <label class ="new-button" for='1'> Upload File
+                                    <input id='1' name="LocalFile" type="file" onChange={this.handleFileChange}/>
                                     </label>
                                     {LocalFile!=null ? `${LocalFile.name}` : ''}
                                 </div>

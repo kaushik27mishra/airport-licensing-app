@@ -236,7 +236,11 @@ export default class Form2 extends Component {
         heaviestAircraftWeight_error,
         heaviestAircraftWidth,
         heaviestAircraftWidth_defect,
-        heaviestAircraftWidth_error} = this.state;
+        heaviestAircraftWidth_error,
+        usage,
+        onlyYourAircraft,
+        priorPermissionForOtherAircraft,
+        allWeatherRequired,} = this.state;
 
         var MUTATION;
         if(data) {

@@ -85,7 +85,7 @@ export default class DGCAForm extends Component {
                     rightsIfNotOver:{
                         data: form3.rightsIfNotOver.data,
                         suggestion: form3.rightsIfNotOver.suggestion,
-                        checked: Form3.rightsIfNotOver.checked
+                        checked: form3.rightsIfNotOver.checked
                     },
                     owner: form3.owner,
                     startPeriod: form3.owner,

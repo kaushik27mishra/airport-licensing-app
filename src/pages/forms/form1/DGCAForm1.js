@@ -444,7 +444,7 @@ export default class DGCAForm extends Component {
                                                 placeName: placeName,
                                                 state: state,
                                                 situation: situation,
-                                                city: city,
+                                               // city: city,
                                                 owner: owner,///Please Check this once
                                                 grid: grid,
                                                 lat: latitude,
