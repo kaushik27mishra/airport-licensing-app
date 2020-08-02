@@ -5,6 +5,7 @@ import { Text, PrimaryButton, Stack, DefaultButton } from 'office-ui-fabric-reac
 import { Card } from '@uifabric/react-cards';
 import { mergeStyleSets } from 'office-ui-fabric-react/lib/Styling';
 import DGCAChecklist from '../../../components/form/DGCAChecklist';
+import { Dropdown } from 'office-ui-fabric-react/lib/Dropdown';
 
 //style
 import '../style.css'
@@ -66,6 +67,12 @@ export default class DGCAForm extends Component {
         })
     }
 
+    statusOptions = [
+        { key: 'Submitted', text: 'Submitted',},
+        { key: 'Edited', text: 'Edited' },
+        { key: 'NotAproved', text: 'Not Approved' },
+        { key: 'Approved', text: 'Approved' },
+      ];
 
     render() {
         const { otherInfo, } = this.state;
@@ -90,6 +97,18 @@ export default class DGCAForm extends Component {
                                             handleChange={this.handleOtherInfoValueChange} 
                                             onChange={this.handleOtherInfoCheckboxChange}
                                         />
+                                        <tr>
+                                            <td style={{maxWidth:"150px"}}>
+                                                <Text variant={'large'}>Approval Status</Text>
+                                            </td>
+                                            <td>
+                                            <Dropdown
+                                                    placeholder="Select Status"
+                                                    options={this.statusOptions}
+                                                    onChange={(e,i) => this.setState({status: i.key})}
+                                                    />
+                                            </td>
+                                        </tr>
                                     </tbody>
                                 </table>
                                 <Stack horizontal tokens={stackTokens}>

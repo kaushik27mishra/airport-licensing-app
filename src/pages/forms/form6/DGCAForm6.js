@@ -5,6 +5,7 @@ import { Text, PrimaryButton, Stack, DefaultButton, Checkbox } from 'office-ui-f
 import { TextField} from 'office-ui-fabric-react/lib/TextField';
 import { Card } from '@uifabric/react-cards';
 import { mergeStyleSets } from 'office-ui-fabric-react/lib/Styling';
+import { Dropdown } from 'office-ui-fabric-react/lib/Dropdown';
 
 //style
 import '../style.css'
@@ -44,7 +45,8 @@ export default class DGCAForm extends Component {
                 checked:false
             },
             enclosed: true,
-            indicateDGCA: "soon"
+            indicateDGCA: "soon",
+            status: "Submitted"
 
         }
     }
@@ -68,6 +70,12 @@ export default class DGCAForm extends Component {
         })
     }
 
+    statusOptions = [
+        { key: 'Submitted', text: 'Submitted',},
+        { key: 'Edited', text: 'Edited' },
+        { key: 'NotAproved', text: 'Not Approved' },
+        { key: 'Approved', text: 'Approved' },
+      ];
 
     render() {
         const { indicateDGCA, enclosed, manual } = this.state;
@@ -126,6 +134,18 @@ export default class DGCAForm extends Component {
                                             </td>
                                             <td>
                                                 <Text variant={'large'}><em>{indicateDGCA}</em></Text>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style={{maxWidth:"150px"}}>
+                                                <Text variant={'large'}>Approval Status</Text>
+                                            </td>
+                                            <td>
+                                            <Dropdown
+                                                    placeholder="Select Status"
+                                                    options={this.statusOptions}
+                                                    onChange={(e,i) => this.setState({status: i.key})}
+                                                    />
                                             </td>
                                         </tr>
                                     </tbody>

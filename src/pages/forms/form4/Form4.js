@@ -85,14 +85,6 @@ const receiveIcon = (status) =>
       }
   }
 
-  const icon = {
-    fontSize: 24,
-    padding: 15,
-    verticalAlign: 'middle',
-    paddingLeft: 0,
-    color: '#0078d4'
-  }
-
 export default class Form4 extends Component {
     constructor(props) {
         super(props)

@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react'
+/*import React, { Component, Fragment } from 'react'
 
 
 //ui
@@ -319,7 +319,7 @@ export default class Form5 extends Component {
                                 <Text variant={'large'} >Board Member/ Managing Director or person having specific responsibility for safety.
                                     <em>(To be completed only where the applicant is a company/ corporate/society)</em>
                                 </Text>
-                                {/*Email phone address to be added in person*/}
+                                {/*Email phone address to be added in person
                                 <TextField 
                                     label="Name"
                                     name="managingDirectorName"
@@ -352,7 +352,7 @@ export default class Form5 extends Component {
                                     errorMessage={managingDirectorTelephone_error} 
                                     disabled={managingDirectorTelephone_defect}
                                 />
-                                {/*Email phone address to be added in person*/}
+
                                 <br/>
                                 <br/>
                                 <Text variant={'large'} >The person in charge of day to day operation of aerodrome.</Text>
@@ -395,11 +395,11 @@ export default class Form5 extends Component {
                                     </label>
                                     {daytoDayInchargeCV!=null ? `${daytoDayInchargeCV.name}` : ''}
                                 </div>
-                                {/*<ActionButton iconProps={addIcon} allowDisabledFocus><em>Add CV</em></ActionButton>*/}
-                                {/*Email phone address to be added in person*/}
+                                <ActionButton iconProps={addIcon} allowDisabledFocus><em>Add CV</em></ActionButton>
+                                Email phone address to be added in person
                                 <br/>
                                 <br/>
-                                <Text variant={'large'} >The person responsible for Aerodrome Safety.</Text>{/*Update dynamically */}
+                                <Text variant={'large'} >The person responsible for Aerodrome Safety.</Text>{/*Update dynamically 
                                 <TextField
                                     label="Name"
                                     name="aerodromeSafetyName"
@@ -448,7 +448,7 @@ export default class Form5 extends Component {
                                         </Text> 
                                        {/*} <ActionButton //to be added in db
                                             iconProps={addIcon} allowDisabledFocus><em>Add CV</em>
-                                </ActionButton>*/}
+                                </ActionButton>
                                         <div class="button-wrap">
                                             <label class ="new-button" for="upload"> Upload File
                                             <input id="upload" name="aerodromeSafetyCV" type="file" onChange={this.handleFileChange}/>
@@ -459,7 +459,7 @@ export default class Form5 extends Component {
                                     </Fragment> : null
                                 }
                                 
-                                {/*Email phone address to be added in person*/}
+                                {/*Email phone address to be added in person
                                 <br/>
                                 <br/>
                                 <Text variant={'large'} >Provider of the CNS - ATM</Text>
@@ -484,10 +484,10 @@ export default class Form5 extends Component {
                                     handleChange={(e) => this.handleAdressChange('providerCNSATMAddress',e)} 
                                     handleAdressStateChange={(e,item) => this.handleAdressStateChange('providerCNSATMAddress',e,item)} 
                                     address={providerCNSATMAddress}/>
-                                {/*<TextField label="Address" /> Address Field*/}
+                                {/*<TextField label="Address" /> Address Field
                                 <br/>
                                 <br/>
-                                {/*Email phone address to be added in person*/}
+                                {/*Email phone address to be added in person
                                 <Text variant={'large'} >Provider of the MET services</Text>
                                 <TextField
                                     label="Name"
@@ -510,10 +510,10 @@ export default class Form5 extends Component {
                                     handleChange={(e) => this.handleAdressChange('providerMETAddress',e)} 
                                     handleAdressStateChange={(e,item) => this.handleAdressStateChange('providerMETAddress',e,item)} 
                                     address={providerMETAddress}/>
-                                {/*<TextField label="Address" />   Address Field*/}
+                                {/*<TextField label="Address" />   Address Field
                                 <br/>
                                 <br/>
-                                {/*Email phone address to be added in person*/}
+                                {/*Email phone address to be added in person
                                 <Text variant={'large'} >The person responsible for overseeing the day to day provisions of the Air Traffic Management</Text>
                                 <TextField 
                                     label="Name"
@@ -549,7 +549,7 @@ export default class Form5 extends Component {
                                 />
                                 <br/>
                                 <br/>
-                                {/*Email phone address to be added in person*/}
+                                {/*Email phone address to be added in person
                                 <Text variant={'large'} >The person responsible for overseeing the day to day provisions of CNS</Text>
                                 <TextField 
                                     label="Name"
@@ -585,7 +585,7 @@ export default class Form5 extends Component {
                                 />
                                 <br/>
                                 <br/>
-                                {/*Email phone address to be added in person*/}
+                                {/*Email phone address to be added in person
                                 <Text variant={'large'} >The person responsible for overseeing the day to day provisions of RFF</Text>
                                 <TextField 
                                     label="Name"
@@ -621,7 +621,7 @@ export default class Form5 extends Component {
                                 />
                                 <br/>
                                 <br/>
-                                {/*Email phone address to be added in person*/}
+                                {/*Email phone address to be added in person
                                 <Text variant={'large'} >The person responsible for overseeing the day to day provisions of MET services</Text>
                                 <TextField 
                                     label="Name"
@@ -665,4 +665,4 @@ export default class Form5 extends Component {
             </div>
         )
     }
-}
+}*/
