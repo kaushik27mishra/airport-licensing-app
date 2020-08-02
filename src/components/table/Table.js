@@ -26,14 +26,22 @@ const Table = (props) => {
               if(loading) return`Loading`
               if(error) return `error`
               console.log(data);
-              return (
+              if(data.licenses.length!==0) {
+                return (
                   <DetailsList
                       items={data.licenses.map(i => ({ id: i.id ,airport: i.aerodrome.placeName, city: i.aerodrome.city, state: i.aerodrome.state, owner: i.aerodrome.owner.name, status: i.status}))}
                       columns={columns}
                       onItemInvoked={onItemInvoked}
                       selectionMode={0}
                   />
-              )
+                )
+              }
+              else {
+                return (
+                  <h1>Currently no licenses</h1>
+                )
+              }
+
               }
           }
           </Query>

@@ -240,7 +240,11 @@ export default class Form2 extends Component {
         heaviestAircraftWeight_error,
         heaviestAircraftWidth,
         heaviestAircraftWidth_defect,
-        heaviestAircraftWidth_error} = this.state;
+        heaviestAircraftWidth_error,
+        usage,
+        onlyYourAircraft,
+        priorPermissionForOtherAircraft,
+        allWeatherRequired,} = this.state;
 
         var MUTATION;
         if(data) {
@@ -430,7 +434,6 @@ export default class Form2 extends Component {
                                             })
                                           }
                                           else {
-                                            // saare variables except defect and error
                                             form2function({ variables: {
                                                 id: this.props.match.params.id,  
                                                 usage: usage,
@@ -446,8 +449,11 @@ export default class Form2 extends Component {
                                                 heaviestWeight: heaviestAircraftWeight,
                                                 heaviestLength: heaviestAircraftLength,
                                                 heaviestWidth: heaviestAircraftWidth,
-                                        }})}} }
-                                        text="Next" allowDisabledFocus />
+                                          }})
+                                      }
+                                      }}
+                                        text="Next" 
+                                        allowDisabledFocus />
                                     </Stack>              
                             </Card.Section>
                         </Card>

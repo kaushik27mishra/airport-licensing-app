@@ -18,6 +18,7 @@ import {roleHandler}  from "../../utils/roleHandler";
 //page
 import TableRO from '../../components/table/TableRO';
 import TableOperator from '../../components/table/TableOperator';
+import TableMinsitry from '../../components/table/TableMinistry'
 
 const classNames = mergeStyleSets({
     pivot: {
@@ -61,7 +62,7 @@ class Dashboard extends Component {
     }
 
     render (){
-        console.log(this.props.userRole.id);
+        console.log(this.props.userRole.role);
         switch(this.props.userRole.role){
             case "DGCA" : return(
                 <>  
@@ -157,13 +158,13 @@ class Dashboard extends Component {
                                                 'data-order': 1,
                                                 }}
                                             >
-                                                <TableRO/>
+                                                <TableRO history={this.props.history}/>
                                             </PivotItem>
                                             <PivotItem headerText="Completed Applications">
-                                                <TableRO/>
+                                                <TableRO history={this.props.history}/>
                                             </PivotItem>
                                             <PivotItem headerText="Ongoing Applications">
-                                                <TableRO/>
+                                                <TableRO history={this.props.history}/>
                                             </PivotItem>
                                         </Pivot>
                                     </Card.Item>
@@ -173,6 +174,41 @@ class Dashboard extends Component {
                     </div>
                 </>
             )
+            case "DefenceMinistry" : 
+            case "HomeMinistry" :
+                return (
+                    <>
+                        <div className="ms-Grid-row">
+                            <CardsSection/>
+                        </div>
+                        <div className="ms-Grid-row">
+                            <div className={`s-Grid-col ms-sm9 ms-xl9 ${classNames.pivot}`}>
+                                <Card styles={styles.cardStyles}>
+                                    <Card.Section>
+                                        <Card.Item>
+                                            <Pivot styles={styles.pivotStyles}>
+                                                <PivotItem
+                                                    headerText="All Applications"
+                                                    headerButtonProps={{
+                                                    'data-order': 1,
+                                                    }}
+                                                >
+                                                    <TableMinsitry role={this.props.userRole.role} />
+                                                </PivotItem>
+                                                <PivotItem headerText="Completed Applications">
+                                                    <TableMinsitry role={this.props.userRole.role} />
+                                                </PivotItem>
+                                                <PivotItem headerText="Ongoing Applications">
+                                                    <TableMinsitry role={this.props.userRole.role} />
+                                                </PivotItem>
+                                            </Pivot>
+                                        </Card.Item>
+                                    </Card.Section>
+                                </Card>
+                            </div>
+                        </div>
+                    </>
+                )
             default: return(
                 <h1>Loading...</h1>
             )

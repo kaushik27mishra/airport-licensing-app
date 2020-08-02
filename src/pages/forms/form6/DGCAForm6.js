@@ -127,7 +127,7 @@ export default class DGCAForm extends Component {
       ];
 
     render() {
-        const { data, indicateDGCA, enclosed, manual } = this.state;
+        const { data, indicateDGCA, enclosed, manual,status } = this.state;
 
         if(!data)
             return <h1>Form yet to be filled</h1>

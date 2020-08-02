@@ -78,11 +78,12 @@ export class TableRO extends Component {
         }
     }
 
-    aerodromeInspector = (name) => {
-        if(name===null) {
+    aerodromeInspector = (i) => {
+        if(i===null) {
             return 'Unassigned'
         }
-        return this.state.inspectorName
+        console.log(i);
+        return i.name
     }
 
     render() {
@@ -104,11 +105,10 @@ export class TableRO extends Component {
                     {({ loading, error, data}) => {
                             if(loading) return`Loading`
                             if(error) return 'error'
-                            console.log(data);
                             if(data.licenses.length!==0) {
                                 return (
                                     <DetailsList
-                                        items={data.licenses.map(i => ({ id: i.id ,airport: i.aerodrome.placeName, city: i.aerodrome.city, state: i.aerodrome.state, inspector: this.aerodromeInspector(i.inspector.name), owner: i.aerodrome.owner.name, status: i.status}))}
+                                        items={data.licenses.map(i => ({ id: i.id ,airport: i.aerodrome.placeName, city: i.aerodrome.city, state: i.aerodrome.state, inspector: this.aerodromeInspector(i.inspector), owner: i.aerodrome.owner.name, status: i.status}))}
                                         columns={columns}
                                         onItemInvoked={this.onItemInvoked}
                                         selectionMode={0}
@@ -125,7 +125,6 @@ export class TableRO extends Component {
                     {(assignInspector, {loading, error, data}) => {
                     if(loading) return 'loading'
                     if(error) console.log(error);
-                    if(data) console.log(data)
                     return (
                         <Modal
                             onDismiss={this.onDismiss}
