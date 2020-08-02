@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+/*import React, { Component } from 'react'
 
 //ui
 import { Text, PrimaryButton, Stack, DefaultButton, Checkbox } from 'office-ui-fabric-react';
@@ -666,4 +666,4 @@ export default class DGCAForm extends Component {
             </div>
         )
     }
-}
+}*/

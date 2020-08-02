@@ -5,6 +5,7 @@ import { Text, PrimaryButton, Stack, DefaultButton } from 'office-ui-fabric-reac
 import { Card } from '@uifabric/react-cards';
 import { mergeStyleSets } from 'office-ui-fabric-react/lib/Styling';
 import DGCAChecklist from '../../../components/form/DGCAChecklist';
+import { Dropdown } from 'office-ui-fabric-react/lib/Dropdown';
 
 import gql from 'graphql-tag';
 import { Mutation } from '@apollo/react-components';
@@ -50,7 +51,8 @@ export default class DGCAForm extends Component {
             owner: false,
             startPeriod: "19-10-2020",
             endPeriod: "19-10-2120",
-            terminationPeriod: "20-10-2120"
+            terminationPeriod: "20-10-2120",
+            status: "Submitted"
         }
     }
 
@@ -112,7 +114,12 @@ export default class DGCAForm extends Component {
     }
 
     
-
+    statusOptions = [
+        { key: 'Submitted', text: 'Submitted',},
+        { key: 'Edited', text: 'Edited' },
+        { key: 'NotAproved', text: 'Not Approved' },
+        { key: 'Approved', text: 'Approved' },
+      ];
 
     render() {
         const {
@@ -190,6 +197,18 @@ export default class DGCAForm extends Component {
                                                 <Text variant={'large'}>
                                                     <em>{terminationPeriod}</em>
                                                 </Text>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style={{maxWidth:"150px"}}>
+                                                <Text variant={'large'}>Approval Status</Text>
+                                            </td>
+                                            <td>
+                                            <Dropdown
+                                                    placeholder="Select Status"
+                                                    options={this.statusOptions}
+                                                    onChange={(e,i) => this.setState({status: i.key})}
+                                                    />
                                             </td>
                                         </tr>
                                     </tbody>
