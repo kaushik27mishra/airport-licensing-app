@@ -6,6 +6,8 @@ import { PrimaryButton, DefaultButton } from 'office-ui-fabric-react/lib/Button'
 import { Dropdown } from 'office-ui-fabric-react/lib/Dropdown'
 import { mergeStyleSets, Modal, getTheme, FontWeights, Stack } from 'office-ui-fabric-react';
 
+import { Query, gql } from '@apollo/react-components'
+
 //styles
 const theme = getTheme();
 const contentStyles = mergeStyleSets({
@@ -71,7 +73,7 @@ export class TableRO extends Component {
     }
 
     onItemInvoked = (item) => {
-        if(item.assigned==="UnAssigned") {
+        if(item.inspector==="UnAssigned") {
             this.setState({
                 id:item.id,
                 isModalOpen: true
@@ -79,83 +81,51 @@ export class TableRO extends Component {
         }
     }
 
+    aerodromeInspector = (item) => {
+        if(item!=null) {
+            return item.name
+        }
+        else {
+            return 'Unassigned'
+        }
+    }
+
     render() {
         //rows
-    const items = [
-        {
-            id:100,
-            airport: 'Indira Gandhi International Airport',
-            location: 'Delhi',
-            area: '5,106 acres',
-            datefrom: '20-05-2020',
-            dateto: '20-05-2020',
-            assigned: "Assigned"
-        },
-        {
-            id:101,
-            airport: 'Indira Gandhi International Airport',
-            location: 'Delhi',
-            area: '5,106 acres',
-            datefrom: '20-05-2020',
-            dateto: '20-05-2020',
-            assigned: "UnAssigned"
-        },
-        {
-            id:102,
-            airport: 'Indira Gandhi International Airport',
-            location: 'Delhi',
-            area: '5,106 acres',
-            datefrom: '20-05-2020',
-            dateto: '20-05-2020',
-            assigned: "Assigned"
-        },
-        {
-            id:103,
-            airport: 'Indira Gandhi International Airport',
-            location: 'Delhi',
-            area: '5,106 acres',
-            datefrom: '20-05-2020',
-            dateto: '20-05-2020',
-            assigned: "Assigned",
-        },
-        {
-            id:104,
-            airport: 'Indira Gandhi International Airport',
-            location: 'Delhi',
-            area: '5,106 acres',
-            datefrom: '20-05-2020',
-            dateto: '20-05-2020',
-            assigned: "Assigned"
-        }
-    ]
-
         //columns blueprint
     const columns = [
-        { key: 'column1', iconName: 'Airplane' ,name: '  Name', fieldName: 'airport', minWidth: 100, maxWidth: 250, isResizable: true },
-        { key: 'column2', name: 'Location', fieldName: 'location', minWidth: 100, maxWidth: 150, isResizable: true },
-        { key: 'column3', name: 'Area', fieldName: 'area', minWidth: 100, maxWidth: 150, isResizable: true },
-        { key: 'column4', name: 'License From', fieldName: 'datefrom', minWidth: 100, maxWidth: 150, isResizable: true },
-        { key: 'column5', name: 'License To', fieldName: 'dateto', minWidth: 100, maxWidth: 150, isResizable: true },
-        { key: 'column6', name: 'Assigned', fieldName: 'assigned', minWidth: 100, maxWidth: 150, isResizable: true },
+        { key: 'column1', iconName: 'Airplane' ,name: 'Name', fieldName: 'airport', minWidth: 100, maxWidth: 250, isResizable: true },
+        { key: 'column2', name: 'City', fieldName: 'city', minWidth: 100, maxWidth: 150, isResizable: true },
+        { key: 'column3', name: 'State', fieldName: 'state', minWidth: 100, maxWidth: 150, isResizable: true },
+        { key: 'column4', name: 'Owner', fieldName: 'owner', minWidth: 100, maxWidth: 150, isResizable: true },
+        { key: 'column5', name: 'Inspector', fieldName: 'inspector', minWidth: 100, maxWidth: 150, isResizable: true },
+        { key: 'column6', name: 'Status', fieldName: 'status', minWidth: 100, maxWidth: 150, isResizable: true },
     ]
 
-
-    const StateOptions = [
-        { key: 'A', text: 'Option a', title: 'I am option a.' },
-        { key: 'B', text: 'Option b' },
-        { key: 'C', text: 'Option c' },
-        { key: 'D', text: 'Option d' },
-        { key: 'E', text: 'Option e' },
-    ]
 
         return (
             <div>
-                <DetailsList
-                    items={items}
-                    columns={columns}
-                    selectionMode={0}
-                    onItemInvoked={this.onItemInvoked}
-                />
+                <Query query={LIST_OF_LICENSE} variables={{ status: "Waiting_For_Data" }}>
+                    {({ loading, error, data}) => {
+                            if(loading) return`Loading`
+                            if(error) return 'error'
+                            console.log(data);
+                            if(data.licenses.length!==0) {
+                                return (
+                                    <DetailsList
+                                        items={data.licenses.map(i => ({ id: i.id ,airport: i.aerodrome.placeName, city: i.aerodrome.city, state: i.aerodrome.state, inspector: this.inspector(i.aerodrome.inspector), owner: i.aerodrome.owner.name, status: i.status}))}
+                                        columns={columns}
+                                        onItemInvoked={this.onItemInvoked}
+                                        selectionMode={0}
+                                    />
+                                )
+                            }
+                            return (
+                              <h1>No Licenses Pending</h1>
+                            )
+                        }
+                    }
+                </Query>
                 <Modal
                     onDismiss={this.onDismiss}
                     isOpen={this.state.isModalOpen}
@@ -166,12 +136,21 @@ export class TableRO extends Component {
                     </div>
                     <div className={contentStyles.body}>
                     <div style={{paddingTop: "20px",paddingBottom: "30px"}}>
-                        <Dropdown
-                            placeholder="Select"
-                            label="Enter State"
-                            onChange={this.onChange}
-                            options={StateOptions}
-                        />
+                    <Query query={LIST_OF_OPERATORS} variables={{ operator: props.id }}>
+                    {({ loading, error, data}) => {
+                            if(loading) return`Loading`
+                            if(error) return 'error'
+                        return (
+                            <Dropdown
+                                placeholder="Select"
+                                label="Enter State"
+                                onChange={this.onChange}
+                                options={data.users.map((i) =>({key: i.id, text: i.name}))}
+                            />
+                            )
+                        }
+                    }
+                    </Query>
                     </div>
                     <Stack horizontal tokens={stackTokens}>
                         <PrimaryButton text="Assign" onClick={this.assignInspector} allowDisabledFocus />
@@ -180,8 +159,51 @@ export class TableRO extends Component {
                     </div>
                 </Modal>
             </div>
-        )
+            )
     }
 }
 
-export default TableRO
+export default TableRO;
+
+const LIST_OF_LICENSE = gql`
+query Licenses($status: String){
+    licenses(filter: {
+      status: $status
+    }) {
+      id
+      status
+      operator {
+        id
+        name
+      }
+      inspector {
+        id
+        name
+      }
+      aerodrome {
+        placeName
+        state
+        city
+        owner {
+          name
+        }
+      }
+    }
+  }
+  `;
+
+const LIST_OF_OPERATORS = gql`
+query Users($role: Roles){
+	users(role: $role) {
+    id
+    name
+  }    
+}`
+;
+
+const ASSIGN_OPERRATOR = gql`
+mutation AssignInspector($id: String!, $inspectorId: String!) {
+    assignInspector(id: $id, inspectorId: $inspectorId)
+  }
+`;  
+
