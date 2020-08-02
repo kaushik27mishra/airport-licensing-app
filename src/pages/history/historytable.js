@@ -1,41 +1,16 @@
 import React, {Component} from 'react';
 
-import { Text } from 'office-ui-fabric-react';
-import { Card } from '@uifabric/react-cards';
 import { mergeStyleSets } from 'office-ui-fabric-react/lib/Styling';
 
 import { ScrollablePane, ScrollbarVisibility } from 'office-ui-fabric-react/lib/ScrollablePane';
 import { Sticky, StickyPositionType } from 'office-ui-fabric-react/lib/Sticky';
-import { DefaultButton, PrimaryButton, Stack, IStackTokens } from 'office-ui-fabric-react';
+import { PrimaryButton } from 'office-ui-fabric-react';
 
-import ReactJson from 'react-json-view';
 import JSONViewer from 'react-json-viewer';
 
 
 import gql from 'graphql-tag';
-import { Mutation, Query } from '@apollo/react-components';
 import { client } from '../..';
-
-const styles = {
-    wrapper: {
-        height: '80vh',
-        position: 'relative',
-        backgroundColor: 'white',
-      },
-    cardStyles: {
-        root: {
-          background: 'white',
-          paddingTop: 30,
-          paddingLeft: 50,
-          paddingRight: 50,
-          paddingBottom: 50,
-          width: '100%',
-          maxWidth: '100%',
-          margin: 'auto',
-          marginTop: 60,
-        }
-    }
-}
 
 const classNames = mergeStyleSets({
     pivot: {
@@ -104,25 +79,20 @@ class HistoryTablePage extends Component{
             <div>
                 <div className="ms-Grid-row" style={{paddingBottom:'100px'}}>
                     <div className={`s-Grid-col ms-sm9 ms-xl9 ${classNames.pivot}`}>
-                        <Card styles={styles.cardStyles}>
-                            <Card.Section>
                                     {/* <Text variant={'xxLarge'}>History</Text> */}
-                                    <div className={`"ms-Grid"`}>
-                                    <div className={`ms-Grid-row`} style={{minHeight:"80%"}}>
+                        <div className={`"ms-Grid"`}>
+                            <div className={`ms-Grid-row`} style={{minHeight:'700px'}}>
                                     <div className={classNames.wrapper}>
                                         <ScrollablePane scrollbarVisibility={ScrollbarVisibility.auto}>
-                                        <Sticky stickyPosition={StickyPositionType.Header}>
-                                        <h1 className={classNames.header}>History</h1>
-                                        </Sticky>
-                                        <JSONViewer json = {this.state.history_json_array}/>
+                                            <Sticky stickyPosition={StickyPositionType.Header}>
+                                                <h1 className={classNames.header}>History</h1>
+                                                <PrimaryButton text="Switch to List View" allowDisabledFocus />
+                                            </Sticky>
+                                            <JSONViewer json = {this.state.history_json_array}/>
                                         </ScrollablePane>
                                     </div>
-                                    </div>
-                                </div>
-                            </Card.Section>
-                            <PrimaryButton text="Switch to List View" allowDisabledFocus />
-                        </Card>
-                        
+                            </div>
+                        </div>
                     </div>
                     
                 </div>

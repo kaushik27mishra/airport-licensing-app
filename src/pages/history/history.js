@@ -4,16 +4,12 @@ import { Text } from 'office-ui-fabric-react';
 import { Card } from '@uifabric/react-cards';
 import { mergeStyleSets } from 'office-ui-fabric-react/lib/Styling';
 
-import { ScrollablePane, ScrollbarVisibility } from 'office-ui-fabric-react/lib/ScrollablePane';
-import { Sticky, StickyPositionType } from 'office-ui-fabric-react/lib/Sticky';
-import { DefaultButton, PrimaryButton, Stack, IStackTokens } from 'office-ui-fabric-react';
+import {PrimaryButton } from 'office-ui-fabric-react';
 
 import ReactJson from 'react-json-view';
-import JSONViewer from 'react-json-viewer';
 
 
 import gql from 'graphql-tag';
-import { Mutation, Query } from '@apollo/react-components';
 import { client } from '../..';
 
 
