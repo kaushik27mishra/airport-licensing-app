@@ -236,7 +236,11 @@ export default class Form2 extends Component {
         heaviestAircraftWeight_error,
         heaviestAircraftWidth,
         heaviestAircraftWidth_defect,
-        heaviestAircraftWidth_error} = this.state;
+        heaviestAircraftWidth_error,
+        usage,
+        onlyYourAircraft,
+        priorPermissionForOtherAircraft,
+        allWeatherRequired,} = this.state;
 
         var MUTATION;
         if(data) {
@@ -395,16 +399,29 @@ export default class Form2 extends Component {
                                           if(data) {
                                             form2function({ variables: {
                                                 // saare variables including check and error
-                                                id: this.props.match.params.id, 
-                                                // usage: usage,
+                                                usage: usage,
                                                 purposeOfPrivate: purposeOfPrivate,
-                                                // onlyYourAircraft: onlyYourAircraft,
-                                                // priorPermission: priorPermissionForOtherAircraft,
-                                                // allWeatherRequired: allWeatherRequired,
+                                                onlyYourAircraft: onlyYourAircraft,
+                                                priorPermission: priorPermissionForOtherAircraft, 
+                                                allWeatherRequired: allWeatherRequired, 
                                                 lightningPlan: detailsOfProposedLighting,
                                                 cnsAtm: detailsCNS_ATN,
                                                 metFacilities: detailsMET_Facilities,
                                                 aviationActivities: otherAviationActivities,
+                                                heaviestType: heaviestAircraftType,
+                                                heaviestWeight: heaviestAircraftWeight,
+                                                heaviestLength: heaviestAircraftLength,
+                                                heaviestWidth: heaviestAircraftWidth,
+                                                id: this.props.match.params.id, 
+                                                // usage: usage,
+                                                //,
+                                                // onlyYourAircraft: onlyYourAircraft,
+                                                // priorPermission: priorPermissionForOtherAircraft,
+                                                // allWeatherRequired: allWeatherRequired,
+                                               // lightningPlan: detailsOfProposedLighting,
+                                               // cnsAtm: detailsCNS_ATN,
+                                                //metFacilities: detailsMET_Facilities,
+                                                //aviationActivities: otherAviationActivities,
                                                 // heaviestType: ,
                                                 // heaviestWeight: ,
                                                 // heaviestLength: ,
@@ -413,11 +430,24 @@ export default class Form2 extends Component {
                                             })
                                           }
                                           else {
-                                            // saare variables except defect and error
-                                          }
-                                          
-                                        }
-                                        }
+                                            form2function({ variables: {
+                                                id: this.props.match.params.id,  
+                                                usage: usage,
+                                                purposeOfPrivate: purposeOfPrivate,
+                                                onlyYourAircraft: onlyYourAircraft,
+                                                priorPermission: priorPermissionForOtherAircraft,
+                                                allWeatherRequired: allWeatherRequired,
+                                                lightningPlan: detailsOfProposedLighting,
+                                                cnsAtm: detailsCNS_ATN,
+                                                metFacilities: detailsMET_Facilities,
+                                                aviationActivities: otherAviationActivities,
+                                                heaviestType: heaviestAircraftType,
+                                                heaviestWeight: heaviestAircraftWeight,
+                                                heaviestLength: heaviestAircraftLength,
+                                                heaviestWidth: heaviestAircraftWidth,
+                                          }})
+                                      }
+                                      }}
                                         text="Next" 
                                         allowDisabledFocus />
                                     </Stack>              

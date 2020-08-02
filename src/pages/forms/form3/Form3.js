@@ -134,6 +134,7 @@ export default class Form3 extends Component {
             if(form3!==null) {
                 this.setState({
                     data: true,
+                    owner: form3.owner,
                     rightsIfNotOver: form3.rightsIfNotOver.data,
                     rightsIfNotOver_error: form3.rightsIfNotOver.suggestion,
                     rightsIfNotOver_defect: form3.rightsIfNotOver.checked,
@@ -226,8 +227,8 @@ export default class Form3 extends Component {
                                     variant={'xxLarge'} >
                                         Control of the Aerodrome 
                                 </Text>
-                                <ChoiceGroup 
-                                    defaultSelectedKey={true}
+                                <ChoiceGroup
+                                    defaultChecked={owner} 
                                     options={options}
                                     onChange={this._onChangeowner} 
                                     label="Are you the owner of the aerodrome site" 

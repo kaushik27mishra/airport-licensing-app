@@ -81,6 +81,14 @@ export default class DGCAForm extends Component {
                 this.setState({
                   data: true,
                  // saare variables 
+                  manual:{
+                      data: form6.manual.data,
+                      suggestion: form6.manual.suggestion,
+                      checked: form6.manual.checked
+                  },
+                  enclosed: form6.enclosed,
+                  indicateDGCA: form6.indicateDGCA,
+                  status: true //dont know what to add
                 })
             }
             else {
@@ -119,7 +127,7 @@ export default class DGCAForm extends Component {
       ];
 
     render() {
-        const { data, indicateDGCA, enclosed, manual } = this.state;
+        const { data, indicateDGCA, enclosed, manual,status } = this.state;
 
         if(!data)
             return <h1>Form yet to be filled</h1>
@@ -207,6 +215,13 @@ export default class DGCAForm extends Component {
                                             form6funstion({
                                                 variables: {
                                                     //all member including defect and error
+                                                    id: this.props.match.params.id,
+                                                    manual: manual.data,
+                                                    manual_defect: manual.checked,
+                                                    manual_error: manual.suggestion,
+                                                    enclosed: enclosed,
+                                                    indicateDGCA: indicateDGCA,
+                                                    status: status
                                                 }
                                             })
                                             

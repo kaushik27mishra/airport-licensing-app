@@ -82,6 +82,15 @@ export default class DGCAForm extends Component {
                 this.setState({
                     data: true,
                     // state yahan pe update karna padega
+                    rightsIfNotOver:{
+                        data: form3.rightsIfNotOver.data,
+                        suggestion: form3.rightsIfNotOver.suggestion,
+                        checked: form3.rightsIfNotOver.checked
+                    },
+                    owner: form3.owner,
+                    startPeriod: form3.owner,
+                    endPeriod: form3.endPeriod,
+                    terminationPeriod: form3.terminationPeriod
                 })
             }
             else {
@@ -220,6 +229,15 @@ export default class DGCAForm extends Component {
                                             if(data) {
                                                 form3funstion({variables: {
                                                     // saare variables including defect and error
+                                                    id: this.props.match.params.id,
+                                                    owner: owner,
+                                                    rightsIfNotOver: rightsIfNotOver.data,
+                                                    rightsIfNotOver_defect: rightsIfNotOver.checked,
+                                                    rightsIfNotOver_error: rightsIfNotOver.suggestion,
+                                                    startPeriod: startPeriod,
+                                                    terminationPeriod: terminationPeriod,
+                                                    endPeriod: endPeriod,
+                                                    status: true //Dont know what to add
                                                 }})
                                             }
                                         }}  
