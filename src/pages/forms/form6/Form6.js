@@ -86,6 +86,11 @@ export default class Form6 extends Component {
                 this.setState({
                   data: true,
                  // saare variables 
+                 manualEnclosed:form6.enclosed,
+                 dateToBeSubmitted: "",
+                 dateToBeSubmitted_error:"",
+                 dateToBeSubmitted_defect: true,
+                 aerodromeManual: true,
                 })
             }
             else {
@@ -186,6 +191,10 @@ export default class Form6 extends Component {
                                                             form6funstion({
                                                                 variables: {
                                                                     //all member including defect and error
+                                                                    id: this.props.match.params.id,
+                                                                    manual: aerodromeManual,
+                                                                    enclosed: manualEnclosed,
+                                                                    //indicateDGCA: ///Dont Know,
                                                                 }
                                                             })
                                                         }
@@ -193,6 +202,12 @@ export default class Form6 extends Component {
                                                             form6funstion({
                                                                 variables: {
                                                                     //all member excluding defect and error
+                                                                    id: this.props.match.params.id,
+                                                                    manual: aerodromeManual,
+                                                                    //manual_defect: manua
+                                                                    //manual_error: String
+                                                                    //enclosed: manualEnclosed
+                                                                    //indicateDGCA: String
                                                                 }
                                                             })
                                                         }

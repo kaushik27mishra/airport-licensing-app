@@ -127,7 +127,21 @@ export default class Form7 extends Component {
             if(form7!==null) {
                 this.setState({
                   data: true,
-                 // saare variables 
+                 // saare variables
+                 check:"", 
+                 challanNo: form7.challanNo,
+                 challanNo_error: "",
+                 challanNo_defect: true,
+                 amount:form7.amount,
+                 amount_error: "",
+                 amount_defect: true,
+                 calculationSheet: form7.calculationSheet.data,
+                 nameOfDraweeBank: form7.nameOfDraweeBank,
+                 nameOfDraweeBank_error: "",
+                 nameOfDraweeBank_defect: true,
+                 dateOfDraweeBank: form7.dateofChallan,
+                 dateOfDraweeBank_defect:true,
+                 dateOfDraweeBank_error:"",
                 })
             }
             else {
@@ -262,6 +276,12 @@ export default class Form7 extends Component {
                                                             form7Function({
                                                                 variables: {
                                                                     // saare variables
+                                                                    id: this.props.match.params.id,
+                                                                    challanNo: challanNo,
+                                                                    amount : amount,
+                                                                    calculationSheet: calculationSheet,
+                                                                    nameofDraweeBank: nameOfDraweeBank,
+                                                                    dateOfChallan: dateOfDraweeBank
                                                                 }
                                                             })
                                                         }
@@ -269,6 +289,14 @@ export default class Form7 extends Component {
                                                             form7Function({
                                                                 variables: {
                                                                     // saare variables except check and defect
+                                                                    id: this.props.match.params.id,
+                                                                    challanNo: challanNo,
+                                                                    amount: amount,
+                                                                    calculationSheet: calculationSheet,
+                                                                    calculationSheet_defect: calculationSheet_defect,
+                                                                    calculationSheet_error: calculationSheet_error,
+                                                                    nameofDraweeBank: nameOfDraweeBank,
+                                                                    dateOfChallan: dateOfDraweeBank
                                                                 }
                                                             })
                                                         }
