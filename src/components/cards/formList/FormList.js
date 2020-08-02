@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 //ui
-import { Text, initializeIcons } from '@fluentui/react';
+import { Text, initializeIcons, PrimaryButton, Stack } from '@fluentui/react';
 import { Card } from '@uifabric/react-cards';
 import { Dropdown } from 'office-ui-fabric-react/lib/Dropdown';
 
@@ -145,6 +145,8 @@ const CardsSection = (props) => {
     { key: 'Waiting_For_Data', text: 'More data is required in this form' },
   ];
 
+  const stackTokens = { childrenGap: 20 };
+
   const { id } = useParams();
   return (
       <>
@@ -239,12 +241,6 @@ const CardsSection = (props) => {
                 </Card.Section>
             </Card>
             <br/>
-            <Dropdown
-              placeholder="What is the status of this application?"
-              label="Select an option"
-              options={statusOptions}
-              onChange={(e,i) => this.setStatus({status: i.key})}
-          />
             </div>
         ))}
         <br/>  
@@ -293,20 +289,24 @@ const CardsSection = (props) => {
                 
                 </Card.Section>
             </Card>
-            {props.userRole.role=="DGCA"?
-              <>
-                <Dropdown
-                  placeholder="do you approve this application?"
-                  label="Select an option"
-                  options={statusOptions}
-                  onChange={(e,i) => this.setState({owner: i.key})}
-                />
-              </>:null}
             <br/>
             </div>
         ))}
-        <br/>  
         </div>
+
+        <Stack style={{marginLeft:'800px'}} horizontal tokens={stackTokens}>
+          {props.userRole.role==="DGCA"?
+                <>
+                  <Dropdown
+                    placeholder="Do you approve this application?"
+                    label="Select an option"
+                    options={statusOptions}
+                    onChange={(e,i) => this.setState({owner: i.key})}
+                  />
+                </>:null}         
+          <PrimaryButton text="Submit" allowDisabledFocus/>
+        </Stack>
+              <br/>
       </>
     
   )
