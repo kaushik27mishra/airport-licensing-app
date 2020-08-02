@@ -18,6 +18,7 @@ const roles = [
     { key: 'Operator', text: 'Operator' },
     { key: 'Owner', text: 'Owner' },
     { key: 'DGCA', text: 'DGCA' },
+    { key: 'RegionalOfficeHead', text: 'RegionalOfficeHead' },
 ]
 
 const styles = {

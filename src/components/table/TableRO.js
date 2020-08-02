@@ -6,7 +6,7 @@ import { PrimaryButton, DefaultButton } from 'office-ui-fabric-react/lib/Button'
 import { Dropdown } from 'office-ui-fabric-react/lib/Dropdown'
 import { mergeStyleSets, Modal, getTheme, FontWeights, Stack } from 'office-ui-fabric-react';
 
-import { Query, gql } from '@apollo/react-components'
+import { Query, gql, Mutation } from '@apollo/react-components'
 
 //styles
 const theme = getTheme();
@@ -50,20 +50,17 @@ export class TableRO extends Component {
         this.state = {
             isModalOpen: false,          
             id:"",
-            name:"",
+            inspectorId: "",
+            inspectorName:"",
 
         }
     }
 
     onChange = (event,option) => {
         this.setState({
-            name:option.key
+            inspectorId: option.key,
+            inspectorName: option.name
         })
-    }
-
-    assignInspector = () => {
-        console.log(this.state);
-        this.onDismiss();
     }
 
     onDismiss = () => {
@@ -73,21 +70,19 @@ export class TableRO extends Component {
     }
 
     onItemInvoked = (item) => {
-        if(item.inspector==="UnAssigned") {
+        if(item.inspector==="Unassigned") {
             this.setState({
-                id:item.id,
+                id: item.id,
                 isModalOpen: true
             })
         }
     }
 
-    aerodromeInspector = (item) => {
-        if(item!=null) {
-            return item.name
-        }
-        else {
+    aerodromeInspector = (name) => {
+        if(name===null) {
             return 'Unassigned'
         }
+        return this.state.inspectorName
     }
 
     render() {
@@ -113,7 +108,7 @@ export class TableRO extends Component {
                             if(data.licenses.length!==0) {
                                 return (
                                     <DetailsList
-                                        items={data.licenses.map(i => ({ id: i.id ,airport: i.aerodrome.placeName, city: i.aerodrome.city, state: i.aerodrome.state, inspector: this.inspector(i.aerodrome.inspector), owner: i.aerodrome.owner.name, status: i.status}))}
+                                        items={data.licenses.map(i => ({ id: i.id ,airport: i.aerodrome.placeName, city: i.aerodrome.city, state: i.aerodrome.state, inspector: this.aerodromeInspector(i.inspector.name), owner: i.aerodrome.owner.name, status: i.status}))}
                                         columns={columns}
                                         onItemInvoked={this.onItemInvoked}
                                         selectionMode={0}
@@ -126,38 +121,52 @@ export class TableRO extends Component {
                         }
                     }
                 </Query>
-                <Modal
-                    onDismiss={this.onDismiss}
-                    isOpen={this.state.isModalOpen}
-                    containerClassName={contentStyles.container}
-                >
-                    <div className={contentStyles.header}>
-                        <span>Select Inspector</span>
-                    </div>
-                    <div className={contentStyles.body}>
-                    <div style={{paddingTop: "20px",paddingBottom: "30px"}}>
-                    <Query query={LIST_OF_OPERATORS} variables={{ operator: props.id }}>
-                    {({ loading, error, data}) => {
-                            if(loading) return`Loading`
-                            if(error) return 'error'
-                        return (
-                            <Dropdown
-                                placeholder="Select"
-                                label="Enter State"
-                                onChange={this.onChange}
-                                options={data.users.map((i) =>({key: i.id, text: i.name}))}
-                            />
-                            )
+                <Mutation mutation={ASSIGN_INSCPECTOR}>
+                    {(assignInspector, {loading, error, data}) => {
+                    if(loading) return 'loading'
+                    if(error) console.log(error);
+                    if(data) console.log(data)
+                    return (
+                        <Modal
+                            onDismiss={this.onDismiss}
+                            isOpen={this.state.isModalOpen}
+                            containerClassName={contentStyles.container}
+                        >
+                        <div className={contentStyles.header}>
+                            <span>Select Inspector</span>
+                        </div>
+                        <div className={contentStyles.body}>
+                        <div style={{paddingTop: "20px",paddingBottom: "30px"}}>
+                        <Query query={LIST_OF_INSPECTOR} variables={{ role: "AerodromeInspector" }}>
+                        {({ loading, error, data}) => {
+                                if(loading) return`Loading`
+                                if(error) return 'error'
+                            return (
+                                <Dropdown
+                                    placeholder="Select"
+                                    label="Enter Inspector"
+                                    onChange={this.onChange}
+                                    options={data.users.map((i) =>({key: i.id, text: i.name}))}
+                                />
+                                )
+                            }
                         }
-                    }
-                    </Query>
-                    </div>
-                    <Stack horizontal tokens={stackTokens}>
-                        <PrimaryButton text="Assign" onClick={this.assignInspector} allowDisabledFocus />
-                        <DefaultButton text="Close" onClick={this.onDismiss} allowDisabledFocus />
-                    </Stack>
-                    </div>
-                </Modal>
+                        </Query>
+                        </div>
+                        <Stack horizontal tokens={stackTokens}>
+                            <PrimaryButton 
+                                text="Assign" 
+                                onClick={() => {
+                                    assignInspector({ variables: { id: this.state.id, inspectorId: this.state.inspectorId }})
+                                }} 
+                                allowDisabledFocus />
+                            <DefaultButton text="Close" onClick={this.onDismiss} allowDisabledFocus />
+                        </Stack>
+                        </div>
+                    </Modal>
+                    );
+                }}
+                </Mutation>
             </div>
             )
     }
@@ -192,7 +201,7 @@ query Licenses($status: String){
   }
   `;
 
-const LIST_OF_OPERATORS = gql`
+const LIST_OF_INSPECTOR = gql`
 query Users($role: Roles){
 	users(role: $role) {
     id
@@ -201,7 +210,7 @@ query Users($role: Roles){
 }`
 ;
 
-const ASSIGN_OPERRATOR = gql`
+const ASSIGN_INSCPECTOR = gql`
 mutation AssignInspector($id: String!, $inspectorId: String!) {
     assignInspector(id: $id, inspectorId: $inspectorId)
   }
