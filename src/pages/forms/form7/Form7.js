@@ -198,6 +198,8 @@ export default class Form7 extends Component {
              amount_error,
              amount_defect,
              calculationSheet,
+             calculationSheet_defect,
+             calculationSheet_error,
              nameOfDraweeBank,
              nameOfDraweeBank_error,
              nameOfDraweeBank_defect,
