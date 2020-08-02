@@ -113,7 +113,6 @@ function LayoutDGCA() {
     <Switch>
       <Route path={'/app/dgca/license/:id/history'} component={HistoryListPage}/> 
       <Route path={'/app/dgca/license/:id/historytable'} component={HistoryTablePage}/> 
-
       <Route path={`/app/dgca/license/:id/form/aerodrome_detail_form`} component={DGCAForm1} />
       <Route path={`/app/dgca/license/:id/form/aerodrome_activities`} component={DGCAForm2} />
       <Route path={`/app/dgca/license/:id/form/control_of_aerodrome`} component={DGCAForm3} />
