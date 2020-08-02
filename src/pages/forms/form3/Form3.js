@@ -300,7 +300,7 @@ export default class Form3 extends Component {
                                             if(data) {
                                                 form3funstion({variables: {
                                                     id: this.props.match.params.id,
-                                                    owner: owner,
+                                                    //owner: owner,
                                                     rightsIfNotOver: rightsIfNotOver ,
                                                     startPeriod: startingPeriod ,
                                                     terminationPeriod: termination,
@@ -310,7 +310,7 @@ export default class Form3 extends Component {
                                             else {
                                                 form3funstion({variables: {
                                                     id: this.props.match.params.id,
-                                                    owner: owner,
+                                                   // owner: owner,
                                                     rightsIfNotOver: rightsIfNotOver,
                                                     rightsIfNotOver_defect: rightsIfNotOver_defect,
                                                     rightsIfNotOver_error: rightsIfNotOver_error,
