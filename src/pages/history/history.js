@@ -151,7 +151,7 @@ class HistoryListPage extends Component{
                                     </div>
                                 </div>
                             </Card.Section>
-                            <PrimaryButton text="Switch to Tabular View" allowDisabledFocus />
+                            <PrimaryButton text="Switch to Tabular View" allowDisabledFocus/>
                         </Card>
                     </div>
                     
