@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios'
 
 //ui
 import { Text, initializeIcons, PrimaryButton } from '@fluentui/react';
@@ -11,7 +10,8 @@ import { roleHandler } from '../../../utils/roleHandler'
 
 import { useParams } from 'react-router-dom'
 import { gql } from '@apollo/react-hooks';
-import { Mutation, Query } from '@apollo/react-components';
+import { Mutation } from '@apollo/react-components';
+import Download from '../../Download';
 
 const container = {
   display: 'flex',
@@ -153,11 +153,6 @@ const CardsSection = (props) => {
     { key: 'Waiting_for_misitries_approval', text: 'Waiting_for_misitries_approval' },
     { key: 'Waiting_For_Data', text: 'Waiting_For_Data' },
   ];
-
-  const file = async (url) => {
-    const data = await axios.get(url);
-    return data.data;
-  };
 
   const { id } = useParams();
   return (
@@ -354,26 +349,10 @@ const CardsSection = (props) => {
               )}}
               </Mutation>
             :null}
-             <div className="ms-Grid-row">
-              <div className="s-Grid-col ms-sm3 ms-xl3">
-                <Query query={LICENSE} variables={{id: id, exipryYears: 2022}}>
-                  {({loading,data,error}) => {
-                    if(loading) return 'loading'
-                    if(error) return console.log(error);
-
-                      var download = file(data.generateLicense.license)  
-                      return(
-                        <td style={{textAlign:"center",paddingLeft:'550px'}}>
-                            <a download="Doc.pdf" href={`data:application/pdf;base64,${download}`}>Dowload now</a>
-                        </td>
-                      )
-                    }
-                  }
-                </Query>         
-              </div>
-            </div>
+            <Download id={id}/>
           </div>
         </div>
+
       </>
     
   )
@@ -387,10 +366,3 @@ mutation UpdateStatus($id: String!, $status: LicenseStatus!) {
 }
 `;
 
-const LICENSE=gql`
-query generateLicense($id: String!,$expiryYears: Int) {
-	generateLicense(id:$id,expiryYears:$expiryYears) {
-    license
-  }
-}
-`;
