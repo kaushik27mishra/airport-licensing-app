@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import Loader from "../../components/loader/Loader"
 
 // components
 import CardsSection from '../../components/cards/Cards'
@@ -18,6 +19,7 @@ import {roleHandler}  from "../../utils/roleHandler";
 //page
 import TableRO from '../../components/table/TableRO';
 import TableOperator from '../../components/table/TableOperator';
+import TableMinsitry from '../../components/table/TableMinistry'
 
 const classNames = mergeStyleSets({
     pivot: {
@@ -61,6 +63,7 @@ class Dashboard extends Component {
     }
 
     render (){
+        console.log(this.props.userRole.role);
         switch(this.props.userRole.role){
             case "DGCA" : return(
                 <>  
@@ -73,19 +76,14 @@ class Dashboard extends Component {
                             <Card.Section>
                                 <Card.Item>
                                     <Pivot styles={styles.pivotStyles}>
-                                        <PivotItem
-                                            headerText="All Applications"
-                                            headerButtonProps={{
-                                              'data-order': 1,
-                                            }}
-                                        >
-                                            <Table history={this.props.history} />
+                                        <PivotItem headerText="Ongoing Applications">
+                                            <Table status="Waiting_For_Data" history={this.props.history} />
+                                        </PivotItem>
+                                        <PivotItem headerText="Ministry Approvals">
+                                            <Table status="Waiting_for_misitries_approval" history={this.props.history} />
                                         </PivotItem>
                                         <PivotItem headerText="Completed Applications">
-                                            <Table history={this.props.history} />
-                                        </PivotItem>
-                                        <PivotItem headerText="Ongoing Applications">
-                                            <Table history={this.props.history} />
+                                            <Table status="Approved" history={this.props.history} />
                                         </PivotItem>
                                     </Pivot>
                                 </Card.Item>
@@ -99,19 +97,11 @@ class Dashboard extends Component {
                             <Card.Section>
                                 <Card.Item>
                                     <Pivot styles={styles.pivotStyles}>
-                                        <PivotItem
-                                            headerText="All Applications"
-                                            headerButtonProps={{
-                                              'data-order': 1,
-                                            }}
-                                        >
-                                            <Table history={this.props.history} />
+                                        <PivotItem headerText="Inspector Assigned">
+                                            <Table status="UnderInspection" history={this.props.history} />
                                         </PivotItem>
-                                        <PivotItem headerText="Completed Applications">
-                                            <Table history={this.props.history} />
-                                        </PivotItem>
-                                        <PivotItem headerText="Ongoing Applications">
-                                            <Table history={this.props.history} />
+                                        <PivotItem headerText="Inspector Unassigned">
+                                            <Table status="Waiting_For_Data" history={this.props.history} />
                                         </PivotItem>
                                     </Pivot>
                                 </Card.Item>
@@ -151,18 +141,18 @@ class Dashboard extends Component {
                                     <Card.Item>
                                         <Pivot styles={styles.pivotStyles}>
                                             <PivotItem
-                                                headerText="All Applications"
+                                                headerText="Under Inspection"
                                                 headerButtonProps={{
                                                 'data-order': 1,
                                                 }}
                                             >
-                                                <TableRO/>
+                                                <TableRO status="UnderInspection" history={this.props.history}/>
                                             </PivotItem>
                                             <PivotItem headerText="Completed Applications">
-                                                <TableRO/>
+                                                <TableRO status="UnderInspection" history={this.props.history}/>
                                             </PivotItem>
-                                            <PivotItem headerText="Ongoing Applications">
-                                                <TableRO/>
+                                            <PivotItem  status="Waiting_For_Data" headerText="Ongoing Applications">
+                                                <TableRO history={this.props.history}/>
                                             </PivotItem>
                                         </Pivot>
                                     </Card.Item>
@@ -172,8 +162,35 @@ class Dashboard extends Component {
                     </div>
                 </>
             )
+            case "DefenceMinistry" : 
+            case "HomeMinistry" :
+                return (
+                    <>
+                        <div className="ms-Grid-row">
+                            <CardsSection/>
+                        </div>
+                        <div className="ms-Grid-row">
+                            <div className={`s-Grid-col ms-sm9 ms-xl9 ${classNames.pivot}`}>
+                                <Card styles={styles.cardStyles}>
+                                    <Card.Section>
+                                        <Card.Item>
+                                            <Pivot styles={styles.pivotStyles}>
+                                                <PivotItem headerText="Ongoing Applications">
+                                                    <TableMinsitry status="Waiting_for_misitries_approval" role={this.props.userRole.role} />
+                                                </PivotItem>
+                                                <PivotItem headerText="Completed Applications">
+                                                    <TableMinsitry status="Approved" role={this.props.userRole.role} />
+                                                </PivotItem>
+                                            </Pivot>
+                                        </Card.Item>
+                                    </Card.Section>
+                                </Card>
+                            </div>
+                        </div>
+                    </>
+                )
             default: return(
-                <h1>Loading...</h1>
+                <Loader/>
             )
         }
             

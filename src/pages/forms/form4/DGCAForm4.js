@@ -5,12 +5,13 @@ import { Text, PrimaryButton, Stack, DefaultButton, initializeIcons } from 'offi
 import { Card } from '@uifabric/react-cards';
 import { DatePicker, DayOfWeek, mergeStyleSets } from 'office-ui-fabric-react';
 import { Icon } from '@fluentui/react/lib/Icon';
-import Loader from '../../../components/loader/Loader'
+
 
 
 import gql from 'graphql-tag';
 import { Mutation, Query } from '@apollo/react-components';
 import { client } from '../../..';
+import Loader from '../../../components/loader/Loader';
 
 //style
 const styles = {
@@ -95,7 +96,6 @@ export default class Form4 extends Component {
         super(props)
     
         this.state = {
-            isLoading: true,
             dateApprovalOfOwnerOfLand: "2020-07-13",
             dateApprovalOfOwnerOfLand_defect:null,
             dateApprovalOfOwnerOfLand_error:"",
@@ -107,17 +107,16 @@ export default class Form4 extends Component {
             OwnerFile: null,
             LocalFile: null,
             dateApprovalOfHomeAffairs:"2020-08-02",
-            dateApprovalOfDefence:"2020-08-02"
-
-        
+            dateApprovalOfDefence:"2020-08-02",
+            isLoading: true
         }
     }
 
     componentDidMount() {
-        this.setState({
-            isLoading:true,
-        })
         const id = this.props.match.params.id;
+        this.setState({
+            isLoading: true
+        })
         client.query({
             query: gql`
             query License($id: String!){
@@ -139,13 +138,13 @@ export default class Form4 extends Component {
                     DefenceStatus: form4.defenceBool,
                     dateApprovalOfHomeAffairs: form4.homeTime,
                     dateApprovalOfDefence: form4.defenceTime,
-                    isLoading:false,
+                    isLoading: false
                 })
             }
             else {
                 this.setState({
                     data: false,
-                    isLoading:false,
+                    isLoading: false
                 })
             }
 
@@ -192,11 +191,9 @@ export default class Form4 extends Component {
             dateApprovalOfDefence
 
         } = this.state;
-
-
         if(isLoading)
-            {return <Loader/>}
-
+            return <Loader/>
+        
         return (
             <div className="ms-Grid-row" style={{paddingBottom:'100px'}}>
                 <div className={`s-Grid-col ms-sm9 ms-xl9 ${classNames.pivot}`}>

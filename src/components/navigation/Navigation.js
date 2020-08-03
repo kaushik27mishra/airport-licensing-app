@@ -48,9 +48,9 @@ const links = [
         }
       },
       {
-        name: 'Profile',
+        name: 'History',
         key: 'key3',
-        url: '/',
+        url: '#/profile',
         iconProps: {
           iconName: 'AccountManagement',
           styles: {

@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react'
+/*import React, { Component, Fragment } from 'react'
 
 
 //ui
@@ -9,6 +9,11 @@ import { mergeStyleSets } from 'office-ui-fabric-react/lib/Styling';
 
 //components
 import Address from '../../../components/form/Address'
+
+
+import gql from 'graphql-tag';
+import { Mutation } from '@apollo/react-components';
+import { client } from '../../..';
 
 //style
 const styles = {
@@ -51,6 +56,8 @@ export default class Form5 extends Component {
         super(props)
     
         this.state = {
+             data: null,
+             upload_check: null,
              check:"No",
              managingDirectorName: "",
              managingDirectorName_error: "",
@@ -168,6 +175,180 @@ export default class Form5 extends Component {
         }
     }
 
+    componentDidMount() {
+        const id = this.props.match.params.id;
+        client.query({
+            query: gql`
+            query License($id: String!) {
+                license(id: $id) {
+                  form5 {
+                    safetyPerson {
+                      name
+                      designation
+                      phone
+                      address {
+                        line1
+                        line2
+                        country
+                        pinCode
+                        city
+                        state
+                      }
+                      signImage
+                    }
+                    personIncharge {
+                      name
+                      designation
+                      phone
+                      address {
+                        line1
+                        line2
+                        country
+                        pinCode
+                        city
+                        state
+                      }
+                      signImage
+                    }
+                    aerodromeSafety {
+                      name
+                      designation
+                      phone
+                      address {
+                        line1
+                        line2
+                        country
+                        pinCode
+                        city
+                        state
+                      }
+                      signImage
+                    }
+                    cnsAtm {
+                      name
+                      designation
+                      phone
+                      address {
+                        line1
+                        line2
+                        country
+                        pinCode
+                        city
+                        state
+                      }
+                      signImage
+                    }
+                    metServices {
+                      name
+                      designation
+                      phone
+                      address {
+                        line1
+                        line2
+                        country
+                        pinCode
+                        city
+                        state
+                      }
+                      signImage
+                    }
+                    metServicesProvider {
+                      name
+                      designation
+                      phone
+                      address {
+                        line1
+                        line2
+                        country
+                        pinCode
+                        city
+                        state
+                      }
+                      signImage
+                    }
+                    airTrafficMgmt {
+                      name
+                      designation
+                      phone
+                      address {
+                        line1
+                        line2
+                        country
+                        pinCode
+                        city
+                        state
+                      }
+                      signImage
+                    }
+                    provisionCNS {
+                      name
+                      designation
+                      phone
+                      address {
+                        line1
+                        line2
+                        country
+                        pinCode
+                        city
+                        state
+                      }
+                      signImage
+                    }
+                    provisionRFF {
+                      name
+                      designation
+                      phone
+                      address {
+                        line1
+                        line2
+                        country
+                        pinCode
+                        city
+                        state
+                      }
+                      signImage
+                    }
+                    personInchargeResume {
+                      data
+                      checked
+                      suggestion
+                    }
+                    aerodromeSafetyResume {
+                      data
+                      checked
+                      suggestion
+                    }
+                    day_to_day_operation_of_aerodrome {
+                      data
+                      checked
+                      suggestion
+                    }
+                    person_responsible_for_Aerodrome_Safety {
+                      data
+                      checked
+                      suggestion
+                    }
+                  }
+                }
+              }
+              `,
+            variables: { id: id }
+        }).then( res => {
+            const { form5 } = res.data.license;
+            if(form5!==null) {
+                this.setState({
+                   // yahan pe karna hai         
+                })
+            }
+            else {
+                this.setState({
+                    data: false
+                })
+            }
+
+        })
+    }
+
     _onChange = (ev, option) => {
         console.dir(option);
         this.setState({check:option.key})
@@ -181,7 +362,8 @@ export default class Form5 extends Component {
 
     handleFileChange=(e) => {
         this.setState({
-            [e.target.name]:e.target.files[0]
+            [e.target.name]:e.target.files[0],
+            upload_check: true
         })
     }
 
@@ -206,6 +388,8 @@ export default class Form5 extends Component {
     render() {
 
         const {
+             data,
+             upload_check,
              managingDirectorName,
              managingDirectorName_error,
              managingDirectorName_defect,
@@ -307,7 +491,26 @@ export default class Form5 extends Component {
              dayToDayMETTelephone_error,
              dayToDayMETTelephone_defect
         } = this.state;
+
+        var MUTATION;
+        if(data) {
+            MUTATION = FORM5;
+        }
+        else {
+            if(upload_check) {
+                MUTATION = FORM5_WITH_UPLOAD;
+            }
+            else {
+                MUTATION = FORM5_WITHOUT_UPLOAD;
+            }
+        }
+
         return (
+            <Mutation mutation={MUTATION}>
+            {(form5function,{loading, data_res, error}) => {
+                if(loading) return 'loading'
+                if(error) console.log(error);
+                return (
             <div className="ms-Grid-row" style={{paddingBottom:'100px'}}>
                 <div className={`s-Grid-col ms-sm9 ms-xl9 ${classNames.pivot}`}>
                     <Card styles={styles.cardStyles}>
@@ -319,7 +522,7 @@ export default class Form5 extends Component {
                                 <Text variant={'large'} >Board Member/ Managing Director or person having specific responsibility for safety.
                                     <em>(To be completed only where the applicant is a company/ corporate/society)</em>
                                 </Text>
-                                {/*Email phone address to be added in person*/}
+                                {/*Email phone address to be added in person
                                 <TextField 
                                     label="Name"
                                     name="managingDirectorName"
@@ -352,7 +555,7 @@ export default class Form5 extends Component {
                                     errorMessage={managingDirectorTelephone_error} 
                                     disabled={managingDirectorTelephone_defect}
                                 />
-                                {/*Email phone address to be added in person*/}
+
                                 <br/>
                                 <br/>
                                 <Text variant={'large'} >The person in charge of day to day operation of aerodrome.</Text>
@@ -395,11 +598,11 @@ export default class Form5 extends Component {
                                     </label>
                                     {daytoDayInchargeCV!=null ? `${daytoDayInchargeCV.name}` : ''}
                                 </div>
-                                {/*<ActionButton iconProps={addIcon} allowDisabledFocus><em>Add CV</em></ActionButton>*/}
-                                {/*Email phone address to be added in person*/}
+                                <ActionButton iconProps={addIcon} allowDisabledFocus><em>Add CV</em></ActionButton>
+                                Email phone address to be added in person
                                 <br/>
                                 <br/>
-                                <Text variant={'large'} >The person responsible for Aerodrome Safety.</Text>{/*Update dynamically */}
+                                <Text variant={'large'} >The person responsible for Aerodrome Safety.</Text>{/*Update dynamically 
                                 <TextField
                                     label="Name"
                                     name="aerodromeSafetyName"
@@ -448,7 +651,7 @@ export default class Form5 extends Component {
                                         </Text> 
                                        {/*} <ActionButton //to be added in db
                                             iconProps={addIcon} allowDisabledFocus><em>Add CV</em>
-                                </ActionButton>*/}
+                                </ActionButton>
                                         <div class="button-wrap">
                                             <label class ="new-button" for="upload"> Upload File
                                             <input id="upload" name="aerodromeSafetyCV" type="file" onChange={this.handleFileChange}/>
@@ -459,7 +662,7 @@ export default class Form5 extends Component {
                                     </Fragment> : null
                                 }
                                 
-                                {/*Email phone address to be added in person*/}
+                                {/*Email phone address to be added in person
                                 <br/>
                                 <br/>
                                 <Text variant={'large'} >Provider of the CNS - ATM</Text>
@@ -484,10 +687,10 @@ export default class Form5 extends Component {
                                     handleChange={(e) => this.handleAdressChange('providerCNSATMAddress',e)} 
                                     handleAdressStateChange={(e,item) => this.handleAdressStateChange('providerCNSATMAddress',e,item)} 
                                     address={providerCNSATMAddress}/>
-                                {/*<TextField label="Address" /> Address Field*/}
+                                {/*<TextField label="Address" /> Address Field
                                 <br/>
                                 <br/>
-                                {/*Email phone address to be added in person*/}
+                                {/*Email phone address to be added in person
                                 <Text variant={'large'} >Provider of the MET services</Text>
                                 <TextField
                                     label="Name"
@@ -510,10 +713,10 @@ export default class Form5 extends Component {
                                     handleChange={(e) => this.handleAdressChange('providerMETAddress',e)} 
                                     handleAdressStateChange={(e,item) => this.handleAdressStateChange('providerMETAddress',e,item)} 
                                     address={providerMETAddress}/>
-                                {/*<TextField label="Address" />   Address Field*/}
+                                {/*<TextField label="Address" />   Address Field
                                 <br/>
                                 <br/>
-                                {/*Email phone address to be added in person*/}
+                                {/*Email phone address to be added in person
                                 <Text variant={'large'} >The person responsible for overseeing the day to day provisions of the Air Traffic Management</Text>
                                 <TextField 
                                     label="Name"
@@ -549,7 +752,7 @@ export default class Form5 extends Component {
                                 />
                                 <br/>
                                 <br/>
-                                {/*Email phone address to be added in person*/}
+                                {/*Email phone address to be added in person
                                 <Text variant={'large'} >The person responsible for overseeing the day to day provisions of CNS</Text>
                                 <TextField 
                                     label="Name"
@@ -585,7 +788,7 @@ export default class Form5 extends Component {
                                 />
                                 <br/>
                                 <br/>
-                                {/*Email phone address to be added in person*/}
+                                {/*Email phone address to be added in person
                                 <Text variant={'large'} >The person responsible for overseeing the day to day provisions of RFF</Text>
                                 <TextField 
                                     label="Name"
@@ -621,7 +824,7 @@ export default class Form5 extends Component {
                                 />
                                 <br/>
                                 <br/>
-                                {/*Email phone address to be added in person*/}
+                                {/*Email phone address to be added in person
                                 <Text variant={'large'} >The person responsible for overseeing the day to day provisions of MET services</Text>
                                 <TextField 
                                     label="Name"
@@ -657,12 +860,121 @@ export default class Form5 extends Component {
                                 />
                                 <Stack horizontal tokens={stackTokens}>
                                     <DefaultButton text="Back" allowDisabledFocus />
-                                    <PrimaryButton text="Next" allowDisabledFocus />
+                                    <PrimaryButton 
+                                        onClick={() => {
+                                            if(data) {
+                                                if(upload_check) {
+                                                    form5function({variables: {
+                                                        // saare variables including upload
+                                                    }})
+                                                }
+                                                else {
+                                                    form5function({variables: {
+                                                        // saare variables exculding upload
+                                                    }})
+                                                }
+                                            }
+                                            else {
+                                                form5function({variables: {
+                                                    // saare variables except defect and error
+                                                }})
+                                            }
+                                        }
+                                    }
+                                    text="Next" allowDisabledFocus />
                                 </Stack>
                         </Card.Section>
                     </Card>
                 </div>
             </div>
+                    )
+                }
+            }
+            </Mutation>
         )
     }
 }
+
+const FORM5 = gql`
+mutation EnterAerodrome(
+  $placeName: String
+  $state: String
+  $situation: String
+  $city: String
+  $grid: Upload
+  $owner: String
+  $lat: String
+  $long: String
+  $runways: [RunwayFields]
+) {
+  enterAerodrome(
+    input: {
+      placeName: $placeName
+      city: $city
+      situation: $situation
+      state: $state
+      grid: $grid
+      owner: $owner
+      lat: $lat
+      long: $long
+      runways: $runways
+    }
+  )
+}
+`;
+
+const FORM5_WITHOUT_UPLOAD = gql`
+mutation UpdateAerodromeWithoutUpload(
+    $id: String!
+    $placeName: String
+    $state: String
+    $situation: String
+    $city: String
+    $owner: String
+    $lat: String
+    $long: String
+    $runways: [RunwayFields]
+  ) {
+    updateAerodromeWithoutUpload(
+      id: $id
+      input: {
+        placeName: $placeName
+        city: $city
+        situation: $situation
+        state: $state
+        owner: $owner
+        lat: $lat
+        long: $long
+        runways: $runways
+      }
+    )
+}`;
+
+const FORM5_WITH_UPLOAD = gql`
+mutation UpdateAerodromeUpload(
+    $id: String!
+    $placeName: String
+    $state: String
+    $situation: String
+    $city: String
+    $grid: Upload
+    $owner: String
+    $lat: String
+    $long: String
+    $runways: [RunwayFields]
+  ) {
+    updateAerodromeUpload(
+      id: $id,
+      input: {
+        placeName: $placeName
+        city: $city
+        situation: $situation
+        state: $state
+        grid: $grid
+        owner: $owner
+        lat: $lat
+        long: $long
+        runways: $runways
+      }
+    )
+  }`;*/

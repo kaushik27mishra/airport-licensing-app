@@ -1,10 +1,15 @@
 import React, { Component } from 'react'
-
+import Loader from '../../../components/loader/Loader'
 //ui
 import { Text, PrimaryButton, Stack, DefaultButton } from 'office-ui-fabric-react';
 import { Card } from '@uifabric/react-cards';
 import { mergeStyleSets } from 'office-ui-fabric-react/lib/Styling';
 import DGCAChecklist from '../../../components/form/DGCAChecklist';
+import { Dropdown } from 'office-ui-fabric-react/lib/Dropdown';
+
+import gql from 'graphql-tag';
+import { Mutation } from '@apollo/react-components';
+import { client } from '../../..';
 
 //style
 import '../style.css'
@@ -38,13 +43,61 @@ export default class DGCAForm extends Component {
         super(props)
 
         this.state = {
+            isLoading: true,
             otherInfo:{
                 data:"other information",
                 suggestion:"",
                 checked:false
             },
-
         }
+
+        
+    }
+
+
+    componentDidMount() {
+        this.setState({
+            isLoading: true,
+        })
+        const id = this.props.match.params.id;
+        client.query({
+            query: gql`
+            query License($id: String!) {
+                license(id: $id) {
+                  form8 {
+                    otherInfo {
+                      data
+                      suggestion
+                      checked
+                    }
+                  } 
+                }
+              }
+              `,
+            variables: { id: id }
+        }).then( res => {
+            const { form8 } = res.data.license;
+            if(form8!==null) {
+                this.setState({
+                  data: true,
+                 // saare variables
+                 //otherInfo: form8.otherInfo
+                otherInfo:{
+                    data: form8.otherInfo.data,
+                    suggestion: form8.otherInfo.suggestion,
+                    checked: form8.otherInfo.checked
+                   },
+                    isLoading: false,
+                })
+            }
+            else {
+                this.setState({
+                    data: false,
+                    isLoading: false,
+                })
+            }
+        })
+
     }
 
     handleOtherInfoValueChange = (e) => {
@@ -66,12 +119,28 @@ export default class DGCAForm extends Component {
         })
     }
 
+    statusOptions = [
+        { key: 'Submitted', text: 'Submitted',},
+        { key: 'Edited', text: 'Edited' },
+        { key: 'NotAproved', text: 'Not Approved' },
+        { key: 'Approved', text: 'Approved' },
+      ];
 
     render() {
-        const { otherInfo, } = this.state;
+        const { data,isLoading, otherInfo, otherInfo_checked, otherInfo_suggestion, status} = this.state;
+
+        if(isLoading) {return <Loader/>}
+
+        if(!data)
+            return (<h1>For yet to be Filled</h1>)
 
         return (
-            <div className="ms-Grid-row" style={{paddingBottom:'100px'}}>
+            <Mutation mutation={FORM8}>
+            {( form8Function ,{loading,data_res,error}) => {
+                    if(loading) {return <Loader/>}
+                    if(error) console.log(error);
+                    return (
+                        <div className="ms-Grid-row" style={{paddingBottom:'100px'}}>
                 <div className={`s-Grid-col ms-sm9 ms-xl9 ${classNames.pivot}`}>
                     <Card styles={styles.cardStyles}>
                         <Card.Section>
@@ -90,16 +159,70 @@ export default class DGCAForm extends Component {
                                             handleChange={this.handleOtherInfoValueChange} 
                                             onChange={this.handleOtherInfoCheckboxChange}
                                         />
+                                        <tr>
+                                            <td style={{maxWidth:"150px"}}>
+                                                <Text variant={'large'}>Approval Status</Text>
+                                            </td>
+                                            <td>
+                                            <Dropdown
+                                                    placeholder="Select Status"
+                                                    options={this.statusOptions}
+                                                    onChange={(e,i) => this.setState({status: i.key})}
+                                                    />
+                                            </td>
+                                        </tr>
                                     </tbody>
                                 </table>
                                 <Stack horizontal tokens={stackTokens}>
                                     <DefaultButton text="Back" allowDisabledFocus/>
-                                    <PrimaryButton text="Next" allowDisabledFocus/>
+                                    <PrimaryButton 
+                                        text="Submit"
+                                        onClick={() => {
+                                            form8Function({
+                                                variables: {
+                                                    // saare variables
+                                                    id: this.props.match.params.id,
+                                                    otherInfo: otherInfo.data,
+                                                    otherInfo_defect:otherInfo.checked,
+                                                    otherInfo_checked:otherInfo.suggestion,
+                                                    status:status
+                                                }
+                                            })
+                                        }}  
+                                        allowDisabledFocus 
+                                        //disabled={!this.state.isChecked} 
+                                        />
                                 </Stack>
                         </Card.Section>
                     </Card>
                 </div>
             </div>
+                    )
+                }
+            }
+            </Mutation>
         )
     }
 }
+
+const FORM8=gql`
+mutation UpdateForm8(
+    $id: String!
+    $otherInfo: String
+    $otherInfo_error: String
+    $otherInfo_defect: Boolean
+    $status: FormStatus
+  ) {
+    updateForm8(
+      id: $id
+      input: {
+        otherInfo: {
+          data: $otherInfo
+          checked: $otherInfo_defect
+          suggestion: $otherInfo_error
+        }
+        status: $status
+      }
+    )
+  }
+`;  

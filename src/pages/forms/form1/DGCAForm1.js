@@ -1,10 +1,16 @@
 import React, { Component } from 'react'
+import Loader from '../../../components/loader/Loader'
 
 //ui
 import { Text, PrimaryButton, Stack, DefaultButton } from 'office-ui-fabric-react';
 import { Card } from '@uifabric/react-cards';
 import { mergeStyleSets } from 'office-ui-fabric-react/lib/Styling';
 import DGCAChecklist from '../../../components/form/DGCAChecklist';
+import { Dropdown } from 'office-ui-fabric-react/lib/Dropdown';
+
+import gql from 'graphql-tag';
+import { Mutation } from '@apollo/react-components';
+import { client } from '../../..';
 
 //style
 import '../style.css'
@@ -38,45 +44,127 @@ export default class DGCAForm extends Component {
         super(props)
 
         this.state = {
+            isLoading:true,
             elevationMeter: {
-                data:"100ft",
+                data:"",
                 suggestion:"",
                 checked:false
             },
-            placeName: "place",
+            placeName: "",
             owner:{
-                name:"CNS Provider",
+                id:"",
+                name:"",
                 address:{
-                    line1: 'l1',
-                    line2: 'l2',
-                    pinCode: 22,
-                    city: 'city',
-                    state: 'state',
-                    country: 'country'
+                    line1: '',
+                    line2: '',
+                    pinCode: 0,
+                    city: '',
+                    state: '',
+                    country: ''
                   },
-                phone: "+91 9999999",
-                fax: "0000", //to be added
-                email: "aai@aai.aai" // to be added
+                phone: "",
+                fax: "", //to be added
+                email: "" // to be added
             },
-            situation: "Situate",
-            state: "Uttar Pradesh",
-            grid: "xxx",
-            map: null, //to be added
+            situation: "",
+            state: "",
+            grid: "",
             runways: [
                 {
-                    orientation: 'One',
-                    length: '111'
-                },
-                {
-                    orientation: 'Two',
-                    length: '222'
+                    orentatation: '',
+                    length: ''
                 }
             ],
-            latitude: "20",
-            longitude: "20"
+            latitude: "",
+            longitude: "",
+            status: ""
 
         }
     }
+
+    componentDidMount() {
+        this.setState({
+            isLoading: true,
+        })
+        const id = this.props.match.params.id;
+        client.query({
+            query: gql`
+            query License($id: String!) {
+                license(id: $id) {
+                  aerodrome {
+                    placeName
+                    state
+                    city
+                    situation
+                    grid
+                    elevationMeter {
+                      data
+                      checked
+                      suggestion
+                    }
+                    runways {
+                      orentatation
+                      length
+                    }
+                    owner {
+                      name
+                      email
+                      phone
+                      id
+                      address {
+                        line1
+                        line2
+                        city
+                        state {
+                          state
+                          id
+                            country
+                        }
+                        pinCode
+                      }
+                    }
+                    lat
+                    long
+                  }
+                }
+              }
+              `,
+            variables: { id: id }
+        }).then( res => {
+            const { aerodrome } = res.data.license;
+            if(aerodrome!==null) {
+                this.setState({
+                    placeName: aerodrome.placeName ,
+                    owner:{
+                        id: aerodrome.owner.id,
+                        name: aerodrome.owner.name ,//not know which field will be entered ,
+                        address:{
+                            line1: aerodrome.owner.address.line1,
+                            line2: aerodrome.owner.address.line2,
+                            pinCode: aerodrome.owner.address.pinCode,
+                            city: aerodrome.owner.address.city,
+                            state: aerodrome.owner.address.state.state,
+                            country: aerodrome.owner.address.state.country
+                          },
+                        phone: aerodrome.owner.phone,
+                        fax: aerodrome.owner.phone, //to be added
+                        email: aerodrome.owner.email // to be added
+                    },
+                    situation: aerodrome.situation ,
+                    state: aerodrome.state,
+                    grid: aerodrome.grid,
+                    map: true, //to be added
+                    runways: aerodrome.runways,
+                    latitude: aerodrome.lat,
+                    longitude: aerodrome.long,
+                    isLoading: false,
+                })
+            }
+
+        })
+
+    }
+
     handleElevationMeterValueChange = (e) => {
         this.setState({
             elevationMeter : {
@@ -95,12 +183,18 @@ export default class DGCAForm extends Component {
         })
     }
 
-
+    statusOptions = [
+        { key: 'Submitted', text: 'Submitted',},
+        { key: 'Edited', text: 'Edited' },
+        { key: 'NotAproved', text: 'Not Approved' },
+        { key: 'Approved', text: 'Approved' },
+    ];
    
 
 
     render() {
         const {
+            isLoading,
             elevationMeter,
             placeName,
             owner,
@@ -110,10 +204,23 @@ export default class DGCAForm extends Component {
             map,
             runways,
             longitude,
-            latitude } = this.state;
+            latitude,
+            status,
+            city
+         } = this.state;
+
+        if(isLoading) {
+           return <Loader/>
+        }
 
         return (
-            <div className="ms-Grid-row" style={{paddingBottom:'100px'}}>
+            <Mutation mutation={FORM1}>
+            {(form1function,{loading, error, data}) => {
+                if(loading) {return <Loader/>}
+                if(error) console.log(error);
+                if(data) console.log(data.enterAerodrome);
+                return (
+                    <div className="ms-Grid-row" style={{paddingBottom:'100px'}}>
                 <div className={`s-Grid-col ms-sm9 ms-xl9 ${classNames.pivot}`}>
                     <Card styles={styles.cardStyles}>
                         <Card.Section>
@@ -273,13 +380,6 @@ export default class DGCAForm extends Component {
                                                 </div>
                                             </td>
                                         </tr>
-                                        <DGCAChecklist 
-                                            field="Elevation of the Aerodrome reference
-                                            point (AMSL)" 
-                                            value={elevationMeter} 
-                                            handleChange={this.handleElevationMeterValueChange} 
-                                            onChange={this.handleElevationMeterCheckboxChange}
-                                        />
                                         <tr>
                                             <td style={{maxWidth:"150px"}}>
                                                 <Text variant={'large'}>Latitude of aerodrome</Text>
@@ -308,7 +408,7 @@ export default class DGCAForm extends Component {
                                                     </td>
                                                     <td>
                                                         <Text variant={'large'}>
-                                                            <em>{runway.orientation}</em>
+                                                            <em>{runway.orentatation}</em>
                                                         </Text>
                                                     </td>
                                                 </tr>
@@ -324,16 +424,79 @@ export default class DGCAForm extends Component {
                                                 </tr>
                                             </>
                                         ))}
+                                        <tr>
+                                            <td style={{maxWidth:"150px"}}>
+                                                <Text variant={'large'}>Approval Status</Text>
+                                            </td>
+                                            <td>
+                                                <Dropdown
+                                                    placeholder="Select Status"
+                                                    options={this.statusOptions}
+                                                    onChange={(e,i) => this.setState({status: i.key})}
+                                                />
+                                            </td>
+                                        </tr>
                                     </tbody>
                                 </table>
                                 <Stack horizontal tokens={stackTokens}>
                                     <DefaultButton text="Back" allowDisabledFocus/>
-                                    <PrimaryButton text="Next" allowDisabledFocus/>
+                                    <PrimaryButton
+                                        onClick={() => {
+                                            form1function({variables: {
+                                                id: this.props.match.params.id,
+                                                placeName: placeName,
+                                                state: state,
+                                                situation: situation,
+                                                city: city,
+                                                owner: owner.id,
+                                                grid: grid,
+                                                lat: latitude,
+                                                long: longitude,
+                                                runways: runways.map((i) => ({length: i.length, orentatation: i.orentatation})),
+                                                status: status
+                                            }})
+                                        }} 
+                                        text="Next" 
+                                        allowDisabledFocus/>
                                 </Stack>
                         </Card.Section>
                     </Card>
                 </div>
             </div>
+            )}}
+            </Mutation>
         )
     }
 }
+
+const FORM1=gql`
+mutation UpdateAerodromeWithoutUpload(
+    $id: String!
+    $placeName: String
+    $state: String
+    $situation: String
+    $city: String
+    $owner: String
+    $grid: String
+    $lat: String
+    $long: String
+    $runways: [RunwayFields]
+    $status: FormStatus
+  ) {
+    updateAerodromeWithoutUpload(
+      id: $id
+      input: {
+        placeName: $placeName
+        city: $city
+        situation: $situation
+        grid: $grid
+        state: $state
+        owner: $owner
+        lat: $lat
+        long: $long
+        runways: $runways
+        status: $status
+      }
+    )
+  }  
+`

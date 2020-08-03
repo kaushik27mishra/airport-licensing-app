@@ -1,13 +1,19 @@
 import React, { Component } from 'react'
-
+import Loader from '../../../components/loader/Loader'
 //ui
 import { Text, PrimaryButton, Stack, DefaultButton, Checkbox } from 'office-ui-fabric-react';
 import { TextField} from 'office-ui-fabric-react/lib/TextField';
 import { Card } from '@uifabric/react-cards';
 import { mergeStyleSets } from 'office-ui-fabric-react/lib/Styling';
+import { Dropdown } from 'office-ui-fabric-react/lib/Dropdown';
 
 //style
 import '../style.css'
+
+import gql from 'graphql-tag';
+import { Mutation } from '@apollo/react-components';
+import { client } from '../../..';
+
 const styles = {
     cardStyles: {
         root: {
@@ -38,6 +44,7 @@ export default class DGCAForm extends Component {
         super(props)
 
         this.state = {
+            isLoading: true,
             calculationSheet:{
                 data:null,
                 suggestion:"",
@@ -49,6 +56,53 @@ export default class DGCAForm extends Component {
             dateOfChallan: "14-10-2020"
 
         }
+    }
+
+    componentDidMount() {
+        this.setState({
+            isLoading: true
+        })
+        const id = this.props.match.params.id;
+        client.query({
+            query: gql`
+            query License($id: String!) {
+                license(id: $id) {
+                  form7 {
+                    challanNo
+                    amount
+                    calculationSheet {
+                      data
+                      checked
+                      suggestion
+                    }
+                    nameofDraweeBank
+                    dateOfChallan
+                  }
+                }
+              }`,
+            variables: { id: id }
+        }).then( res => {
+            const { form7 } = res.data.license;
+            if(form7!==null) {
+                this.setState({
+                  data: true,
+                 calculationSheet: form7.calculationSheet,
+                challanNo:form7.challanNo,
+                amount:form7.amount,
+                nameofDraweeBank: form7.nameofDraweeBank,
+                dateOfChallan: form7.dateOfChallan,
+                isLoading: false
+
+                })
+            }
+            else {
+                this.setState({
+                    data: false,
+                    isLoading: false
+                })
+            }
+        })
+
     }
 
     handleCalculationSheetValueChange = (e) => {
@@ -70,19 +124,38 @@ export default class DGCAForm extends Component {
         })
     }
 
+    statusOptions = [
+        { key: 'Submitted', text: 'Submitted',},
+        { key: 'Edited', text: 'Edited' },
+        { key: 'NotAproved', text: 'Not Approved' },
+        { key: 'Approved', text: 'Approved' },
+      ];
 
     render() {
         const {
+            isLoading,
+            data,
             challanNo,
             amount,
             calculationSheet,
             nameofDraweeBank,
-            dateOfChallan
+            dateOfChallan,
+            status
         
         } = this.state;
 
+        if(isLoading) {return <Loader/>}
+
+        if(!data)
+            return <h1>Forms yet to be filled</h1>
+
         return (
-            <div className="ms-Grid-row" style={{paddingBottom:'100px'}}>
+            <Mutation mutation={FORM7}>
+            {(form7Function,{loading,data_res,error}) => {
+                    if(loading) {return <Loader/>}
+                    if(error) console.log(error);
+            return (
+                    <div className="ms-Grid-row" style={{paddingBottom:'100px'}}>
                 <div className={`s-Grid-col ms-sm9 ms-xl9 ${classNames.pivot}`}>
                     <Card styles={styles.cardStyles}>
                         <Card.Section>
@@ -153,18 +226,81 @@ export default class DGCAForm extends Component {
                                         </td>
                                     </tr>
                                     {/*Local authority extra in db*/}
-                                       
-
+                                    <tr>
+                                            <td style={{maxWidth:"150px"}}>
+                                                <Text variant={'large'}>Approval Status</Text>
+                                            </td>
+                                            <td>
+                                            <Dropdown
+                                                    placeholder="Select Status"
+                                                    options={this.statusOptions}
+                                                    onChange={(e,i) => this.setState({status: i.key})}
+                                                    />
+                                            </td>
+                                        </tr>
                                     </tbody>
                                 </table>
                                 <Stack horizontal tokens={stackTokens}>
                                     <DefaultButton text="Back" allowDisabledFocus/>
-                                    <PrimaryButton text="Next" allowDisabledFocus/>
+                                    <PrimaryButton 
+                                        text="Next"
+                                        onClick={() => {
+                                            form7Function({
+                                                variables: {
+                                                    // saare variables
+                                                    id: this.props.match.params.id,
+                                                    challanNo: challanNo,
+                                                    amount: amount,
+                                                    calculationSheet: calculationSheet.data,
+                                                    calculationSheet_defect: calculationSheet.checked,
+                                                    calculationSheet_error: calculationSheet.suggestion,
+                                                    nameofDraweeBank: nameofDraweeBank,
+                                                    dateOfChallan: dateOfChallan,
+                                                    status: status
+                                                }
+                                            })
+                                           
+                                        }} 
+                                    allowDisabledFocus />
                                 </Stack>
                         </Card.Section>
                     </Card>
                 </div>
             </div>
+                    )
+                }
+            }
+            </Mutation>
         )
     }
 }
+
+const FORM7 = gql`
+mutation UpdateForm7(
+    $id: String!
+    $challanNo: String
+    $amount: String
+    $calculationSheet: String
+    $calculationSheet_defect: Boolean
+    $calculationSheet_error: String
+    $nameofDraweeBank: String
+    $dateOfChallan: String
+    $status: FormStatus
+  ) {
+    updateForm7(
+      id: $id
+      input: {
+        challanNo: $challanNo
+        amount: $amount
+        calculationSheet: {
+          data: $calculationSheet
+          suggestion: $calculationSheet_error
+          checked: $calculationSheet_defect
+        }
+        nameofDraweeBank: $nameofDraweeBank
+        dateOfChallan: $dateOfChallan
+        status: $status
+      }
+    )
+  }
+`;  

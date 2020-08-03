@@ -21,19 +21,27 @@ const Table = (props) => {
 
     return (
       <div data-is-scrollable={true}>
-          <Query query={LIST_OF_LICENSE} variables={{ status: "Waiting_For_Data" }}>
+          <Query query={LIST_OF_LICENSE} variables={{ status: props.status }}>
           {({ loading, error, data}) => {
               if(loading) return`Loading`
               if(error) return `error`
               console.log(data);
-              return (
+              if(data.licenses.length!==0) {
+                return (
                   <DetailsList
                       items={data.licenses.map(i => ({ id: i.id ,airport: i.aerodrome.placeName, city: i.aerodrome.city, state: i.aerodrome.state, owner: i.aerodrome.owner.name, status: i.status}))}
                       columns={columns}
                       onItemInvoked={onItemInvoked}
                       selectionMode={0}
                   />
-              )
+                )
+              }
+              else {
+                return (
+                  <h1>Currently no licenses</h1>
+                )
+              }
+
               }
           }
           </Query>

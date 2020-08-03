@@ -1,10 +1,15 @@
 import React, { Component } from 'react'
-
+import Loader from '../../../components/loader/Loader'
 //ui
 import { Text, PrimaryButton, Stack, DefaultButton } from 'office-ui-fabric-react';
 import { Card } from '@uifabric/react-cards';
 import { mergeStyleSets } from 'office-ui-fabric-react/lib/Styling';
 import DGCAChecklist from '../../../components/form/DGCAChecklist';
+import { Dropdown } from 'office-ui-fabric-react/lib/Dropdown';
+
+import gql from 'graphql-tag';
+import { Mutation } from '@apollo/react-components';
+import { client } from '../../..';
 
 //style
 import '../style.css'
@@ -46,8 +51,62 @@ export default class DGCAForm extends Component {
             owner: false,
             startPeriod: "19-10-2020",
             endPeriod: "19-10-2120",
-            terminationPeriod: "20-10-2120"
+            terminationPeriod: "20-10-2120",
+            status: "Submitted",
+            isLoading: true,
         }
+    }
+
+    componentDidMount() {
+        this.setState({
+            isLoading: true
+        })
+        const id = this.props.match.params.id;
+        client.query({
+            query: gql`
+            query License($id: String!) {
+                license(id: $id) {
+                  form3 {
+                    owner
+                    rightsIfNotOver {
+                      data
+                      suggestion
+                      checked
+                    }
+                    startPeriod
+                    terminationPeriod
+                    endPeriod
+                  }
+                }
+              }`,
+            variables: { id: id }
+        }).then( res => {
+            const { form3 } = res.data.license;
+            if(form3!==null) {
+                this.setState({
+                    data: true,
+                    // state yahan pe update karna padega
+                    rightsIfNotOver:{
+                        data: form3.rightsIfNotOver.data,
+                        suggestion: form3.rightsIfNotOver.suggestion,
+                        checked: form3.rightsIfNotOver.checked
+                    },
+                    owner: form3.owner,
+                    startPeriod: form3.owner,
+                    endPeriod: form3.endPeriod,
+                    terminationPeriod: form3.terminationPeriod,
+                    isLoading: false,
+                })
+            }
+            else {
+                this.setState({
+                    data: false,
+                    isLoading: false,
+                })
+            }
+
+        })
+
     }
 
     handleRightsIfNotOverValueChange = (e) => {
@@ -70,16 +129,36 @@ export default class DGCAForm extends Component {
     }
 
     
-
+    statusOptions = [
+        { key: 'Submitted', text: 'Submitted',},
+        { key: 'Edited', text: 'Edited' },
+        { key: 'NotAproved', text: 'Not Approved' },
+        { key: 'Approved', text: 'Approved' },
+      ];
 
     render() {
-        const { rightsIfNotOver,
+        const {
+            isLoading,
+            data, 
+            rightsIfNotOver,
         owner,
         startPeriod,
         endPeriod,
-        terminationPeriod } = this.state;
+        terminationPeriod,
+    status } = this.state;
+
+        if(isLoading) {return <Loader/>}
+
+        if(!data) {
+            return <h1>Form yet to be filled</h1>;
+        }
 
         return (
+            <Mutation mutation={FORM3}>
+            { (form3funstion,{loading, data_res, error}) => {
+                if(loading) {return <Loader/>}
+                if(error) console.log(error);
+                return (
             <div className="ms-Grid-row" style={{paddingBottom:'100px'}}>
                 <div className={`s-Grid-col ms-sm9 ms-xl9 ${classNames.pivot}`}>
                     <Card styles={styles.cardStyles}>
@@ -139,16 +218,80 @@ export default class DGCAForm extends Component {
                                                 </Text>
                                             </td>
                                         </tr>
+                                        <tr>
+                                            <td style={{maxWidth:"150px"}}>
+                                                <Text variant={'large'}>Approval Status</Text>
+                                            </td>
+                                            <td>
+                                            <Dropdown
+                                                    placeholder="Select Status"
+                                                    options={this.statusOptions}
+                                                    onChange={(e,i) => this.setState({status: i.key})}
+                                                    />
+                                            </td>
+                                        </tr>
                                     </tbody>
                                 </table>
                                 <Stack horizontal tokens={stackTokens}>
                                     <DefaultButton text="Back" allowDisabledFocus/>
-                                    <PrimaryButton text="Next" allowDisabledFocus/>
+                                    <PrimaryButton
+                                        onClick={() => {
+                                            if(data) {
+                                                form3funstion({variables: {
+                                                    // saare variables including defect and error
+                                                    id: this.props.match.params.id,
+                                                    owner: owner,
+                                                    rightsIfNotOver: rightsIfNotOver.data,
+                                                    rightsIfNotOver_defect: rightsIfNotOver.checked,
+                                                    rightsIfNotOver_error: rightsIfNotOver.suggestion,
+                                                    startPeriod: startPeriod,
+                                                    terminationPeriod: terminationPeriod,
+                                                    endPeriod: endPeriod,
+                                                    status: status//Dont know what to add
+                                                }})
+                                            }
+                                        }}  
+                                        text="Next" 
+                                        allowDisabledFocus/>
                                 </Stack>
                         </Card.Section>
                     </Card>
                 </div>
             </div>
+            )
+        }}
+        </Mutation>
         )
     }
 }
+
+const FORM3 = gql`
+mutation UpdateForm3(
+    $id: String!
+    $owner: Boolean
+    $rightsIfNotOver: String
+    $rightsIfNotOver_defect: Boolean
+    $rightsIfNotOver_error: String
+    $startPeriod: String
+    $terminationPeriod: String
+    $endPeriod: String
+    $status: FormStatus
+  ) {
+    updateForm3(
+      id: $id
+      input: {
+        owner: $owner
+        rightsIfNotOver: {
+          data: $rightsIfNotOver
+          checked: $rightsIfNotOver_defect
+          suggestion: $rightsIfNotOver_error
+        }
+        startPeriod: $startPeriod
+        terminationPeriod: $terminationPeriod
+        endPeriod: $endPeriod
+        status: $status
+      }
+    )
+  }
+  
+`

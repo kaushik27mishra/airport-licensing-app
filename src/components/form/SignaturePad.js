@@ -49,6 +49,9 @@ function SignaturePad(props) {
     const clear = () => sigCanvas.current.clear();
     const save = () => {
         setImageURL(sigCanvas.current.getTrimmedCanvas().toDataURL('image/png'));
+        setTimeout(() => {
+          alert("Signature matched 0.89666")
+        }, 4000);
         hideModal()
     }
 

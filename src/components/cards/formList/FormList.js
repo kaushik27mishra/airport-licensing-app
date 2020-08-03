@@ -1,13 +1,17 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 //ui
-import { Text, initializeIcons } from '@fluentui/react';
+import { Text, initializeIcons, PrimaryButton } from '@fluentui/react';
 import { Card } from '@uifabric/react-cards';
+import { Dropdown } from 'office-ui-fabric-react/lib/Dropdown';
 
 //auth
 import { roleHandler } from '../../../utils/roleHandler'
 
 import { useParams } from 'react-router-dom'
+import { gql } from '@apollo/react-hooks';
+import { Mutation, Query } from '@apollo/react-components';
+import Download from '../../Download';
 
 const container = {
   display: 'flex',
@@ -65,6 +69,8 @@ const styles = {
 
 
 const CardsSection = (props) => {
+
+  const [status, setStatus] = useState("");
   const cards_one_two_three = [
     {
       title: 'Details of Aerodrome',
@@ -94,37 +100,59 @@ const CardsSection = (props) => {
         dgcaLink: `/form/permissions_and_approvals`,
         operatorLink: '/permissions_and_approvals',
       },
-      {
+      /*{
         title: 'Aerodrome Management Personnel',
         status: 'Processing',
         dgcaLink: `/form/aerodrome_management_personnel`,
         operatorLink: '/aerodrome_management_personnel',
-      },
+      },*/
       {
         title: 'Aerodrome Manual',
         status: 'Submitted',
         dgcaLink: `/form/aerodrome_manual`,
         operatorLink: '/aerodrome_manual',
-      }
-    ]
-  
-    const cards_seven_eight = [
-      
+      },
       {
         title: 'Details of Fees',
         status: 'Submitted',
         dgcaLink: `/form/details_of_fees`,
         operatorLink: '/details_of_fees',
       },
+    ]
+  
+    const cards_seven_eight = [
+      
+      /*{
+        title: 'Details of Fees',
+        status: 'Submitted',
+        dgcaLink: `/form/details_of_fees`,
+        operatorLink: '/details_of_fees',
+      },*/
       {
         title: 'Any Other Information',
         status: 'Processing',
         dgcaLink: `/form/further_info`,
         operatorLink: '/further_info',
-      }
+      },
+      
     ]
+    const history_card = {
+      title: "License History",
+      status: "fwd",
+      dgcaLink:'/form/history'
+    }
 
+    
   initializeIcons();
+
+  const statusOptions = [
+    { key: 'Approved', text: 'Approved',},
+    { key: 'Rejected', text: 'Rejected' },
+    { key: 'UnderInspection', text: 'UnderInspection' },
+    { key: 'Correct_Data', text: 'Correct_Data' },
+    { key: 'Waiting_for_misitries_approval', text: 'Waiting_for_misitries_approval' },
+    { key: 'Waiting_For_Data', text: 'Waiting_For_Data' },
+  ];
 
   const { id } = useParams();
   return (
@@ -146,7 +174,7 @@ const CardsSection = (props) => {
                     <Text styles={styles.header}>{cards_one_two_three.title}</Text>
                 </Card.Item>
                 {
-                    props.user_type==="dgca" ?
+                    props.userRole.role==="DGCA" ?
                     <>
                         <Card.Item>
                             <Text styles={styles.status}>Form status - {cards_one_two_three.status}</Text>
@@ -169,6 +197,7 @@ const CardsSection = (props) => {
                         }
                 </>
                 }
+                
                 </Card.Section>
             </Card>
             <br/>
@@ -193,7 +222,7 @@ const CardsSection = (props) => {
                     <Text styles={styles.header}>{cards_four_five_six.title}</Text>
                 </Card.Item>
                 {
-                    props.user_type==="dgca" ?
+                    props.userRole.role==="DGCA" ?
                     <>
                         <Card.Item>
                             <Text styles={styles.status}>Form status - {cards_four_five_six.status}</Text>
@@ -242,7 +271,7 @@ const CardsSection = (props) => {
                     <Text styles={styles.header}>{cards_seven_eight.title}</Text>
                 </Card.Item>
                 {
-                    props.user_type==="dgca" ?
+                    props.userRole.role==="DGCA" ?
                     <>
                         <Card.Item>
                             <Text styles={styles.status}>Form status - {cards_seven_eight.status}</Text>
@@ -265,17 +294,87 @@ const CardsSection = (props) => {
                         }
                 </>
                 }
-                
                 </Card.Section>
             </Card>
-            <br/>
+
+            {
+              props.userRole.role==="DGCA" ?
+              <>
+                        <br/><br/>
+                            <Card styles={styles.cardStyles}
+                        onClick={() => {
+                            props.history.push(`/app/dgca/license/${id}/history`)
+                        }}>
+                        <Card.Section>
+                            <Card.Item>
+                                  <i style={icon} className={`ms-Icon ms-Icon--${receiveIcon(history_card.status)}`} aria-hidden="true"></i>
+                                  <Text styles={styles.header}>{history_card.title}</Text>
+                              </Card.Item>
+                              <Card.Item>
+                                  <Text styles={styles.status}>Click to view complete history of this license</Text>
+                              </Card.Item>
+                          </Card.Section>
+                        </Card>
+              </>:null
+            }
             </div>
         ))}
-        <br/>  
         </div>
+        <div className="ms-Grid-row">
+            <div className="s-Grid-col ms-sm3 ms-xl3">
+            {props.userRole.role==="DGCA"?
+              <Mutation mutation={MUTATION}>
+                {(formstatus,{loading,data,error}) => {
+                  if(loading) return 'loading';
+                  if(error) return 'error';
+
+                  return (
+                    <td style={{textAlign:"center",paddingLeft:'550px'}}>
+                      <Dropdown
+                        placeholder="Do you approve this application?"
+                        label="Select an option"
+                        options={statusOptions}
+                        onChange={(e,i) => setStatus(i.key)}
+                      />
+                        <br/>
+                      <PrimaryButton 
+                        onClick={() => {
+                          formstatus({
+                            variables: {id: id,status: status }
+                          })
+                        }}
+                        text="Submit" 
+                        allowDisabledFocus/>
+                    </td>
+                   
+              )}}
+              </Mutation>
+            :null}
+          </div>
+        </div>
+        {
+          (status==="Approved") ?  <Download id={id}/> : null
+        }
+       
       </>
     
   )
 }
 
 export default roleHandler(CardsSection);
+
+const MUTATION=gql`
+mutation UpdateStatus($id: String!, $status: LicenseStatus!) {
+  updateStatus(id: $id, status: $status)
+}
+`;
+
+const STATUS=gql`
+query License($id: String!) {
+  license(id: $id) {
+    aerodrome {
+      status
+    }
+  }
+}
+`;

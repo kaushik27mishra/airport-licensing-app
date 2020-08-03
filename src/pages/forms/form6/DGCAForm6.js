@@ -1,13 +1,22 @@
 import React, { Component } from 'react'
 
+import Loader from '../../../components/loader/Loader'
+
+import axios from 'axios';
+
 //ui
 import { Text, PrimaryButton, Stack, DefaultButton, Checkbox } from 'office-ui-fabric-react';
 import { TextField} from 'office-ui-fabric-react/lib/TextField';
 import { Card } from '@uifabric/react-cards';
 import { mergeStyleSets } from 'office-ui-fabric-react/lib/Styling';
+import { Dropdown } from 'office-ui-fabric-react/lib/Dropdown';
 
 //style
 import '../style.css'
+import gql from 'graphql-tag';
+import { Mutation } from '@apollo/react-components';
+import { client } from '../../..';
+
 const styles = {
     cardStyles: {
         root: {
@@ -44,10 +53,64 @@ export default class DGCAForm extends Component {
                 checked:false
             },
             enclosed: true,
-            indicateDGCA: "soon"
-
+            indicateDGCA: "soon",
+            status: "Submitted",
+            isLoading: true
         }
     }
+
+    componentDidMount() {
+        this.setState({
+            isLoading: true
+        })
+        const id = this.props.match.params.id;
+        client.query({
+            query: gql`
+            query License($id: String!) {
+                license(id: $id) {
+                  form6 {
+                    manual {
+                      data
+                      suggestion
+                      checked
+                    }
+                    enclosed
+                    indicateDGCA
+                  }
+                }
+              }
+              `,
+            variables: { id: id }
+        }).then( async res => {
+            const { form6 } = res.data.license;
+            if(form6!==null) {
+                console.log(form6);
+                this.setState({
+                  data: true,
+                  manual:{
+                      data: await this.file(form6.manual.data),
+                      suggestion: form6.manual.suggestion,
+                      checked: form6.manual.checked
+                  },
+                  enclosed: form6.enclosed,
+                  indicateDGCA: form6.indicateDGCA,
+                  isLoading:false
+                })
+            }
+            else {
+                this.setState({
+                    data: false,
+                    isLoading:false
+                })
+            }
+        })
+
+    }
+
+    file = async (url) => {
+        const data = await axios.get(url);
+        return data.data;
+    };
 
     handleManualValueChange = (e) => {
         this.setState({
@@ -68,12 +131,28 @@ export default class DGCAForm extends Component {
         })
     }
 
+    statusOptions = [
+        { key: 'Submitted', text: 'Submitted',},
+        { key: 'Edited', text: 'Edited' },
+        { key: 'NotAproved', text: 'Not Approved' },
+        { key: 'Approved', text: 'Approved' },
+      ];
 
     render() {
-        const { indicateDGCA, enclosed, manual } = this.state;
+        const { isLoading, data, indicateDGCA, enclosed, manual,status } = this.state;
 
+        if(isLoading) {return <Loader/>}
+
+        if(!data)
+            return <h1>Form yet to be filled</h1>
+            
         return (
-            <div className="ms-Grid-row" style={{paddingBottom:'100px'}}>
+            <Mutation mutation={FORM6}>
+            {(form6funstion,{loading, data_res, error}) => {
+                if(loading) {return <Loader/>}
+                if(error) console.log(error);
+                return (
+                    <div className="ms-Grid-row" style={{paddingBottom:'100px'}}>
                 <div className={`s-Grid-col ms-sm9 ms-xl9 ${classNames.pivot}`}>
                     <Card styles={styles.cardStyles}>
                         <Card.Section>
@@ -92,7 +171,7 @@ export default class DGCAForm extends Component {
                                             </td>
                                             <td>
                                                 <Text variant={'large'}>
-                                                    <em>{enclosed===true?'Yes':'No'}</em> {/* Fix spelling in db*/}
+                                                    <em>{manual.data ? 'Yes':'No'}</em> {/* Fix spelling in db*/}
                                                 </Text>
                                             </td>
                                         </tr>
@@ -102,9 +181,7 @@ export default class DGCAForm extends Component {
                                             </td>
                                             <td>
                                                 <div class="button-wrap">
-                                                    <form method="get" action={manual}>
-                                                        <button type="submit">Download Manual</button>
-                                                    </form>
+                                                    <a download="Data.png" href={`data:image/png;base64,${manual.data}`}>Image</a>
                                                 </div>
                                             </td>
                                             <td style={{textAlign:'center'}}>
@@ -116,7 +193,7 @@ export default class DGCAForm extends Component {
                                                     name="suggestion"
                                                     onChange={this.handleManualValueChange}
                                                     value={manual.suggestion}
-                                                    disabled={!manual.checked}
+                                                    disabled={manual.checked}
                                                 />
                                             </td>
                                         </tr>
@@ -128,16 +205,77 @@ export default class DGCAForm extends Component {
                                                 <Text variant={'large'}><em>{indicateDGCA}</em></Text>
                                             </td>
                                         </tr>
+                                        <tr>
+                                            <td style={{maxWidth:"150px"}}>
+                                                <Text variant={'large'}>Approval Status</Text>
+                                            </td>
+                                            <td>
+                                            <Dropdown
+                                                placeholder="Select Status"
+                                                options={this.statusOptions}
+                                                onChange={(e,i) => this.setState({status: i.key})}
+                                            />
+                                            </td>
+                                        </tr>
                                     </tbody>
                                 </table>
                                 <Stack horizontal tokens={stackTokens}>
                                     <DefaultButton text="Back" allowDisabledFocus/>
-                                    <PrimaryButton text="Next" allowDisabledFocus/>
+
+                                    <PrimaryButton 
+                                        onClick={()=> {
+                                            form6funstion({
+                                                variables: {
+                                                    //all member including defect and error
+                                                    id: this.props.match.params.id,
+                                                    manual: manual.data,
+                                                    manual_defect: manual.checked,
+                                                    manual_error: manual.suggestion,
+                                                    enclosed: enclosed,
+                                                    indicateDGCA: indicateDGCA,
+                                                    status: status 
+                                                }
+                                            })
+                                            
+                                        }}
+                                        text="Next" 
+                                        allowDisabledFocus />
                                 </Stack>
                         </Card.Section>
                     </Card>
                 </div>
             </div>
+                    )
+                }
+            }
+            </Mutation>
         )
     }
 }
+
+const FORM6 = gql`
+mutation UpdateForm6(
+    $id: String!
+    $manual: String
+    $manual_defect: Boolean
+    $manual_error: String
+    $enclosed: Boolean
+    $indicateDGCA: String
+    $status: FormStatus
+  ) {
+    updateForm6(
+      id: $id
+      input: {
+        manual: {
+          data: $manual
+          checked: $manual_defect
+          suggestion: $manual_error
+        }
+        enclosed: $enclosed
+        indicateDGCA: $indicateDGCA
+        status: $status
+      }
+    )
+  }
+  
+`;

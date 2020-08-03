@@ -25,7 +25,7 @@ function TableOperator(props) {
         <Query query={LIST_OF_LICENSE} variables={{ operator: props.id }}>
             {({ loading, error, data}) => {
                     if(loading) return`Loading`
-                    if(error) return `error`
+                    if(error) return 'error'
                     console.log(data);
                     if(data.licenses.length!==0) {
                         return (
