@@ -52,11 +52,15 @@ export default class DGCAForm extends Component {
             startPeriod: "19-10-2020",
             endPeriod: "19-10-2120",
             terminationPeriod: "20-10-2120",
-            status: "Submitted"
+            status: "Submitted",
+            isLoading: true,
         }
     }
 
     componentDidMount() {
+        this.setState({
+            isLoading: true
+        })
         const id = this.props.match.params.id;
         client.query({
             query: gql`
@@ -90,12 +94,14 @@ export default class DGCAForm extends Component {
                     owner: form3.owner,
                     startPeriod: form3.owner,
                     endPeriod: form3.endPeriod,
-                    terminationPeriod: form3.terminationPeriod
+                    terminationPeriod: form3.terminationPeriod,
+                    isLoading: false,
                 })
             }
             else {
                 this.setState({
-                    data: false
+                    data: false,
+                    isLoading: false,
                 })
             }
 
@@ -132,6 +138,7 @@ export default class DGCAForm extends Component {
 
     render() {
         const {
+            isLoading,
             data, 
             rightsIfNotOver,
         owner,
@@ -139,6 +146,8 @@ export default class DGCAForm extends Component {
         endPeriod,
         terminationPeriod,
     status } = this.state;
+
+        if(isLoading) {return <Loader/>}
 
         if(!data) {
             return <h1>Form yet to be filled</h1>;

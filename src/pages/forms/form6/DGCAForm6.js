@@ -54,12 +54,15 @@ export default class DGCAForm extends Component {
             },
             enclosed: true,
             indicateDGCA: "soon",
-            status: "Submitted"
-
+            status: "Submitted",
+            isLoading: true
         }
     }
 
     componentDidMount() {
+        this.setState({
+            isLoading: true
+        })
         const id = this.props.match.params.id;
         client.query({
             query: gql`
@@ -91,11 +94,13 @@ export default class DGCAForm extends Component {
                   },
                   enclosed: form6.enclosed,
                   indicateDGCA: form6.indicateDGCA,
+                  isLoading:false
                 })
             }
             else {
                 this.setState({
-                    data: false
+                    data: false,
+                    isLoading:false
                 })
             }
         })
@@ -134,7 +139,9 @@ export default class DGCAForm extends Component {
       ];
 
     render() {
-        const { data, indicateDGCA, enclosed, manual,status } = this.state;
+        const { isLoading, data, indicateDGCA, enclosed, manual,status } = this.state;
+
+        if(isLoading) {return <Loader/>}
 
         if(!data)
             return <h1>Form yet to be filled</h1>

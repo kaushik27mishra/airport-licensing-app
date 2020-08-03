@@ -93,12 +93,15 @@ export default class DGCAForm extends Component {
             ownAircraft: true,
             priorPermission: true,
             allWeatherRequired: true,
-            status: "Submitted"
-
+            status: "Submitted",
+            isLoading: true
         }
     }
 
     componentDidMount() {
+        this.setState({
+            isLoading: true
+        })
         const id = this.props.match.params.id;
         client.query({
             query: gql`
@@ -212,13 +215,14 @@ export default class DGCAForm extends Component {
                     usage: form2.usage,
                     ownAircraft: form2.ownAircraft,
                     priorPermission: form2.priorPermission,
-                    allWeatherRequired: form2.allWeatherRequired
-                
+                    allWeatherRequired: form2.allWeatherRequired,
+                    isLoading: false
                     })
             }
             else {
                 this.setState({
-                    data: false
+                    data: false,
+                    isLoading: false
                 })
             }
         })
@@ -405,6 +409,7 @@ export default class DGCAForm extends Component {
    
     render() {
         const {
+            isLoading,
             data, 
             purpose,
             lightningPlan,
@@ -420,6 +425,9 @@ export default class DGCAForm extends Component {
             priorPermission,
             allWeatherRequired
         } = this.state;
+
+        if(isLoading)
+            {return <Loader/>}
 
         if(!data)
             return <h1>Form yet to be filled</h1>

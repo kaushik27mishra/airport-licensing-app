@@ -43,18 +43,22 @@ export default class DGCAForm extends Component {
         super(props)
 
         this.state = {
+            isLoading: true,
             otherInfo:{
                 data:"other information",
                 suggestion:"",
                 checked:false
             },
-            }
+        }
 
         
     }
 
 
     componentDidMount() {
+        this.setState({
+            isLoading: true,
+        })
         const id = this.props.match.params.id;
         client.query({
             query: gql`
@@ -82,12 +86,14 @@ export default class DGCAForm extends Component {
                     data: form8.otherInfo.data,
                     suggestion: form8.otherInfo.suggestion,
                     checked: form8.otherInfo.checked
-                   }
+                   },
+                    isLoading: false,
                 })
             }
             else {
                 this.setState({
-                    data: false
+                    data: false,
+                    isLoading: false,
                 })
             }
         })
@@ -121,7 +127,12 @@ export default class DGCAForm extends Component {
       ];
 
     render() {
-        const { otherInfo, otherInfo_checked, otherInfo_suggestion, status} = this.state;
+        const { data,isLoading, otherInfo, otherInfo_checked, otherInfo_suggestion, status} = this.state;
+
+        if(isLoading) {return <Loader/>}
+
+        if(!data)
+            return (<h1>For yet to be Filled</h1>)
 
         return (
             <Mutation mutation={FORM8}>

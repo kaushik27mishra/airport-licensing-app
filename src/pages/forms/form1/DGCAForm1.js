@@ -44,6 +44,7 @@ export default class DGCAForm extends Component {
         super(props)
 
         this.state = {
+            isLoading:true,
             elevationMeter: {
                 data:"",
                 suggestion:"",
@@ -82,6 +83,9 @@ export default class DGCAForm extends Component {
     }
 
     componentDidMount() {
+        this.setState({
+            isLoading: true,
+        })
         const id = this.props.match.params.id;
         client.query({
             query: gql`
@@ -152,7 +156,8 @@ export default class DGCAForm extends Component {
                     map: true, //to be added
                     runways: aerodrome.runways,
                     latitude: aerodrome.lat,
-                    longitude: aerodrome.long
+                    longitude: aerodrome.long,
+                    isLoading: false,
                 })
             }
 
@@ -189,6 +194,7 @@ export default class DGCAForm extends Component {
 
     render() {
         const {
+            isLoading,
             elevationMeter,
             placeName,
             owner,
@@ -202,6 +208,10 @@ export default class DGCAForm extends Component {
             status,
             city
          } = this.state;
+
+        if(isLoading) {
+           return <Loader/>
+        }
 
         return (
             <Mutation mutation={FORM1}>

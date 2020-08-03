@@ -352,7 +352,10 @@ const CardsSection = (props) => {
             :null}
           </div>
         </div>
-        <Download id={id}/>
+        {
+          (status==="Approved") ?  <Download id={id}/> : null
+        }
+       
       </>
     
   )

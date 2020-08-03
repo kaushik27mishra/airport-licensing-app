@@ -44,6 +44,7 @@ export default class DGCAForm extends Component {
         super(props)
 
         this.state = {
+            isLoading: true,
             calculationSheet:{
                 data:null,
                 suggestion:"",
@@ -58,6 +59,9 @@ export default class DGCAForm extends Component {
     }
 
     componentDidMount() {
+        this.setState({
+            isLoading: true
+        })
         const id = this.props.match.params.id;
         client.query({
             query: gql`
@@ -86,12 +90,15 @@ export default class DGCAForm extends Component {
                 challanNo:form7.challanNo,
                 amount:form7.amount,
                 nameofDraweeBank: form7.nameofDraweeBank,
-                dateOfChallan: form7.dateOfChallan
+                dateOfChallan: form7.dateOfChallan,
+                isLoading: false
+
                 })
             }
             else {
                 this.setState({
-                    data: false
+                    data: false,
+                    isLoading: false
                 })
             }
         })
@@ -126,6 +133,7 @@ export default class DGCAForm extends Component {
 
     render() {
         const {
+            isLoading,
             data,
             challanNo,
             amount,
@@ -135,6 +143,8 @@ export default class DGCAForm extends Component {
             status
         
         } = this.state;
+
+        if(isLoading) {return <Loader/>}
 
         if(!data)
             return <h1>Forms yet to be filled</h1>
