@@ -86,7 +86,10 @@ class HistoryTablePage extends Component{
                                         <ScrollablePane scrollbarVisibility={ScrollbarVisibility.auto}>
                                             <Sticky stickyPosition={StickyPositionType.Header}>
                                                 <h1 className={classNames.header}>History</h1>
-                                                <PrimaryButton text="Switch to List View" allowDisabledFocus />
+                                                <PrimaryButton text="Switch to List View" allowDisabledFocus
+                                                onClick={() => {
+                                                    this.props.history.push(`/app/dgca/license/${this.props.match.params.id}/history`)
+                                                }} />
                                             </Sticky>
                                             <JSONViewer json = {this.state.history_json_array}/>
                                         </ScrollablePane>

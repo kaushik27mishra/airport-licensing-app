@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 //ui
-import { Text, initializeIcons, PrimaryButton, Stack } from '@fluentui/react';
+import { Text, initializeIcons, PrimaryButton } from '@fluentui/react';
 import { Card } from '@uifabric/react-cards';
 import { Dropdown } from 'office-ui-fabric-react/lib/Dropdown';
 
@@ -300,6 +300,7 @@ const CardsSection = (props) => {
             {
               props.userRole.role==="DGCA" ?
               <>
+                        <br/><br/>
                             <Card styles={styles.cardStyles}
                         onClick={() => {
                             props.history.push(`/app/dgca/license/${id}/history`)

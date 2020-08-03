@@ -151,7 +151,10 @@ class HistoryListPage extends Component{
                                     </div>
                                 </div>
                             </Card.Section>
-                            <PrimaryButton text="Switch to Tabular View" allowDisabledFocus/>
+                            <PrimaryButton text="Switch to Tabular View" allowDisabledFocus
+                                onClick={() => {
+                                    this.props.history.push(`/app/dgca/license/${this.props.match.params.id}/historytable`)
+                                }}/>
                         </Card>
                     </div>
                     
