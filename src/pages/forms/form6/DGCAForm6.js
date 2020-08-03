@@ -75,14 +75,14 @@ export default class DGCAForm extends Component {
               }
               `,
             variables: { id: id }
-        }).then( res => {
+        }).then( async res => {
             const { form6 } = res.data.license;
             if(form6!==null) {
                 console.log(form6);
                 this.setState({
                   data: true,
                   manual:{
-                      data: this.file(form6.manual.data),
+                      data: await this.file(form6.manual.data),
                       suggestion: form6.manual.suggestion,
                       checked: form6.manual.checked
                   },
