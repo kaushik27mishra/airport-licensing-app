@@ -190,8 +190,10 @@ export default class Form2 extends Component {
                   heaviestAircraftWidth_defect: !!form2.heaviestWidth.checked,
                   heaviestAircraftWidth_error: form2.heaviestWidth.suggestion,
                   heaviestAircraftWeight: form2.heaviestWeight.data,
-                  heaviestAircraftWidth_defect: form2.heaviestWeight.checked,
-                  heaviestAircraftWidth_error:  form2.heaviestWeight.suggestion
+                  heaviestAircraftWeight_defect: !!form2.heaviestWeight.checked,
+                  heaviestAircraftWeight_error: form2.heaviesWeight.suggestion,
+                 // heaviestAircraftWidth_defect: form2.heaviestWeight.checked,
+                 // heaviestAircraftWidth_error:  form2.heaviestWeight.suggestion
                 })
             }
             else {

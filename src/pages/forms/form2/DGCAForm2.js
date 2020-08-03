@@ -149,6 +149,11 @@ export default class DGCAForm extends Component {
                       checked
                       suggestion
                     }
+                    heaviestWeight {
+                        data
+                        checked
+                        suggestion
+                      }
                   }
                 }
               }
@@ -189,7 +194,11 @@ export default class DGCAForm extends Component {
                         suggestion: form2.heaviestType.suggestion,
                         checked: form2.heaviestType.checked
                     },
-                    heaviestWeight:form2.heaviestWeight,
+                    heaviestWeight:{
+                        data: form2.heaviestWeight.data,
+                        suggestion: form2.heaviestWeight.suggestion,
+                        checked: form2.heaviestWeight.checked
+                    },
                     heaviestLength:{
                         data: form2.heaviestLength.data,
                         suggestion: form2.heaviestLength.suggestion,
@@ -612,14 +621,14 @@ export default class DGCAForm extends Component {
     }
 }
 
-const FORM2=gql`
+const FORM2 = gql`
 mutation UpdateForm2(
     $id: String!
     $usage: Usage
-    $purpose: String
-    $purpose_defect: Boolean
-    $purpose_error: String
-    $ownAircraft: Boolean
+    $purposeOfPrivate: String
+    $purposeOfPrivate_defect: Boolean
+    $purposeOfPrivate_error: String
+    $onlyYourAircraft: Boolean
     $priorPermission: Boolean
     $allWeatherRequired: Boolean
     $lightningPlan: String
@@ -628,35 +637,35 @@ mutation UpdateForm2(
     $cnsAtm: String
     $cnsAtm_defect: Boolean
     $cnsAtm_error: String
-    $metmetFacilities: String
-    $metmetFacilities_defect: Boolean
-    $metmetFacilities_error: String
+    $metFacilities: String
+    $metFacilities_defect: Boolean
+    $metFacilities_error: String
     $aviationActivities: String
     $aviationActivities_defect: Boolean
     $aviationActivities_error: String
     $heaviestType: String
     $heaviestType_defect: Boolean
     $heaviestType_error: String
-    $heaviestWidth: String
-    $heaviestWidth_defect: Boolean
-    $heaviestWidth_error: String
     $heaviestWeight: String
-    $heaviestWeight_error: String
     $heaviestWeight_defect: Boolean
+    $heaviestWeight_error: String
     $heaviestLength: String
     $heaviestLength_defect: Boolean
     $heaviestLength_error: String
+    $heaviestWidth: String
+    $heaviestWidth_defect: Boolean
+    $heaviestWidth_error: String
   ) {
     updateForm2(
       id: $id
       input: {
         usage: $usage
         purpose: {
-          data: $purpose
-          checked: $purpose_defect
-          suggestion: $purpose_error
+          data: $purposeOfPrivate
+          checked: $purposeOfPrivate_defect
+          suggestion: $purposeOfPrivate_error
         }
-        ownAircraft: $ownAircraft
+        ownAircraft: $onlyYourAircraft
         priorPermission: $priorPermission
         allWeatherRequired: $allWeatherRequired
         lightningPlan: {
@@ -670,9 +679,9 @@ mutation UpdateForm2(
           suggestion: $cnsAtm_error
         }
         metFacilities: {
-          data: $metmetFacilities
-          checked: $metmetFacilities_defect
-          suggestion: $metmetFacilities_error
+          data: $metFacilities
+          checked: $metFacilities_defect
+          suggestion: $metFacilities_error
         }
         aviationActivities: {
           data: $aviationActivities
@@ -684,11 +693,6 @@ mutation UpdateForm2(
           checked: $heaviestType_defect
           suggestion: $heaviestType_error
         }
-        heaviestWidth: {
-          data: $heaviestWidth
-          checked: $heaviestWidth_defect
-          suggestion: $heaviestWidth_error
-        }
         heaviestWeight: {
           data: $heaviestWeight
           checked: $heaviestWeight_defect
@@ -696,11 +700,15 @@ mutation UpdateForm2(
         }
         heaviestLength: {
           data: $heaviestLength
-          suggestion: $heaviestLength_error
           checked: $heaviestLength_defect
+          suggestion: $heaviestLength_error
+        }
+        heaviestWidth: {
+          data: $heaviestWidth
+          checked: $heaviestWidth_defect
+          suggestion: $heaviestWidth_error
         }
       }
     )
-  }
-  
-`
+    }
+`;
