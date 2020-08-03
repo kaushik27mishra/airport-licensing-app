@@ -54,12 +54,12 @@ export class TableRO extends Component {
     
         this.state = {
             isModalOpen: false,
-            approved: false,          
+            approved: true,          
             id:""
         }
     }
 
-    _onChangeowner = (ev,option) => {
+  onChange = (ev,option) => {
       this.setState({approved:option.key})
   }
 
