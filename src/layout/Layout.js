@@ -25,6 +25,7 @@ import DGCAForm8 from "../pages/forms/form8/DGCAForm8";
 import DGCAForm1 from "../pages/forms/form1/DGCAForm1";
 import DGCAForm2 from "../pages/forms/form2/DGCAForm2";
 import DGCAForm3 from "../pages/forms/form3/DGCAForm3";
+import DGCAForm4 from "../pages/forms/form4/DGCAForm4";
 import { roleHandler } from '../utils/roleHandler';
 import FormList from '../components/cards/formList/FormList';
 import HistoryListPage from '../pages/history/history';
@@ -115,6 +116,7 @@ function LayoutDGCA() {
       <Route path={`/app/dgca/license/:id/form/aerodrome_detail_form`} component={DGCAForm1} />
       <Route path={`/app/dgca/license/:id/form/aerodrome_activities`} component={DGCAForm2} />
       <Route path={`/app/dgca/license/:id/form/control_of_aerodrome`} component={DGCAForm3} />
+      <Route path={`/app/dgca/license/:id/form/permissions_and_approvals`} component={DGCAForm4}/>
      {/* <Route path={`/app/dgca/license/:id/form/aerodrome_management_personnel`} component={DGCAForm5}/>*/}
       <Route path={`/app/dgca/license/:id/form/aerodrome_manual`} component={DGCAForm6}/>
       <Route path={`/app/dgca/license/:id/form/details_of_fees`} component={DGCAForm7}/>
