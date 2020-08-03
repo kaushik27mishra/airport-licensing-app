@@ -21,7 +21,7 @@ const Table = (props) => {
 
     return (
       <div data-is-scrollable={true}>
-          <Query query={LIST_OF_LICENSE} variables={{ status: "Waiting_For_Data" }}>
+          <Query query={LIST_OF_LICENSE} variables={{ status: props.status }}>
           {({ loading, error, data}) => {
               if(loading) return`Loading`
               if(error) return `error`

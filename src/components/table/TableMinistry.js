@@ -97,7 +97,7 @@ export class TableRO extends Component {
 
         return (
             <div>
-                <Query query={LIST_OF_LICENSE} variables={{ status: "Waiting_for_misitries_approval" }}>
+                <Query query={LIST_OF_LICENSE} variables={{ status: this.props.status }}>
                     {({ loading, error, data}) => {
                             if(loading) return`Loading`
                             if(error) return 'error'

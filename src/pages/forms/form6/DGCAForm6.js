@@ -1,4 +1,7 @@
 import React, { Component } from 'react'
+
+import Loader from '../../../components/loader/Loader'
+
 import axios from 'axios';
 
 //ui
@@ -139,7 +142,7 @@ export default class DGCAForm extends Component {
         return (
             <Mutation mutation={FORM6}>
             {(form6funstion,{loading, data_res, error}) => {
-                if(loading) return 'loading'
+                if(loading) {return <Loader/>}
                 if(error) console.log(error);
                 return (
                     <div className="ms-Grid-row" style={{paddingBottom:'100px'}}>
@@ -171,7 +174,7 @@ export default class DGCAForm extends Component {
                                             </td>
                                             <td>
                                                 <div class="button-wrap">
-                                                    <a download="Doc.pdf" href={`data:application/pdf;base64,${manual.data}`}>Download</a>
+                                                    <a download="Data.png" href={`data:image/png;base64,${manual.data}`}>Image</a>
                                                 </div>
                                             </td>
                                             <td style={{textAlign:'center'}}>
@@ -201,10 +204,10 @@ export default class DGCAForm extends Component {
                                             </td>
                                             <td>
                                             <Dropdown
-                                                    placeholder="Select Status"
-                                                    options={this.statusOptions}
-                                                    onChange={(e,i) => this.setState({status: i.key})}
-                                                    />
+                                                placeholder="Select Status"
+                                                options={this.statusOptions}
+                                                onChange={(e,i) => this.setState({status: i.key})}
+                                            />
                                             </td>
                                         </tr>
                                     </tbody>

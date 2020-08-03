@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-
+import Loader from '../../../components/loader/Loader'
 //ui
 import { Text, PrimaryButton, Stack, DefaultButton } from 'office-ui-fabric-react';
 import { TextField} from 'office-ui-fabric-react/lib/TextField';
@@ -216,7 +216,7 @@ export default class Form3 extends Component {
         return (
             <Mutation mutation={MUTATION}>
             { (form3funstion,{loading, data_res, error}) => {
-                if(loading) return 'loading'
+                if(loading) {return <Loader/>}
                 if(error) console.log(error);
                 return (
                 <div className="ms-Grid-row" style={{paddingBottom:'100px'}}>

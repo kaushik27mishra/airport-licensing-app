@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import Loader from '../../../components/loader/Loader'
 
 //ui
 import { Text, PrimaryButton, Stack, DefaultButton  } from 'office-ui-fabric-react';
@@ -265,6 +266,7 @@ class Form2 extends Component {
         return (                
                 <Mutation mutation={MUTATION} >
                     {(form1function, {loading, data_res, error}) => {
+                        if(loading) {return <Loader/>}
                         if(error) console.log(error);
                         if(data) console.log(data.enterAerodrome);
                         return(
@@ -414,7 +416,6 @@ class Form2 extends Component {
                                                                 runways: runways.map((i)=>({length:i.length,orentatation:i.orentatation}))
                                                             }})
                                                         }
-                                                        console.log(data_res);
                                                     }
                                                 } text="Next" allowDisabledFocus />
                                             </Stack>

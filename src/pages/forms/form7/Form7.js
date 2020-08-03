@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-
+import Loader from '../../../components/loader/Loader'
 
 //ui
 import { Text, PrimaryButton, Stack, DefaultButton, DatePicker, DayOfWeek, mergeStyleSets  } from 'office-ui-fabric-react';
@@ -220,7 +220,7 @@ export default class Form7 extends Component {
         return (
             <Mutation mutation={MUTATION}>
             {(form7Function,{loading,data_res,error}) => {
-                    if(loading) return 'loading'
+                    if(loading) {return <Loader/>}
                     if(error) console.log(error);
                     return (
                         <div className="ms-Grid-row" style={{paddingBottom:'100px'}}>
