@@ -335,6 +335,7 @@ const CardsSection = (props) => {
                     if(loading) return 'loading'
                     if(error) return console.log(error);
 
+                      console.log(data.generateLicense.license);
                       var download = file(data.generateLicense.license)  
                       return(
                         <td style={{textAlign:"center",paddingLeft:'550px'}}>
