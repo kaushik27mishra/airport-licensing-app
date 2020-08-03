@@ -10,7 +10,7 @@ import { roleHandler } from '../../../utils/roleHandler'
 
 import { useParams } from 'react-router-dom'
 import { gql } from '@apollo/react-hooks';
-import { Mutation } from '@apollo/react-components';
+import { Mutation, Query } from '@apollo/react-components';
 
 const container = {
   display: 'flex',
@@ -322,7 +322,25 @@ const CardsSection = (props) => {
                     </td>
               )}}
               </Mutation>
-            :null}         
+            :null}
+             <div className="ms-Grid-row">
+              <div className="s-Grid-col ms-sm3 ms-xl3">
+                <Query query={LICENSE} variables={{id: id}}>
+                  {({loading,data,error}) => {
+                    if(loading) return 'loading'
+                    if(error) return 'error'
+                    console.log(data);
+                    return(
+                      <td style={{textAlign:"center",paddingLeft:'550px'}}>
+                          <a download="Doc.pdf" href={`data:application/pdf;base64,${data}`}>Dowload now</a>
+                        </td>
+                    )
+                  }
+                
+                  }
+                </Query>         
+              </div>
+            </div>
           </div>
         </div>
       </>
@@ -335,5 +353,13 @@ export default roleHandler(CardsSection);
 const MUTATION=gql`
 mutation UpdateStatus($id: String!, $status: LicenseStatus!) {
   updateStatus(id: $id, status: $status)
+}
+`;
+
+const LICENSE=gql`
+query License($id: String!) {
+  license(id: $id) {
+    license
+  }
 }
 `;

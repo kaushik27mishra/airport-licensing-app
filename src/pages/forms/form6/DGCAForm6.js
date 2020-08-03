@@ -82,7 +82,7 @@ export default class DGCAForm extends Component {
                 this.setState({
                   data: true,
                   manual:{
-                      data: await this.file(form6.manual.data),
+                      data: await this.file("https://ipfs.infura.io:5001/api/v0/cat?arg=QmXLPEHmY8gqmL7AZrPyCNF2CG5WW1Gzg5U7MHjzXGieHa"),
                       suggestion: form6.manual.suggestion,
                       checked: form6.manual.checked
                   },
@@ -171,7 +171,7 @@ export default class DGCAForm extends Component {
                                             </td>
                                             <td>
                                                 <div class="button-wrap">
-                                                    <a download="Doc.pdf" href={`data:application/pdf;base64,${manual.data}`}>Download</a>
+                                                    <a download="Data.png" href={`data:image/png;base64,${manual.data}`}>Image</a>
                                                 </div>
                                             </td>
                                             <td style={{textAlign:'center'}}>
