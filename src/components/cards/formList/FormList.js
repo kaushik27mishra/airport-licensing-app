@@ -197,15 +197,7 @@ const CardsSection = (props) => {
                         }
                 </>
                 }
-                {
-                    props.userRole.role==="DGCA" ?
-                    <>
-                  <Card.Item>
-                    <i style={icon} className={`ms-Icon ms-Icon--${receiveIcon('fwd')}`} aria-hidden="true"></i>
-                    <Text styles={styles.header}>License History</Text>
-                  </Card.Item>
-                  </>:null
-                }
+                
                 </Card.Section>
             </Card>
             <br/>
