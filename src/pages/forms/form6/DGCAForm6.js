@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-
+import Loader from '../../../components/loader/Loader'
 //ui
 import { Text, PrimaryButton, Stack, DefaultButton, Checkbox } from 'office-ui-fabric-react';
 import { TextField} from 'office-ui-fabric-react/lib/TextField';
@@ -134,7 +134,7 @@ export default class DGCAForm extends Component {
         return (
             <Mutation muatation={FORM6}>
             {(form6funstion,{loading, data_res, error}) => {
-                if(loading) return 'loading'
+                if(loading) {return <Loader/>}
                 if(error) console.log(error);
                 return (
                     <div className="ms-Grid-row" style={{paddingBottom:'100px'}}>

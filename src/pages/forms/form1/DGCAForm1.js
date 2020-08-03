@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import Loader from '../../../components/loader/Loader'
 
 //ui
 import { Text, PrimaryButton, Stack, DefaultButton } from 'office-ui-fabric-react';
@@ -205,6 +206,7 @@ export default class DGCAForm extends Component {
         return (
             <Mutation mutation={FORM1}>
             {(form1function,{loading, error, data}) => {
+                if(loading) {return <Loader/>}
                 if(error) console.log(error);
                 if(data) console.log(data.enterAerodrome);
                 return (

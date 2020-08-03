@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-
+import Loader from '../../../components/loader/Loader'
 //ui
 import { Text, PrimaryButton, Stack, DefaultButton } from 'office-ui-fabric-react';
 import { TextField} from 'office-ui-fabric-react/lib/TextField';
@@ -258,7 +258,7 @@ export default class Form2 extends Component {
         return (
             <Mutation mutation={MUTATION}>
                 {(form2function, { loading, data_res, error }) => {
-            
+                if(loading) {return <Loader/>}
                 if(loading) return 'loading'
                 if(error) console.log(error);
                 return (
