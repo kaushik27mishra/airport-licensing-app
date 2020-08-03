@@ -1,5 +1,9 @@
 import React, { Component } from 'react'
+
 import Loader from '../../../components/loader/Loader'
+
+import axios from 'axios';
+
 //ui
 import { Text, PrimaryButton, Stack, DefaultButton, Checkbox } from 'office-ui-fabric-react';
 import { TextField} from 'office-ui-fabric-react/lib/TextField';
@@ -74,20 +78,19 @@ export default class DGCAForm extends Component {
               }
               `,
             variables: { id: id }
-        }).then( res => {
+        }).then( async res => {
             const { form6 } = res.data.license;
             if(form6!==null) {
+                console.log(form6);
                 this.setState({
                   data: true,
-                 // saare variables 
                   manual:{
-                      data: form6.manual.data,
+                      data: await this.file("https://ipfs.infura.io:5001/api/v0/cat?arg=QmXLPEHmY8gqmL7AZrPyCNF2CG5WW1Gzg5U7MHjzXGieHa"),
                       suggestion: form6.manual.suggestion,
                       checked: form6.manual.checked
                   },
                   enclosed: form6.enclosed,
                   indicateDGCA: form6.indicateDGCA,
-                  status: true //dont know what to add
                 })
             }
             else {
@@ -98,6 +101,11 @@ export default class DGCAForm extends Component {
         })
 
     }
+
+    file = async (url) => {
+        const data = await axios.get(url);
+        return data.data;
+    };
 
     handleManualValueChange = (e) => {
         this.setState({
@@ -132,7 +140,7 @@ export default class DGCAForm extends Component {
             return <h1>Form yet to be filled</h1>
             
         return (
-            <Mutation muatation={FORM6}>
+            <Mutation mutation={FORM6}>
             {(form6funstion,{loading, data_res, error}) => {
                 if(loading) {return <Loader/>}
                 if(error) console.log(error);
@@ -156,7 +164,7 @@ export default class DGCAForm extends Component {
                                             </td>
                                             <td>
                                                 <Text variant={'large'}>
-                                                    <em>{enclosed===true?'Yes':'No'}</em> {/* Fix spelling in db*/}
+                                                    <em>{manual.data ? 'Yes':'No'}</em> {/* Fix spelling in db*/}
                                                 </Text>
                                             </td>
                                         </tr>
@@ -166,9 +174,7 @@ export default class DGCAForm extends Component {
                                             </td>
                                             <td>
                                                 <div class="button-wrap">
-                                                    <form method="get">
-                                                        <a href={manual}>Download Manual</a>
-                                                    </form>
+                                                    <a download="Data.png" href={`data:image/png;base64,${manual.data}`}>Image</a>
                                                 </div>
                                             </td>
                                             <td style={{textAlign:'center'}}>
@@ -180,7 +186,7 @@ export default class DGCAForm extends Component {
                                                     name="suggestion"
                                                     onChange={this.handleManualValueChange}
                                                     value={manual.suggestion}
-                                                    disabled={!manual.checked}
+                                                    disabled={manual.checked}
                                                 />
                                             </td>
                                         </tr>
@@ -220,7 +226,7 @@ export default class DGCAForm extends Component {
                                                     manual_error: manual.suggestion,
                                                     enclosed: enclosed,
                                                     indicateDGCA: indicateDGCA,
-                                                    //status: status  //Check this
+                                                    status: status 
                                                 }
                                             })
                                             

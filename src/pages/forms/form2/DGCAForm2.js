@@ -171,8 +171,8 @@ export default class DGCAForm extends Component {
                     },
                     cnsAtm: {
                         data: form2.cnsAtm.data,
-                        suggestion: form2.cnsAtm.data,
-                        checked: form2.cnsAtm.suggestion
+                        suggestion: form2.cnsAtm.suggestion,
+                        checked: form2.cnsAtm.checked
                     },
                     metFacilities:{
                         data: form2.metFacilities.data,

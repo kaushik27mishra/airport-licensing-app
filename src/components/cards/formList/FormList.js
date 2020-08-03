@@ -9,6 +9,8 @@ import { Dropdown } from 'office-ui-fabric-react/lib/Dropdown';
 import { roleHandler } from '../../../utils/roleHandler'
 
 import { useParams } from 'react-router-dom'
+import { gql } from '@apollo/react-hooks';
+import { Mutation, Query } from '@apollo/react-components';
 
 const container = {
   display: 'flex',
@@ -137,15 +139,14 @@ const CardsSection = (props) => {
   initializeIcons();
 
   const statusOptions = [
-    { key: 'Approved', text: 'The license for this form shall be approved.',},
-    { key: 'Rejected', text: 'The license for this form shall be rejected.' },
-    { key: 'UnderInspection', text: 'This form is under inspection' },
-    { key: 'Correct_Data', text: 'This form presents correct data' },
-    { key: 'Waiting_for_misitries_approval', text: 'This form awaits approval' },
-    { key: 'Waiting_For_Data', text: 'More data is required in this form' },
+    { key: 'Approved', text: 'Approved',},
+    { key: 'Rejected', text: 'Rejected' },
+    { key: 'UnderInspection', text: 'UnderInspection' },
+    { key: 'Correct_Data', text: 'Correct_Data' },
+    { key: 'Waiting_for_misitries_approval', text: 'Waiting_for_misitries_approval' },
+    { key: 'Waiting_For_Data', text: 'Waiting_For_Data' },
   ];
 
-  const stackTokens = { childrenGap: 20 };
 
   const { id } = useParams();
   return (
@@ -296,17 +297,50 @@ const CardsSection = (props) => {
         <div className="ms-Grid-row">
             <div className="s-Grid-col ms-sm3 ms-xl3">
             {props.userRole.role==="DGCA"?
-              <td style={{textAlign:"center",paddingLeft:'550px'}}>
-                  <Dropdown
-                    placeholder="Do you approve this application?"
-                    label="Select an option"
-                    options={statusOptions}
-                    onChange={(e,i) => this.setState({owner: i.key})}
-                    />
-                    <br/>
-                  <PrimaryButton  text="Submit" allowDisabledFocus/>
-              </td>
-            :null}         
+              <Mutation mutation={MUTATION}>
+                {(formstatus,{loading,data,error}) => {
+                  if(loading) return 'loading';
+                  if(error) return 'error';
+
+                  return (
+                    <td style={{textAlign:"center",paddingLeft:'550px'}}>
+                      <Dropdown
+                        placeholder="Do you approve this application?"
+                        label="Select an option"
+                        options={statusOptions}
+                        onChange={(e,i) => setStatus(i.key)}
+                      />
+                        <br/>
+                      <PrimaryButton 
+                        onClick={() => {
+                          formstatus({
+                            variables: {id: id,status: status }
+                          })
+                        }}
+                        text="Submit" 
+                        allowDisabledFocus/>
+                    </td>
+              )}}
+              </Mutation>
+            :null}
+             <div className="ms-Grid-row">
+              <div className="s-Grid-col ms-sm3 ms-xl3">
+                <Query query={LICENSE} variables={{id: id}}>
+                  {({loading,data,error}) => {
+                    if(loading) return 'loading'
+                    if(error) return 'error'
+                    console.log(data);
+                    return(
+                      <td style={{textAlign:"center",paddingLeft:'550px'}}>
+                          <a download="Doc.pdf" href={`data:application/pdf;base64,${data}`}>Dowload now</a>
+                        </td>
+                    )
+                  }
+                
+                  }
+                </Query>         
+              </div>
+            </div>
           </div>
         </div>
       </>
@@ -315,3 +349,17 @@ const CardsSection = (props) => {
 }
 
 export default roleHandler(CardsSection);
+
+const MUTATION=gql`
+mutation UpdateStatus($id: String!, $status: LicenseStatus!) {
+  updateStatus(id: $id, status: $status)
+}
+`;
+
+const LICENSE=gql`
+query License($id: String!) {
+  license(id: $id) {
+    license
+  }
+}
+`;

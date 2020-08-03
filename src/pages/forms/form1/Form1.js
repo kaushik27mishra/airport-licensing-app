@@ -416,7 +416,6 @@ class Form2 extends Component {
                                                                 runways: runways.map((i)=>({length:i.length,orentatation:i.orentatation}))
                                                             }})
                                                         }
-                                                        console.log(data_res);
                                                     }
                                                 } text="Next" allowDisabledFocus />
                                             </Stack>
