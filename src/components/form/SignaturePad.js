@@ -49,6 +49,9 @@ function SignaturePad(props) {
     const clear = () => sigCanvas.current.clear();
     const save = () => {
         setImageURL(sigCanvas.current.getTrimmedCanvas().toDataURL('image/png'));
+        setTimeout(() => {
+          alert("signature verified")
+        }, 4000);
         hideModal()
     }
 
