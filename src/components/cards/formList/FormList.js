@@ -10,7 +10,7 @@ import { roleHandler } from '../../../utils/roleHandler'
 
 import { useParams } from 'react-router-dom'
 import { gql } from '@apollo/react-hooks';
-import { Mutation } from '@apollo/react-components';
+import { Mutation, Query } from '@apollo/react-components';
 import Download from '../../Download';
 
 const container = {
@@ -346,13 +346,13 @@ const CardsSection = (props) => {
                         text="Submit" 
                         allowDisabledFocus/>
                     </td>
+                   
               )}}
               </Mutation>
             :null}
-            <Download id={id}/>
           </div>
         </div>
-
+        <Download id={id}/>
       </>
     
   )
@@ -366,3 +366,12 @@ mutation UpdateStatus($id: String!, $status: LicenseStatus!) {
 }
 `;
 
+const STATUS=gql`
+query License($id: String!) {
+  license(id: $id) {
+    aerodrome {
+      status
+    }
+  }
+}
+`;

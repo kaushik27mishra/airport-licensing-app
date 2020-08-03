@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react'
 import { useLazyQuery } from '@apollo/react-hooks';
 import { gql } from '@apollo/react-hooks';
 import axios from "axios";
+import { CompoundButton } from 'office-ui-fabric-react';
 
 const file = async (url) => {
     const data = await axios.get(url);
@@ -22,16 +23,20 @@ function Download(props) {
         return 'loading'
 
     if(download){
-        return (<a download="Doc.pdf" href={`data:application/pdf;base64,${download}`}>Image</a>);
+        return (<div style={{paddingLeft:'550px'}} className="ms-Grid-row">
+                    <a download="Doc.pdf" href={`data:application/pdf;base64,${download}`}>Download Now</a>
+                </div>);
     }
     if(data)console.log(data);
     return (
         <div className="ms-Grid-row">
-            <button onClick={() => {
-                generateLicense({ variables: {id: props.id,year: 20} })
-            }}>
-                Download now
-            </button>     
+            <div style={{textAlign: "center",margin:"0 auto"}}>
+                <CompoundButton primary secondaryText="Click to generate link" onClick={() => {
+                    generateLicense({ variables: {id: props.id,year: 20} })
+                }}>
+                    Download License
+                </CompoundButton>    
+            </div>
         </div>
     )
 }
