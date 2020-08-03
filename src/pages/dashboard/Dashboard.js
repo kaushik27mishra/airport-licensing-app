@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import Loader from "../../components/loader/Loader"
 
 // components
 import CardsSection from '../../components/cards/Cards'
@@ -140,17 +141,17 @@ class Dashboard extends Component {
                                     <Card.Item>
                                         <Pivot styles={styles.pivotStyles}>
                                             <PivotItem
-                                                headerText="All Applications"
+                                                headerText="Under Inspection"
                                                 headerButtonProps={{
                                                 'data-order': 1,
                                                 }}
                                             >
-                                                <TableRO history={this.props.history}/>
+                                                <TableRO status="UnderInspection" history={this.props.history}/>
                                             </PivotItem>
                                             <PivotItem headerText="Completed Applications">
-                                                <TableRO history={this.props.history}/>
+                                                <TableRO status="UnderInspection" history={this.props.history}/>
                                             </PivotItem>
-                                            <PivotItem headerText="Ongoing Applications">
+                                            <PivotItem  status="Waiting_For_Data" headerText="Ongoing Applications">
                                                 <TableRO history={this.props.history}/>
                                             </PivotItem>
                                         </Pivot>
@@ -189,7 +190,7 @@ class Dashboard extends Component {
                     </>
                 )
             default: return(
-                <h1>Loading...</h1>
+                <Loader/>
             )
         }
             

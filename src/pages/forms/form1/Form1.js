@@ -66,6 +66,7 @@ class Form2 extends Component {
         super(props)
 
         this.state = {
+            isLoading: true,
             upload_check:false,
             data: false,
             placeName: "",
@@ -102,6 +103,9 @@ class Form2 extends Component {
     }
 
     componentDidMount() {
+        this.setState({
+            isLoading:true,
+        })
         const id = this.props.match.params.id;
         client.query({
             query: gql`
@@ -154,13 +158,16 @@ class Form2 extends Component {
                     elevationFeet_defect: true,
                     elevationMeter_defect: true,
                     longitude_defect: true,
-                    latitude_defect: true,        
+                    latitude_defect: true,
+                    isLoading:false,
+
                 })
                 console.log(this.state.grid);
             }
             else {
                 this.setState({
-                    data: false
+                    data: false,
+                    isLoading:false,
                 })
             }
 
@@ -215,6 +222,7 @@ class Form2 extends Component {
     render() { 
         
         const {
+            isLoading,
             upload_check,
             data,
             placeName,
@@ -249,6 +257,9 @@ class Form2 extends Component {
         } = this.state;
 
         var MUTATION;
+
+        if(isLoading)
+            {return <Loader/>}
 
         if(data) {
             if(upload_check) {

@@ -7,6 +7,7 @@ import { Card } from '@uifabric/react-cards';
 import { mergeStyleSets } from 'office-ui-fabric-react/lib/Styling';
 import { ActionButton} from 'office-ui-fabric-react';
 import { Dropdown } from 'office-ui-fabric-react/lib/Dropdown';
+import Loader from '../../../components/loader/Loader'
 
 //style
 import './style.css'
@@ -179,7 +180,7 @@ class LicenseCreateForm extends Component {
             <Mutation mutation={FORM1} >
             { (form1function, {loading, data, error}) => {
                 if(error) return 'error';
-                if(loading) return 'loading';
+                if(loading) return (<Loader/>);
                 if(data) console.log(data);
 
                 return(

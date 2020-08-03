@@ -5,7 +5,7 @@ import { Text, PrimaryButton, Stack, DefaultButton, initializeIcons } from 'offi
 import { Card } from '@uifabric/react-cards';
 import { DatePicker, DayOfWeek, mergeStyleSets } from 'office-ui-fabric-react';
 import { Icon } from '@fluentui/react/lib/Icon';
-
+import Loader from '../../../components/loader/Loader'
 
 
 import gql from 'graphql-tag';
@@ -95,6 +95,7 @@ export default class Form4 extends Component {
         super(props)
     
         this.state = {
+            isLoading: true,
             dateApprovalOfOwnerOfLand: "2020-07-13",
             dateApprovalOfOwnerOfLand_defect:null,
             dateApprovalOfOwnerOfLand_error:"",
@@ -113,6 +114,9 @@ export default class Form4 extends Component {
     }
 
     componentDidMount() {
+        this.setState({
+            isLoading:true,
+        })
         const id = this.props.match.params.id;
         client.query({
             query: gql`
@@ -134,12 +138,14 @@ export default class Form4 extends Component {
                     HomeAffairsStatus: form4.homeBool,
                     DefenceStatus: form4.defenceBool,
                     dateApprovalOfHomeAffairs: form4.homeTime,
-                    dateApprovalOfDefence: form4.defenceTime    
+                    dateApprovalOfDefence: form4.defenceTime,
+                    isLoading:false,
                 })
             }
             else {
                 this.setState({
-                    data: false
+                    data: false,
+                    isLoading:false,
                 })
             }
 
@@ -179,13 +185,18 @@ export default class Form4 extends Component {
     render() {
         initializeIcons();
         const {
-            
+            isLoading,
             DefenceStatus,
             HomeAffairsStatus,
             dateApprovalOfHomeAffairs,
             dateApprovalOfDefence
 
         } = this.state;
+
+
+        if(isLoading)
+            {return <Loader/>}
+
         return (
             <div className="ms-Grid-row" style={{paddingBottom:'100px'}}>
                 <div className={`s-Grid-col ms-sm9 ms-xl9 ${classNames.pivot}`}>

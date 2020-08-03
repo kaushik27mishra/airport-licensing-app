@@ -52,6 +52,7 @@ export default class Form6 extends Component {
         super(props)
     
         this.state = {
+            isLoading: true,
              manualEnclosed:null,
              dateToBeSubmitted: "",
              dateToBeSubmitted_error:"",
@@ -61,6 +62,9 @@ export default class Form6 extends Component {
     }
 
     componentDidMount() {
+        this.setState({
+            isLoading:true,
+        })
         const id = this.props.match.params.id;
         client.query({
             query: gql`
@@ -90,11 +94,14 @@ export default class Form6 extends Component {
                  dateToBeSubmitted_error:"",
                  dateToBeSubmitted_defect: true,
                  aerodromeManual: true,
+                 isLoading: false
                 })
             }
             else {
                 this.setState({
-                    data: false
+                    data: false,
+                 isLoading: false
+
                 })
             }
         })
@@ -126,6 +133,7 @@ export default class Form6 extends Component {
     render() {
 
         const {
+            isLoading,
             data,
             dateToBeSubmitted,
             dateToBeSubmitted_error,
@@ -135,6 +143,9 @@ export default class Form6 extends Component {
         } = this.state;
 
         var MUTATION;
+
+        if(isLoading)
+            {return <Loader/>}
 
         if(data) {
             MUTATION= FORM6_UPLOAD

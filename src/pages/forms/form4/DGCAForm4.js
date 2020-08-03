@@ -11,6 +11,7 @@ import { Icon } from '@fluentui/react/lib/Icon';
 import gql from 'graphql-tag';
 import { Mutation, Query } from '@apollo/react-components';
 import { client } from '../../..';
+import Loader from '../../../components/loader/Loader';
 
 //style
 const styles = {
@@ -106,14 +107,16 @@ export default class Form4 extends Component {
             OwnerFile: null,
             LocalFile: null,
             dateApprovalOfHomeAffairs:"2020-08-02",
-            dateApprovalOfDefence:"2020-08-02"
-
-        
+            dateApprovalOfDefence:"2020-08-02",
+            isLoading: true
         }
     }
 
     componentDidMount() {
         const id = this.props.match.params.id;
+        this.setState({
+            isLoading: true
+        })
         client.query({
             query: gql`
             query License($id: String!){
@@ -134,12 +137,14 @@ export default class Form4 extends Component {
                     HomeAffairsStatus: form4.homeBool,
                     DefenceStatus: form4.defenceBool,
                     dateApprovalOfHomeAffairs: form4.homeTime,
-                    dateApprovalOfDefence: form4.defenceTime    
+                    dateApprovalOfDefence: form4.defenceTime,
+                    isLoading: false
                 })
             }
             else {
                 this.setState({
-                    data: false
+                    data: false,
+                    isLoading: false
                 })
             }
 
@@ -179,13 +184,16 @@ export default class Form4 extends Component {
     render() {
         initializeIcons();
         const {
-            
+            isLoading,
             DefenceStatus,
             HomeAffairsStatus,
             dateApprovalOfHomeAffairs,
             dateApprovalOfDefence
 
         } = this.state;
+        if(isLoading)
+            return <Loader/>
+        
         return (
             <div className="ms-Grid-row" style={{paddingBottom:'100px'}}>
                 <div className={`s-Grid-col ms-sm9 ms-xl9 ${classNames.pivot}`}>

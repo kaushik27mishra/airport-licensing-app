@@ -82,6 +82,7 @@ export default class Form7 extends Component {
         super(props)
     
         this.state = {
+            isLoading: true,
              data: false,
              check:"",
              challanNo:"",
@@ -104,6 +105,9 @@ export default class Form7 extends Component {
     }
 
     componentDidMount() {
+        this.setState({
+            isLoading:true,
+        })
         const id = this.props.match.params.id;
         client.query({
             query: gql`
@@ -143,11 +147,13 @@ export default class Form7 extends Component {
                  dateOfDraweeBank: form7.dateofChallan,
                  dateOfDraweeBank_defect:true,
                  dateOfDraweeBank_error:"",
+                 isLoading:false,
                 })
             }
             else {
                 this.setState({
-                    data: false
+                    data: false,
+                    isLoading:false,
                 })
             }
         })
@@ -191,6 +197,7 @@ export default class Form7 extends Component {
     render() {
 
         const {
+            isLoading,
              data,
              challanNo,
              challanNo_error,
@@ -216,6 +223,9 @@ export default class Form7 extends Component {
         else {
             MUTATION=FORM7;
         }
+
+        if(isLoading)
+            {return <Loader/>}
 
         return (
             <Mutation mutation={MUTATION}>

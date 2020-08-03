@@ -59,6 +59,7 @@ export default class Form2 extends Component {
         super(props)
 
         this.state = {
+          isLoading: true,
             data: null,
             usage: 'Public',
             onlyYourAircraft : true,
@@ -96,6 +97,9 @@ export default class Form2 extends Component {
     }
 
     componentDidMount() {
+      this.setState({
+        isLoading:true,
+    })
         const id = this.props.match.params.id;
         client.query({
             query: gql`
@@ -164,41 +168,43 @@ export default class Form2 extends Component {
                   usage: form2.usage,
                   purposeOfPrivate: form2.purpose.data,
                   purposeOfPrivate_defect: !!form2.purpose.checked,
-                  purposeOfPrivate_error: form2.purpose.error,
+                  purposeOfPrivate_error: form2.purpose.error===null ? "": form2.purpose.error,
                   onlyYourAircraft: form2.ownAircraft,
                   priorPermissionForOtherAircraft: form2.priorPermission,
                   allWeatherRequired: form2.allWeatherRequired,
                   detailsOfProposedLighting: form2.lightningPlan.data,
                   detailsOfProposedLighting_defect: !!form2.lightningPlan.checked,
-                  detailsOfProposedLighting_error: form2.lightningPlan.suggestion,
+                  detailsOfProposedLighting_error: form2.lightningPlan.suggestion===null ? "": form2.lightningPlan.suggestion,
                   detailsCNS_ATN: form2.cnsAtm.data,
                   detailsCNS_ATN_defect: !!form2.cnsAtm.checked,
-                  detailsCNS_ATN_error: form2.cnsAtm.suggestion,
+                  detailsCNS_ATN_error: form2.cnsAtm.suggestion===null ? "": form2.cnsAtm.suggestion,
                   detailsMET_Facilities: form2.metFacilities.data,
                   detailsMET_Facilities_defect: !!form2.metFacilities.checked,
-                  detailsMET_Facilities_error: form2.metFacilities.suggestion,
+                  detailsMET_Facilities_error: form2.metFacilities.suggestion===null ? "": form2.metFacilities.suggestion,
                   otherAviationActivities: form2.aviationActivities.data,
                   otherAviationActivities_defect: !!form2.aviationActivities.checked,
-                  otherAviationActivities_error: form2.aviationActivities.suggestion,
+                  otherAviationActivities_error: form2.aviationActivities.suggestion===null ? "": form2.aviationActivities.suggestion,
                   heaviestAircraftType: form2.heaviestType.data,
                   heaviestAircraftType_defect: form2.heaviestType.checked,
-                  heaviestAircraftType_error: form2.heaviestType.suggestion,
+                  heaviestAircraftType_error: form2.heaviestType.suggestion===null ? "": form2.heaviestType.suggestion,
                   heaviestAircraftLength: form2.heaviestLength.data,
                   heaviestAircraftLength_defect: form2.heaviestLength.checked,
-                  heaviestAircraftLength_error: form2.heaviestLength.error,
+                  heaviestAircraftLength_error: form2.heaviestLength.suggestion===null ? "": form2.heaviestLength.suggestion,
                   heaviestAircraftWidth: form2.heaviestWidth.data,
                   heaviestAircraftWidth_defect: !!form2.heaviestWidth.checked,
-                  heaviestAircraftWidth_error: form2.heaviestWidth.suggestion,
+                  heaviestAircraftWidth_error: form2.heaviestWidth.suggestion===null ? "": form2.heaviestWidth.suggestion,
                   heaviestAircraftWeight: form2.heaviestWeight.data,
                   heaviestAircraftWeight_defect: !!form2.heaviestWeight.checked,
-                  heaviestAircraftWeight_error: form2.heaviesWeight.suggestion,
+                  heaviestAircraftWeight_error: form2.heaviestWeight.suggestion===null ? "": form2.heaviesWeight.suggestion,
+                  isLoading:false,
                  // heaviestAircraftWidth_defect: form2.heaviestWeight.checked,
                  // heaviestAircraftWidth_error:  form2.heaviestWeight.suggestion
                 })
             }
             else {
                 this.setState({
-                    data: false
+                    data: false,
+                    isLoading:false,
                 })
             }
         })
@@ -216,6 +222,7 @@ export default class Form2 extends Component {
 
     render() {
         const {
+          isLoading,
         data,
         purposeOfPrivate,
         purposeOfPrivate_defect,
@@ -248,6 +255,8 @@ export default class Form2 extends Component {
         onlyYourAircraft,
         priorPermissionForOtherAircraft,
         allWeatherRequired,} = this.state;
+
+        if(isLoading) {return <Loader/>}
 
         var MUTATION;
         if(data) {

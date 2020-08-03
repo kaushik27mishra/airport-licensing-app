@@ -93,6 +93,7 @@ export default class Form3 extends Component {
         super(props)
     
         this.state = {
+            isLoading: true,
              owner: true,
              rightsIfNotOver: "",
              rightsIfNotOver_error: "",
@@ -110,6 +111,9 @@ export default class Form3 extends Component {
     }
 
     componentDidMount() {
+        this.setState({
+            isLoading:true,
+        })
         const id = this.props.match.params.id;
         client.query({
             query: gql`
@@ -147,11 +151,13 @@ export default class Form3 extends Component {
                     termination: form3.terminationPeriod,
                     termination_error: "",
                     termination_defect: true,
+                    isLoading:false,
                 })
             }
             else {
                 this.setState({
-                    data: false
+                    data: false,
+                    isLoading:false,
                 })
             }
 
@@ -189,6 +195,7 @@ export default class Form3 extends Component {
     
     render() {
         const {
+            isLoading,
              data,
              owner,
              rightsIfNotOver,
@@ -204,6 +211,9 @@ export default class Form3 extends Component {
              termination_error,
              termination_defect,
         } = this.state;
+
+        if(isLoading)
+        {return <Loader/>}
 
         var MUTATION;
         if(data) {

@@ -49,6 +49,7 @@ export default class Form8 extends Component {
         super(props)
     
         this.state = {
+            isLoading: true,
              isChecked:false,
              anyOtherInformation: "",
              anyOtherInformation_error: "",
@@ -59,6 +60,9 @@ export default class Form8 extends Component {
     }
 
     componentDidMount() {
+        this.setState({
+            isLoading:true,
+        })
         const id = this.props.match.params.id;
         client.query({
             query: gql`
@@ -85,12 +89,16 @@ export default class Form8 extends Component {
                  anyOtherInformation: form8.otherInfo.data,
                  anyOtherInformation_error: form8.otherInfo.suggestion,
                  anyOtherInformation_defect: form8.otherInfo.checked,
-                 sign: true
+                 sign: true,
+                 isLoading:false,
+
                 })
             }
             else {
                 this.setState({
-                    data: false
+                    data: false,
+                    isLoading:false,
+
                 })
             }
         })
@@ -141,11 +149,16 @@ export default class Form8 extends Component {
     render() {
 
         const {
+            isLoading,
              data,
              anyOtherInformation,
              anyOtherInformation_error,
              anyOtherInformation_defect,
         } = this.state;
+
+
+        if(isLoading)
+            {return <Loader/>}
 
         var MUTATION;
         if(data) {
