@@ -85,7 +85,7 @@ export default class DGCAForm extends Component {
                 this.setState({
                   data: true,
                   manual:{
-                      data: await this.file("https://ipfs.infura.io:5001/api/v0/cat?arg=QmXLPEHmY8gqmL7AZrPyCNF2CG5WW1Gzg5U7MHjzXGieHa"),
+                      data: await this.file(form6.manual.data),
                       suggestion: form6.manual.suggestion,
                       checked: form6.manual.checked
                   },
@@ -204,10 +204,10 @@ export default class DGCAForm extends Component {
                                             </td>
                                             <td>
                                             <Dropdown
-                                                    placeholder="Select Status"
-                                                    options={this.statusOptions}
-                                                    onChange={(e,i) => this.setState({status: i.key})}
-                                                    />
+                                                placeholder="Select Status"
+                                                options={this.statusOptions}
+                                                onChange={(e,i) => this.setState({status: i.key})}
+                                            />
                                             </td>
                                         </tr>
                                     </tbody>
