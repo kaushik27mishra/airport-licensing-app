@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios'
 
 //ui
-import { Text, initializeIcons, PrimaryButton, Stack } from '@fluentui/react';
+import { Text, initializeIcons, PrimaryButton } from '@fluentui/react';
 import { Card } from '@uifabric/react-cards';
 import { Dropdown } from 'office-ui-fabric-react/lib/Dropdown';
 
@@ -133,8 +133,14 @@ const CardsSection = (props) => {
         status: 'Processing',
         dgcaLink: `/form/further_info`,
         operatorLink: '/further_info',
-      }
+      },
+      
     ]
+    const history_card = {
+      title: "License History",
+      status: "fwd",
+      dgcaLink:'/form/history'
+    }
 
     
   initializeIcons();
@@ -196,6 +202,7 @@ const CardsSection = (props) => {
                         }
                 </>
                 }
+                
                 </Card.Section>
             </Card>
             <br/>
@@ -292,10 +299,29 @@ const CardsSection = (props) => {
                         }
                 </>
                 }
-                
                 </Card.Section>
             </Card>
-            <br/>
+
+            {
+              props.userRole.role==="DGCA" ?
+              <>
+                        <br/><br/>
+                            <Card styles={styles.cardStyles}
+                        onClick={() => {
+                            props.history.push(`/app/dgca/license/${id}/history`)
+                        }}>
+                        <Card.Section>
+                            <Card.Item>
+                                  <i style={icon} className={`ms-Icon ms-Icon--${receiveIcon(history_card.status)}`} aria-hidden="true"></i>
+                                  <Text styles={styles.header}>{history_card.title}</Text>
+                              </Card.Item>
+                              <Card.Item>
+                                  <Text styles={styles.status}>Click to view complete history of this license</Text>
+                              </Card.Item>
+                          </Card.Section>
+                        </Card>
+              </>:null
+            }
             </div>
         ))}
         </div>
