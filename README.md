@@ -9,7 +9,9 @@ A web based application using Block chain technology is sought from Airport Lice
 * Seamless Approval process, Centralized Monitoring and Suggestion Mechanism. 
 * Relevant information should be fetched from data source, linked to a particular project which can be used in the hour of need.
 
-Video Demonstration of our project can be seen here - https://drive.google.com/file/d/1gLuQTiAaS8mhC3pmVI9g24RAh1nJ-VPf/view
+Have a look at our work!
+* Video Demonstration of our project can be seen here - https://drive.google.com/file/d/1gLuQTiAaS8mhC3pmVI9g24RAh1nJ-VPf/view
+* The website is hosted at - https://airport-licensing-app.vercel.app/#/
 
 This project has been created in **React** framework. It also uses **Fluent UI**, and has been wired up for requisite **Apollo GraphQL APIs** that we designed specifically for this portal.
 
