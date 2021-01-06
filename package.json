@@ -13,7 +13,7 @@
     "apollo-client": "^2.6.10",
     "apollo-link-context": "^1.0.20",
     "apollo-upload-client": "^14.1.0",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "graphql": "^15.3.0",
     "react": "^16.13.1",
     "react-chat-widget": "^3.0.5",
